@@ -1,0 +1,643 @@
+{
+  "brand": {
+    "name": "Marble Box",
+    "descriptor": "Bakery",
+    "tagline": "Number cakes, bomboloni and kunafa cups, made to order.",
+    "city": "Houston, TX",
+    "cityShort": "Houston",
+    "phone": "+1 (713) 555-0142",
+    "email": "orders@marbleboxbakery.com",
+    "instagram": "marblebox.bakery",
+    "currency": "usd",
+    "pickupDays": [
+      4,
+      5,
+      6,
+      0
+    ],
+    "pickupDaysLabel": "Thu–Sun",
+    "pickupHours": "10 am – 6 pm",
+    "pickupWindows": [
+      "10:00 – 12:00",
+      "12:00 – 2:00",
+      "2:00 – 4:00",
+      "4:00 – 6:00"
+    ],
+    "allergens": "Contains wheat, dairy and eggs. Pistachio and kunafa items contain tree nuts. We are not a nut-free kitchen."
+  },
+  "fulfillment": {
+    "delivery": {
+      "fee": 12,
+      "freeOver": 150,
+      "radiusMiles": 15
+    }
+  },
+  "categories": [
+    {
+      "id": "tarts",
+      "label": "Number & letter cakes"
+    },
+    {
+      "id": "bomboloni",
+      "label": "Bomboloni"
+    },
+    {
+      "id": "kunafa",
+      "label": "Kunafa"
+    },
+    {
+      "id": "cakes",
+      "label": "Cakes"
+    }
+  ],
+  "products": [
+    {
+      "id": "number-cake",
+      "name": "Number & letter cake",
+      "category": "tarts",
+      "leadDays": 2,
+      "tag": "Signature",
+      "tagColor": "pink",
+      "meta": "8–10 servings per character",
+      "priceLabel": "$85 / character",
+      "description": "The one we are known for. Each character is a thin, buttery cookie base with two layers of piped cream and a full top of toppings. Any number, any initials, up to three characters.",
+      "alt": "A 50 number cake in a marble box, topped with gold almonds, chocolate-dipped strawberries, Ferrero Rocher and a gold crown",
+      "images": [
+        "number-50-marble",
+        "letter-m-pastel",
+        "number-chocolate",
+        "number-pastel-hearts",
+        "letter-j-rose",
+        "letter-l-crown",
+        "bar-mitzvah-13"
+      ],
+      "options": [
+        {
+          "id": "chars",
+          "type": "text",
+          "label": "Number or initials",
+          "short": "",
+          "maxLength": 3,
+          "required": true,
+          "upper": true,
+          "glyphs": true,
+          "placeholder": "30",
+          "pattern": "[A-Z0-9]{1,3}",
+          "patternHint": "letters and numbers only",
+          "charPrices": {
+            "1": 85,
+            "2": 160,
+            "3": 235
+          }
+        },
+        {
+          "id": "topping",
+          "type": "choice",
+          "label": "Topping style",
+          "choices": [
+            {
+              "id": "pastel",
+              "label": "Pastel candy",
+              "sub": "Hershey's hearts, Kinder, pearls, pink, blue and lilac piping",
+              "delta": 0
+            },
+            {
+              "id": "chocolate",
+              "label": "Chocolate lover's",
+              "sub": "Ferrero, Raffaello, Kinder, a mini Nutella, strawberries",
+              "delta": 0
+            },
+            {
+              "id": "gold",
+              "label": "Gold & crown",
+              "sub": "Gold almonds, dipped strawberries, gold stars and a crown topper",
+              "delta": 12
+            },
+            {
+              "id": "fruit",
+              "label": "Fresh fruit",
+              "sub": "Strawberries, blueberries, raspberries, dragon fruit",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "cream",
+          "type": "choice",
+          "label": "Cream",
+          "choices": [
+            {
+              "id": "vanilla",
+              "label": "Vanilla",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "Pistachio",
+              "delta": 8
+            },
+            {
+              "id": "strawberry",
+              "label": "Strawberry",
+              "delta": 0
+            },
+            {
+              "id": "hazelnut",
+              "label": "Chocolate hazelnut",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "topper",
+          "type": "choice",
+          "label": "Acrylic topper",
+          "hint": "a keepsake, not edible",
+          "choices": [
+            {
+              "id": "gold",
+              "label": "Happy Birthday, gold",
+              "short": "gold topper",
+              "delta": 0
+            },
+            {
+              "id": "silver",
+              "label": "Happy Birthday, silver",
+              "short": "silver topper",
+              "delta": 0
+            },
+            {
+              "id": "none",
+              "label": "No topper",
+              "short": "no topper",
+              "delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heart-tart",
+      "name": "Heart cream tart",
+      "category": "tarts",
+      "leadDays": 2,
+      "price": 78,
+      "meta": "About 10 servings",
+      "description": "The same cookie-and-cream build, shaped as a heart. Anniversaries, Valentine's, or a Tuesday.",
+      "alt": "A heart-shaped cream tart covered in chopped strawberries on a black marble tray",
+      "images": [
+        "heart-strawberries"
+      ],
+      "options": [
+        {
+          "id": "topping",
+          "type": "choice",
+          "label": "Topping",
+          "choices": [
+            {
+              "id": "strawberries",
+              "label": "Chopped strawberries",
+              "delta": 0
+            },
+            {
+              "id": "berries",
+              "label": "Mixed berries",
+              "delta": 6
+            },
+            {
+              "id": "pastel",
+              "label": "Pastel candy",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "cream",
+          "type": "choice",
+          "label": "Cream",
+          "choices": [
+            {
+              "id": "vanilla",
+              "label": "Vanilla",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "Pistachio",
+              "delta": 8
+            },
+            {
+              "id": "strawberry",
+              "label": "Strawberry",
+              "delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring-tart",
+      "name": "Ring cream tart",
+      "category": "tarts",
+      "leadDays": 2,
+      "price": 92,
+      "meta": "12–14 servings",
+      "description": "A wreath of three cookie layers with three colors of cream showing at the edge. Feeds a table.",
+      "alt": "A ring-shaped cream tart with strawberries, blueberries, raspberries and silver chocolate bars in a clear box",
+      "images": [
+        "ring-berries",
+        "ring-shani"
+      ],
+      "options": [
+        {
+          "id": "topping",
+          "type": "choice",
+          "label": "Topping",
+          "choices": [
+            {
+              "id": "berries",
+              "label": "Fresh berries & silver chocolate",
+              "delta": 0
+            },
+            {
+              "id": "macarons",
+              "label": "Macarons, Ferrero & gold hearts",
+              "delta": 8
+            },
+            {
+              "id": "strawberries",
+              "label": "Strawberries only",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "cream",
+          "type": "choice",
+          "label": "Cream",
+          "choices": [
+            {
+              "id": "three",
+              "label": "Three-tone",
+              "sub": "vanilla, strawberry, dulce de leche",
+              "delta": 0
+            },
+            {
+              "id": "vanilla",
+              "label": "All vanilla",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "All pistachio",
+              "delta": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bomboloni",
+      "name": "Bomboloni box",
+      "category": "bomboloni",
+      "leadDays": 1,
+      "tag": "Same-day fresh",
+      "tagColor": "blue",
+      "meta": "Fried the morning of pickup",
+      "description": "Brioche doughnuts fried the morning you pick up, split, filled with cream and finished on top. Eat them the same day. They do not survive a fridge.",
+      "alt": "A box of bomboloni topped with pistachio cream, dulce de leche cream, and strawberries with whipped cream",
+      "images": [
+        "bomboloni-box",
+        "bomboloni-box-2",
+        "bomboloni-oreo-mm"
+      ],
+      "options": [
+        {
+          "id": "size",
+          "type": "size",
+          "label": "Box",
+          "choices": [
+            {
+              "id": "six",
+              "label": "Box of 6",
+              "price": 36
+            },
+            {
+              "id": "twelve",
+              "label": "Box of 12",
+              "price": 66
+            }
+          ]
+        },
+        {
+          "id": "mix",
+          "type": "choice",
+          "label": "Flavors",
+          "hint": "want two? say which in the notes",
+          "choices": [
+            {
+              "id": "assorted",
+              "label": "Baker's assortment",
+              "sub": "a bit of everything",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "Pistachio cream",
+              "delta": 0
+            },
+            {
+              "id": "strawberry",
+              "label": "Strawberries & cream",
+              "delta": 0
+            },
+            {
+              "id": "oreo",
+              "label": "Cookies & cream",
+              "delta": 0
+            },
+            {
+              "id": "dulce",
+              "label": "Dulce de leche",
+              "delta": 0
+            },
+            {
+              "id": "mm",
+              "label": "Chocolate glaze & M&M's",
+              "delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kunafa-cups",
+      "name": "Dubai kunafa cups",
+      "category": "kunafa",
+      "leadDays": 1,
+      "meta": "Served cold, keeps 2 days",
+      "description": "Crisp toasted kataifi, pistachio cream and milk chocolate layered in a glass. The viral one, done properly.",
+      "alt": "Dubai kunafa cups in martini glasses on a gold tray with pistachios and gold spoons",
+      "images": [
+        "kunafa-cups"
+      ],
+      "allergens": "Contains wheat, dairy, eggs and tree nuts (pistachio).",
+      "options": [
+        {
+          "id": "size",
+          "type": "size",
+          "label": "How many",
+          "choices": [
+            {
+              "id": "four",
+              "label": "4 cups",
+              "price": 32
+            },
+            {
+              "id": "eight",
+              "label": "8 cups",
+              "price": 60
+            }
+          ]
+        },
+        {
+          "id": "extra",
+          "type": "choice",
+          "label": "Pistachio cream",
+          "choices": [
+            {
+              "id": "classic",
+              "label": "Classic",
+              "short": "classic",
+              "delta": 0
+            },
+            {
+              "id": "extra",
+              "label": "Extra pistachio on top",
+              "short": "extra pistachio",
+              "delta": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vintage-cake",
+      "name": "Vintage cake",
+      "category": "cakes",
+      "leadDays": 3,
+      "tag": "72 h notice",
+      "tagColor": "lilac",
+      "meta": "Boxed in a clear case with ribbon",
+      "description": "Ruffled buttercream shells, sugar pearls and sprigs of baby's breath, in a clear box tied with ribbon. Add a gold number on top.",
+      "alt": "A white vintage-style cake with pink shell piping, pearls, pink baby's breath and a gold 30 topper, in a clear box",
+      "images": [
+        "vintage-30-side",
+        "vintage-30-top"
+      ],
+      "options": [
+        {
+          "id": "size",
+          "type": "size",
+          "label": "Size",
+          "choices": [
+            {
+              "id": "six",
+              "label": "6 inch",
+              "sub": "serves 10",
+              "price": 95
+            },
+            {
+              "id": "eight",
+              "label": "8 inch",
+              "sub": "serves 18",
+              "price": 135
+            }
+          ]
+        },
+        {
+          "id": "colors",
+          "type": "choice",
+          "label": "Colors",
+          "choices": [
+            {
+              "id": "pink",
+              "label": "White & pink",
+              "delta": 0
+            },
+            {
+              "id": "blue",
+              "label": "White & blue",
+              "delta": 0
+            },
+            {
+              "id": "white",
+              "label": "All white",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "flavor",
+          "type": "choice",
+          "label": "Cake",
+          "choices": [
+            {
+              "id": "vanilla",
+              "label": "Vanilla bean",
+              "delta": 0
+            },
+            {
+              "id": "chocolate",
+              "label": "Chocolate",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "Pistachio",
+              "delta": 8
+            }
+          ]
+        },
+        {
+          "id": "number",
+          "type": "text",
+          "label": "Gold number on top",
+          "short": "number",
+          "maxLength": 2,
+          "required": false,
+          "placeholder": "30",
+          "pattern": "[0-9]{1,2}",
+          "patternHint": "digits only",
+          "priceIfFilled": 6
+        }
+      ]
+    },
+    {
+      "id": "mini-cake",
+      "name": "Mini celebration cake",
+      "category": "cakes",
+      "leadDays": 2,
+      "price": 42,
+      "meta": "4 inch, serves 2–3",
+      "description": "A small ruffle cake with gold pearls and a gold candle, on a gold board. One is a treat; two make a pair.",
+      "alt": "Two small white ruffled cakes with gold pearls and gold candles on gold boards",
+      "images": [
+        "mini-ruffle-cakes"
+      ],
+      "options": [
+        {
+          "id": "flavor",
+          "type": "choice",
+          "label": "Cake",
+          "choices": [
+            {
+              "id": "vanilla",
+              "label": "Vanilla bean",
+              "delta": 0
+            },
+            {
+              "id": "chocolate",
+              "label": "Chocolate",
+              "delta": 0
+            }
+          ]
+        },
+        {
+          "id": "pearls",
+          "type": "choice",
+          "label": "Pearls",
+          "choices": [
+            {
+              "id": "gold",
+              "label": "Gold",
+              "short": "gold pearls",
+              "delta": 0
+            },
+            {
+              "id": "silver",
+              "label": "Silver",
+              "short": "silver pearls",
+              "delta": 0
+            },
+            {
+              "id": "pink",
+              "label": "Pink",
+              "short": "pink pearls",
+              "delta": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "name-cake",
+      "name": "Name cake",
+      "category": "cakes",
+      "leadDays": 3,
+      "price": 120,
+      "meta": "6 inch, serves 10",
+      "description": "Their name in gold letters on the side. Choose white florals and gold balls, or black, gold and mini whisky bottles.",
+      "alt": "A white cake with the name CHEN in gold letters, white flowers, baby's breath and gold balls",
+      "images": [
+        "name-cake-chen",
+        "name-cake-nissim"
+      ],
+      "options": [
+        {
+          "id": "name",
+          "type": "text",
+          "label": "The name",
+          "short": "",
+          "maxLength": 10,
+          "required": true,
+          "upper": true,
+          "placeholder": "CHEN",
+          "pattern": "[A-Z]{2,10}",
+          "patternHint": "letters only"
+        },
+        {
+          "id": "style",
+          "type": "choice",
+          "label": "Style",
+          "choices": [
+            {
+              "id": "florals",
+              "label": "White florals & gold",
+              "sub": "fresh white blooms, baby's breath, gold balls",
+              "delta": 0
+            },
+            {
+              "id": "black-gold",
+              "label": "Black, gold & whisky minis",
+              "sub": "black and gold pearls, two mini bottles, gold balloon",
+              "delta": 15
+            }
+          ]
+        },
+        {
+          "id": "flavor",
+          "type": "choice",
+          "label": "Cake",
+          "choices": [
+            {
+              "id": "vanilla",
+              "label": "Vanilla bean",
+              "delta": 0
+            },
+            {
+              "id": "chocolate",
+              "label": "Chocolate",
+              "delta": 0
+            },
+            {
+              "id": "pistachio",
+              "label": "Pistachio",
+              "delta": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

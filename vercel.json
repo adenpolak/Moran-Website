@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "headers": [
+    { "source": "/images/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/catalog.json", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+  ]
+}
