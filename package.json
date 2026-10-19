@@ -2,10 +2,19 @@
   "name": "marble-box-storefront",
   "private": true,
   "version": "1.0.0",
-  "description": "Cake storefront: static site + Stripe Checkout serverless function. No framework, no build step.",
+  "description": "Cake storefront: static site + Stripe Checkout serverless functions. No framework, no build step.",
   "scripts": {
     "dev": "vercel dev",
+    "serve": "node scripts/dev-server.js",
+    "test": "node --test tests/api.test.js",
+    "test:e2e": "playwright test",
+    "images": "python3 scripts/images.py all",
     "deploy": "vercel --prod"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
 }
