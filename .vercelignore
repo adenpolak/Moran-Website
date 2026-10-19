@@ -1,0 +1,14 @@
+# Keep repo housekeeping out of the deployed static site. lib/ must stay: the functions require it.
+docs
+tests
+scripts
+supabase
+node_modules
+test-results
+playwright-report
+playwright.config.js
+package-lock.json
+CLAUDE.md
+README.md
+.env.example
+.gitignore
