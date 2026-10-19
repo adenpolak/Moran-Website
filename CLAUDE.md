@@ -10,7 +10,10 @@ The full plan with acceptance criteria is in `docs/BUILD_PLAN.md`. Work through 
 1. **Do not rewrite the front end.** No React, Next, Vue, Tailwind, Bootstrap, or a bundler. It is one `index.html` with
    vanilla CSS/JS on purpose, and the owner asked for a site that does not look AI-generated. Keep the fonts
    (Shrikhand / Instrument Sans / DM Mono), the colour tokens at the top of `<style>`, the copy voice, and the animations.
-   Add to it; do not "modernize" it.
+   Add to it; do not "modernize" it. The look (Oct 2026, chosen by the owner over a white editorial version) is a bakery:
+   cream paper, strawberry pink and chocolate ink, pastel colour blocks with piped-scallop and frosting-drip edges, a
+   sprinkle field in the hero only, inline-SVG pastry illustrations on every photo slot, checkout as numbered order slips.
+   Do not calm it back down to grey-on-white, and do not pile on more stickers, tilts and hard shadows either.
 2. **The server sets every price.** `lib/pricing.js` is shared by the browser and `api/`. Any server code that charges money
    must re-price from `catalog.json` through that file and must never trust an amount, a total, or a price sent by the browser.
 3. **`catalog.json` is the single source of truth** for brand text, pickup days/windows, delivery fee, products, options,
