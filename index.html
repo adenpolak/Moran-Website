@@ -3,10 +3,22 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#EE5A92">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23EE5A92'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='38' fill='%23fff'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta charset="utf-8">
-<title>Marble Box Bakery</title>
-<meta name="description" content="Number and letter cakes, bomboloni and Dubai kunafa cups, made to order. Pick up Thu–Sun or get it delivered.">
+<title>Marble Box Bakery · Number cakes, bomboloni and kunafa cups in Houston</title>
+<meta name="description" content="Number and letter cakes, bomboloni and Dubai kunafa cups, made to order in Houston, TX. Pick up Thu–Sun or get it delivered within 15 miles.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Marble Box Bakery">
+<meta property="og:title" content="Marble Box Bakery · Spell it in cream">
+<meta property="og:description" content="Number and letter cakes, bomboloni and Dubai kunafa cups, made to order in Houston. Pick up Thu–Sun or get it delivered.">
+<meta property="og:image" content="/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Marble Box Bakery · Spell it in cream">
+<meta name="twitter:description" content="Number and letter cakes, bomboloni and Dubai kunafa cups, made to order in Houston.">
+<meta name="twitter:image" content="/images/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -242,6 +254,9 @@ p{margin:0}
 .copy-btn:hover,.copy-btn.done{border-color:var(--cream);color:var(--cream)}
 .foot-bottom{border-top:1px solid var(--night-2);margin-top:3rem;padding-block:1.25rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font:400 .72rem/1.5 var(--mono);color:var(--night-mute)}
 .marble-edge{height:12px;background:url(images/marble-tile.jpg) center/cover}
+.foot-legal{margin-top:2.5rem;font:400 .72rem/1.65 var(--mono);color:var(--night-mute);max-width:64rem}
+.foot-legal strong{color:var(--night-fg);font-weight:500}
+.foot-legal+.foot-bottom{margin-top:1.25rem}
 @media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
 
@@ -583,6 +598,7 @@ legend::before{content:"";width:10px;height:10px;border-radius:50%;background:va
           <div class="field" id="f-window"><label for="co-window">Window</label><select id="co-window" name="window" required><option value="">Choose a window</option></select><span class="err" id="err-window"></span></div>
         </div>
         <p class="hint" id="co-lead-hint"></p>
+        <p class="hint" id="co-avail" aria-live="polite"></p>
       </fieldset>
       <fieldset>
         <legend>Anything we should know</legend>
@@ -650,6 +666,9 @@ legend::before{content:"";width:10px;height:10px;border-radius:50%;background:va
       <a id="ig-link" href="https://instagram.com/marblebox.bakery" target="_blank" rel="noopener"><span data-brand="instagramAt">@marblebox.bakery</span> ↗</a>
     </div>
   </div>
+  <div class="wrap foot-legal">
+    <p><strong>Refunds.</strong> Full refund with 72 hours' notice, half with 48, none inside 48 hours. Changes are free up to 48 hours before pickup. <strong>Allergens.</strong> <span data-brand="allergens">Contains wheat, dairy and eggs. Pistachio and kunafa items contain tree nuts. We are not a nut-free kitchen.</span> <strong>Contact.</strong> <span data-brand="phone">+1 (713) 555-0142</span> · <span data-brand="email">orders@marbleboxbakery.com</span>. Payments are processed by Stripe; we never see your card number.</p>
+  </div>
   <div class="wrap foot-bottom">
     <span>© <span id="year">2026</span> <span data-brand="name">Marble Box</span> <span data-brand="descriptor">Bakery</span></span>
     <span>Cream tarts, boxed in marble.</span>
@@ -679,6 +698,8 @@ legend::before{content:"";width:10px;height:10px;border-radius:50%;background:va
 /* ---- Config: the only thing to touch when you deploy. ---- */
 const CONFIG = {
   checkoutEndpoint: '/api/checkout',   // the serverless function in api/checkout.js (creates a Stripe Checkout Session)
+  orderEndpoint: '/api/order',         // api/order.js: the paid order behind a Stripe session, for the success page
+  availabilityEndpoint: '/api/availability',   // api/availability.js: which pickup days are open / full / closed
   cartKey: 'marblebox.cart.v1',
   orderKey: 'marblebox.lastorder.v1'
 };
@@ -719,6 +740,24 @@ function applyBrand() {
   Array.from(sel.options).slice(1).forEach(o => o.remove());
   b.pickupWindows.forEach(w => sel.append(new Option(w, w)));
   if (b.pickupWindows.includes(keep)) sel.value = keep;
+  renderJsonLd(b);
+}
+function renderJsonLd(b) {
+  const ld = {
+    '@context': 'https://schema.org', '@type': 'Bakery', name: `${b.name} ${b.descriptor}`, description: b.tagline,
+    telephone: b.phone, email: b.email, url: location.origin + '/', image: location.origin + '/images/og.jpg', priceRange: '$$',
+    address: { '@type': 'PostalAddress', addressLocality: b.cityShort, addressRegion: (b.city.split(',')[1] || '').trim(), addressCountry: 'US' },
+    sameAs: ['https://instagram.com/' + b.instagram]
+  };
+  const h = /(\d{1,2})(?::(\d{2}))?\s*(am|pm)\s*[–-]\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i.exec(b.pickupHours || '');
+  if (h) {
+    const to24 = (hh, mm, ap) => `${String((+hh % 12) + (/pm/i.test(ap) ? 12 : 0)).padStart(2, '0')}:${mm || '00'}`;
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    ld.openingHoursSpecification = [{ '@type': 'OpeningHoursSpecification', dayOfWeek: b.pickupDays.map(d => days[d]), opens: to24(h[1], h[2], h[3]), closes: to24(h[4], h[5], h[6]) }];
+  }
+  let s = $('#ld-json');
+  if (!s) { s = document.createElement('script'); s.type = 'application/ld+json'; s.id = 'ld-json'; document.head.append(s); }
+  s.textContent = JSON.stringify(ld);
 }
 
 /* ---- marquee ---- */
@@ -1053,6 +1092,7 @@ function openCheckout() {
   date.max = isoLocal(addDays(startOfToday(), 90));
   const cur = parseISO(date.value);
   if (!cur || cur < min || !isOpenDay(cur)) date.value = isoLocal(first);
+  loadAvailability(min, addDays(startOfToday(), 90));
   $('#co-lead-hint').textContent = `This box needs ${lead} day${lead > 1 ? 's' : ''}' notice, so the earliest ${method()} is ${fmtDateLong(first)}. We bake for ${CAT.brand.pickupDaysLabel} only.`;
   $('#co-msg').innerHTML = '';
   renderTicket();
@@ -1075,6 +1115,36 @@ $$('input[name="method"]').forEach(r => r.addEventListener('change', () => {
 }));
 $('#co-back').addEventListener('click', () => { showView('shop'); scrollToId('#shop'); });
 
+/* ---- availability: which days are full or closed (server counts the orders; this is a courtesy check) ---- */
+let AVAIL = {};
+function dayState(iso) {
+  const d = parseISO(iso); if (!d) return 'closed';
+  if (AVAIL[iso]) return AVAIL[iso];
+  return isOpenDay(d) ? 'open' : 'closed';
+}
+function firstOpenFrom(d) { for (let i = 0; i < 90; i++) { if (dayState(isoLocal(d)) === 'open') return d; d = addDays(d, 1); } return null; }
+async function loadAvailability(from, to) {
+  AVAIL = {}; $('#co-avail').textContent = '';
+  if (!CONFIG.availabilityEndpoint) return;
+  try {
+    const r = await fetch(`${CONFIG.availabilityEndpoint}?from=${isoLocal(from)}&to=${isoLocal(to)}`, { cache: 'no-store' });
+    if (!r.ok) return;
+    AVAIL = await r.json() || {};
+  } catch (e) { return; }
+  const list = state => Object.keys(AVAIL).filter(k => AVAIL[k] === state && isOpenDay(parseISO(k))).sort().slice(0, 6).map(k => fmtDate(parseISO(k)));
+  const full = list('full'), closed = list('closed');
+  const bits = [];
+  if (full.length) bits.push('Full: ' + full.join(', '));
+  if (closed.length) bits.push('Closed: ' + closed.join(', '));
+  $('#co-avail').textContent = bits.length ? bits.join(' · ') + '.' : '';
+  const date = $('#co-date');
+  if (view === 'checkout' && dayState(date.value) !== 'open') {
+    const d = firstOpenFrom(parseISO(date.value) || parseISO(date.min) || startOfToday());
+    if (d) date.value = isoLocal(d);
+  }
+}
+$('#co-date').addEventListener('change', () => { const st = dayState($('#co-date').value); setErr('date', st === 'full' ? 'That day is full. Pick another date.' : st === 'closed' && isOpenDay(parseISO($('#co-date').value) || new Date(NaN)) ? 'We are closed that day.' : ''); });
+
 function setErr(id, msg) {
   const f = $('#f-' + id), e = $('#err-' + id);
   if (f) f.classList.toggle('bad', !!msg);
@@ -1095,6 +1165,8 @@ function validateCheckout() {
   if (!d) bad('date', 'Pick a date.');
   else if (d < minD) bad('date', `Too soon. This box needs ${lead} day${lead > 1 ? 's' : ''}' notice.`);
   else if (!isOpenDay(d)) bad('date', `We bake for ${CAT.brand.pickupDaysLabel}. Next open day: ${fmtDate(nextOpenDay(d))}.`);
+  else if (dayState(v.date) === 'full') bad('date', 'That day is full. Pick another date.');
+  else if (dayState(v.date) === 'closed') bad('date', 'We are closed that day. Pick another date.');
   if (!v.window) bad('window', 'Pick a time window.');
   if (v.method === 'delivery' && v.address.length < 8) bad('address', 'Enter the full delivery address.');
   if (firstBad) { firstBad.focus(); firstBad.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' }); return null; }
@@ -1136,27 +1208,57 @@ $('#co-form').addEventListener('submit', async e => {
 });
 
 /* ---- success ---- */
-function completeOrder(sessionId) {
+// The server's view of a paid order, or null when there is no API / it is not reachable.
+async function fetchOrder(sessionId) {
+  if (!CONFIG.orderEndpoint || !sessionId) return null;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const r = await fetch(`${CONFIG.orderEndpoint}?session_id=${encodeURIComponent(sessionId)}`, { cache: 'no-store' });
+      if (r.status === 202) { await new Promise(ok => setTimeout(ok, 1500)); continue; }   // webhook not in yet
+      if (!r.ok) return null;
+      const j = await r.json();
+      if (!j || !Array.isArray(j.items)) return null;
+      return {
+        ref: j.ref, firstName: j.first_name || '', email: j.email_masked || '', phone: j.phone_masked || '',
+        method: j.method, date: j.pickup_date, window: j.pickup_window, address: '', notes: j.notes || '',
+        lines: j.items.map(it => ({ name: it.name, summary: it.summary, qty: it.qty, amount: it.amount_cents / 100 })),
+        subtotal: j.subtotal_cents / 100, deliveryFee: j.delivery_fee_cents / 100, total: j.total_cents / 100
+      };
+    } catch (e) { return null; }
+  }
+  return null;
+}
+// What this browser saved just before going to Stripe (works offline and in preview mode).
+function snapshotOrder() {
   const o = storage.get(CONFIG.orderKey);
-  if (!o) { showView('shop'); return; }
-  const ref = sessionId ? 'MB-' + sessionId.slice(-6).toUpperCase() : o.ref;
+  if (!o) return null;
   const c = o.payload.customer, f = o.payload.fulfillment;
-  const d = parseISO(f.date);
-  $('#s-title').textContent = `Thank you, ${c.name.split(' ')[0]}.`;
-  $('#s-ref').textContent = ref; $('#s-no').textContent = 'No. ' + ref;
-  $('#s-email').textContent = c.email;
-  $('#s-lines').innerHTML = o.lines.map(l => `<div class="tl"><div><div>${esc(l.name)}${l.qty > 1 ? ` <span class="sub">× ${l.qty}</span>` : ''}</div><div class="sub">${esc(l.summary)}</div></div><div class="price">${money(l.amount)}</div></div>`).join('');
-  $('#s-totals').innerHTML = `<div class="tt"><span>Subtotal</span><span class="price">${money(o.subtotal)}</span></div>${f.method === 'delivery' ? `<div class="tt"><span>Delivery</span><span class="price">${o.deliveryFee ? money(o.deliveryFee) : 'Free'}</span></div>` : ''}<div class="grand"><span>Paid</span><span>${money(o.total)}</span></div>`;
-  const when = d ? `${fmtDateLong(d)}, ${f.window}` : f.window;
+  return { ref: o.ref, firstName: c.name.split(' ')[0], email: c.email, phone: c.phone, method: f.method, date: f.date, window: f.window, address: f.address, notes: f.notes, lines: o.lines, subtotal: o.subtotal, deliveryFee: o.deliveryFee, total: o.total };
+}
+function renderSuccess(s) {
+  const d = parseISO(s.date);
+  $('#s-title').textContent = s.firstName ? `Thank you, ${s.firstName}.` : 'Thank you.';
+  $('#s-ref').textContent = s.ref; $('#s-no').textContent = 'No. ' + s.ref;
+  $('#s-email').textContent = s.email;
+  $('#s-lines').innerHTML = s.lines.map(l => `<div class="tl"><div><div>${esc(l.name)}${l.qty > 1 ? ` <span class="sub">× ${l.qty}</span>` : ''}</div><div class="sub">${esc(l.summary)}</div></div><div class="price">${money(l.amount)}</div></div>`).join('');
+  $('#s-totals').innerHTML = `<div class="tt"><span>Subtotal</span><span class="price">${money(s.subtotal)}</span></div>${s.method === 'delivery' ? `<div class="tt"><span>Delivery</span><span class="price">${s.deliveryFee ? money(s.deliveryFee) : 'Free'}</span></div>` : ''}<div class="grand"><span>Paid</span><span>${money(s.total)}</span></div>`;
+  const when = d ? `${fmtDateLong(d)}, ${s.window}` : s.window;
   $('#s-steps').innerHTML = [
-    `<li><strong>Today:</strong> your receipt from Stripe arrives at ${esc(c.email)}.</li>`,
-    `<li><strong>The day before:</strong> we text ${esc(c.phone)} to confirm ${f.method === 'delivery' ? 'the delivery' : 'the pickup'} window.</li>`,
-    f.method === 'delivery'
-      ? `<li><strong>${esc(when)}:</strong> we deliver to ${esc(f.address)}. Someone needs to be home to take the box.</li>`
+    `<li><strong>Today:</strong> your receipt from Stripe arrives at ${esc(s.email)}.</li>`,
+    `<li><strong>The day before:</strong> we text ${esc(s.phone)} to confirm ${s.method === 'delivery' ? 'the delivery' : 'the pickup'} window.</li>`,
+    s.method === 'delivery'
+      ? `<li><strong>${esc(when)}:</strong> we deliver to ${s.address ? esc(s.address) : 'the address you gave us'}. Someone needs to be home to take the box.</li>`
       : `<li><strong>${esc(when)}:</strong> pick up at the address in your text. Bring a flat surface in the car and a fridge shelf at home.</li>`,
-    f.notes ? `<li><strong>Your notes:</strong> ${esc(f.notes)}</li>` : ''
+    s.notes ? `<li><strong>Your notes:</strong> ${esc(s.notes)}</li>` : ''
   ].join('');
+}
+async function completeOrder(sessionId) {
+  if (sessionId) { $('#s-title').textContent = 'One moment…'; $('#s-ref').textContent = ''; $('#s-no').textContent = ''; $('#s-email').textContent = ''; $('#s-lines').innerHTML = ''; $('#s-totals').innerHTML = ''; $('#s-steps').innerHTML = ''; showView('success'); }
+  const s = (await fetchOrder(sessionId)) || snapshotOrder();
+  if (!s) { showView('shop'); return; }
+  renderSuccess(s);
   cart = []; saveCart(); renderBag(); orderRef = null;
+  storage.del(CONFIG.orderKey);
   showView('success');
 }
 
