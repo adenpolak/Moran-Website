@@ -2,7 +2,7 @@
 const { defineConfig } = require('@playwright/test');
 const fs = require('fs');
 
-const PORT = 3100;
+const PORT = Number(process.env.PW_PORT || 3100);   // PW_PORT lets several checkouts test side by side
 // Use a Chromium that is already on the machine when there is one (CI images, Claude's sandbox); otherwise
 // Playwright's own download (`npx playwright install chromium`).
 const CHROME = process.env.PW_CHROMIUM_PATH || ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].find(p => fs.existsSync(p));
