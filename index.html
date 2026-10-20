@@ -22,6 +22,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Instrument+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>/* A photo that fails hides itself (Safari and Firefox never render ::after on <img>). Registered before any <img> exists, so a failed hero never paints its alt text. */
+document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('is-missing'); }, true);</script>
 <style>
 /* Studio Light (Oct 2026, closed out after the design round). A white page where the photographs do the talking: one
    background, one near-black ink, one grey, hairline dividers. The brand pink, deepened to raspberry so white type passes
@@ -52,17 +54,16 @@
   color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:76px}   /* anchor jumps and keyboard focus both land clear of the sticky header */
 html,body{overflow-x:clip}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.55 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body.locked,body.lb-on{overflow:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
 img{max-width:100%;display:block}
-img.is-missing{visibility:hidden}
+img.is-missing,img[data-src]{visibility:hidden}   /* a failed photo, or one not yet woken, never paints its alt text over the placeholder */
 picture{display:contents}
 source{display:none}
 section:focus,main:focus{outline:none}
-section[id]{scroll-margin-top:76px}
 [hidden]{display:none!important}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
 a{color:inherit}
@@ -104,7 +105,7 @@ p{margin:0}
   .ticker-row .dup{display:inline-block}
 }
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid transparent;transition:background .35s,border-color .35s}
-.site-head.scrolled{background:rgba(255,255,255,.78);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom-color:var(--line)}
+.site-head.scrolled{background:rgba(255,255,255,.9);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom-color:var(--line)}
 .head-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:16px;transition:padding .3s var(--out)}
 .site-head.scrolled .head-row{padding-block:10px}
 .wordmark{font:400 1.45rem/1 var(--display);text-decoration:none;display:inline-flex;align-items:baseline;gap:.5rem;color:var(--ink);white-space:nowrap}
@@ -175,11 +176,11 @@ p{margin:0}
 .lede{font-size:1.22rem;line-height:1.5;max-width:38rem;color:var(--ink);letter-spacing:-.012em}
 .cta-row{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
 @media (max-width:900px){
-  .hero{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;height:auto;min-height:0;background:var(--paper);color:var(--ink)}   /* minmax(0,…): the photo's max-height must not transfer through its aspect ratio into the track width */
-  .hero-media{grid-area:1/1;aspect-ratio:4/5;max-height:78vh}
+  .hero{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;height:auto;min-height:0;background:var(--paper);color:var(--ink)}
+  .hero-media{grid-area:1/1;width:100%;aspect-ratio:4/5;max-height:78vh}   /* width:100%, or the max-height transfers through the aspect ratio into a narrow photo on a phone held sideways and the headline runs off it */
   .hero-media .hero-slide img{object-position:50% 50%}
   .hero-scrim{display:block;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.84) 42%,rgba(0,0,0,.35) 64%,rgba(0,0,0,0) 85%)}
-  .hero-copy{grid-area:1/1;align-self:end;padding-bottom:2rem}
+  .hero-copy{grid-area:1/1;align-self:end;padding-bottom:2.75rem}   /* the headline clears the builder card below by 20px, not 8 */
   .hero-copy .wrap,.builder-wrap .wrap{width:min(var(--wrap),100%);margin-inline:auto;padding-left:var(--gl);padding-right:var(--gr)}
   .builder-wrap{grid-area:2/1;padding-bottom:0}
   .builder{width:auto;margin:-1.5rem 0 0;border:1px solid var(--line);position:relative;z-index:5;box-shadow:0 30px 70px -36px rgba(0,0,0,.35)}
@@ -262,7 +263,8 @@ p{margin:0}
 .ph{display:block;padding:0;border:0;border-radius:var(--r);overflow:hidden;background:var(--paper-2);position:relative;cursor:zoom-in;transform:translateZ(0)}
 .ph::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(17,17,17,.08);pointer-events:none;z-index:2}
 .strip-item .ph{height:var(--strip-h)}
-.strip-item img{height:100%;width:auto;display:block;transition:transform 1.1s var(--out)}
+.strip-item img{height:var(--strip-h);width:auto;display:block;transition:transform 1.1s var(--out)}   /* the custom property, not 100%: WebKit does not resolve a percentage height inside a <button> */
+.strip-item figcaption{width:0;min-width:100%}   /* the caption wraps under the photo instead of widening the tile past it */
 .strip-item .ph:hover img,.wall .ph:hover img{transform:scale(1.04)}
 .strip-item figcaption,.wall figcaption{font:400 .7rem/1.5 var(--mono);color:var(--ink-2)}
 /* the wall: a real grid of equal 4:5 tiles with two double-size features, packed dense. Twelve singles and two features
@@ -378,7 +380,7 @@ dialog.pdp.closing{animation:dlgout .2s var(--out) forwards}
 .pdp-thumbs button img{width:100%;height:100%;object-fit:cover}
 .pdp-thumbs button:hover{opacity:1}
 .pdp-thumbs button[aria-current="true"]{opacity:1;border-color:#fff}
-.pdp-body{padding:2rem 1.9rem 1.25rem;overflow:auto;display:flex;flex-direction:column;gap:1.3rem;min-width:0;min-height:0;height:100%}
+.pdp-body{padding:2rem 1.9rem 1.25rem;overflow:auto;display:flex;flex-direction:column;gap:1.3rem;min-width:0;min-height:0;height:100%;scroll-padding-bottom:6rem}   /* a focused choice scrolls clear of the sticky Add-to-box bar */
 .pdp-close{position:absolute;top:.8rem;right:.8rem;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--line);display:grid;place-items:center;z-index:3;font-size:1.4rem;line-height:1;transition:background .2s,color .2s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .pdp-close:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pdp h2{font:700 1.9rem/1.05 var(--sans);letter-spacing:-.035em;margin:0 0 .6rem}
@@ -402,9 +404,16 @@ dialog.pdp.closing{animation:dlgout .2s var(--out) forwards}
 .pdp-add .btn{flex:1;min-width:0}
 .field-err{font:400 .74rem/1.4 var(--mono);color:var(--cherry);min-height:1.1em;margin-top:-1rem}
 @media (max-width:760px){
-  dialog.pdp{width:calc(100% - 1rem);height:auto;max-height:calc(100% - 1rem);overflow:auto;border-radius:18px}
+  dialog.pdp{width:calc(100% - 1rem);height:auto;max-height:calc(100% - 1rem);overflow:auto;border-radius:18px;scroll-padding-bottom:6rem}
   .pdp-grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto}
-  .pdp-media{aspect-ratio:auto;height:min(80vw,46vh);height:min(80vw,46dvh)}
+  /* the pane is 4:5 like the photos (width:100%, or the max-height transfers into the width), and the thumbnails sit in a
+     row beneath the photo instead of over the cake's lower third */
+  .pdp-media{width:100%;height:auto;aspect-ratio:4/5;max-height:62vh;max-height:62dvh;display:flex;flex-direction:column}
+  .pdp-main{position:relative;flex:1;min-height:0}
+  .pdp-main img{position:absolute;inset:0}
+  .pdp-thumbs{position:static;background:none;padding:.6rem .75rem .4rem}
+  .pdp-thumbs button[aria-current="true"]{border-color:var(--ink)}
+  .pdp-thumbs :focus-visible{outline-color:var(--ink)}
   .pdp-close{position:sticky;top:.6rem;right:auto;margin:.6rem .6rem -44px auto;z-index:4}
   .pdp-body{overflow:visible;height:auto;padding:1.25rem 1.1rem 1rem}
   .pdp-add{bottom:-1rem}
@@ -436,6 +445,7 @@ legend::before{counter-increment:leg;content:"0" counter(leg);font:500 .66rem/1 
 .seg input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
 .seg label:has(input:checked){background:var(--ink);color:#fff}
 .seg label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:-4px}
+.seg label:has(input:checked):has(input:focus-visible){outline-color:#fff}   /* the ring is inset, so on the ink segment it flips to white */
 .ticket{position:sticky;top:calc(84px + env(safe-area-inset-top,0px));background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
 .ticket-head{background:var(--marble) center/cover,#fff;padding:1rem 1.1rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:68px}
 .ticket-head h3{font:600 .92rem/1 var(--sans);margin:0;background:#fff;padding:.5rem .7rem;border-radius:8px;letter-spacing:-.01em}
@@ -473,8 +483,10 @@ legend::before{counter-increment:leg;content:"0" counter(leg);font:500 .66rem/1 
 dialog.lb{position:fixed;inset:0;width:auto;height:auto;max-width:none;max-height:none;margin:0;border:0;padding:0;background:transparent;color:#fff;display:none}
 dialog.lb[open]{display:grid;place-items:center;animation:fade .25s}
 dialog.lb::backdrop{background:rgba(8,8,8,.94)}
-.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:.8rem;max-width:min(96vw,1400px);max-height:100vh;padding:3.5rem 1rem 4.5rem;cursor:zoom-out}
-.lb-fig img{max-width:100%;max-height:calc(100vh - 9rem);width:auto;height:auto;border-radius:14px;object-fit:contain;animation:fade .3s;background:#1B1B1B}
+/* the photo gets an explicit box from its own ratio (--ar, set by the script): as wide as the figure allows, or as wide as
+   the free height allows, whichever is less. Left to its intrinsic size, a 768 px file opened at a third of a 2x phone. */
+.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:.8rem;width:min(96vw,1400px);max-height:100vh;padding:3.5rem 1rem 4.5rem;cursor:zoom-out}
+.lb-fig img{width:min(100%,calc((100vh - 9rem) * var(--ar,.75)));width:min(100%,calc((100dvh - 9rem) * var(--ar,.75)));height:auto;border-radius:14px;object-fit:contain;animation:fade .3s;background:#1B1B1B}
 .lb-cap{font:400 .72rem/1.5 var(--mono);color:rgba(255,255,255,.8);text-align:center;letter-spacing:.02em}
 .lb-btn{position:fixed;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);color:#fff;display:grid;place-items:center;font-size:1.15rem;transition:background .2s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .lb-btn:hover{background:rgba(255,255,255,.26)}
@@ -482,7 +494,9 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
 .lb-next{right:max(14px,env(safe-area-inset-right))}
 .lb-close{position:fixed;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));transform:none;font-size:1.4rem}
 .lb-count{position:fixed;top:max(28px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);font:400 .68rem/1 var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.72)}
-@media (max-width:680px){.lb-btn{width:44px;height:44px}.lb-prev,.lb-next{top:auto;bottom:max(16px,env(safe-area-inset-bottom));transform:none}.lb-fig img{max-height:calc(100vh - 10rem)}}
+@media (min-width:681px){.lb-fig{width:min(100vw - 140px,1400px)}}   /* clear of the prev/next buttons at the sides */
+@media (max-width:680px){.lb-btn{width:44px;height:44px}.lb-prev,.lb-next{top:auto;bottom:max(16px,env(safe-area-inset-bottom));transform:none}.lb-fig img{width:min(100%,calc((100vh - 10rem) * var(--ar,.75)));width:min(100%,calc((100dvh - 10rem) * var(--ar,.75)))}}
+@media (max-height:480px){.lb-fig{padding:2.75rem 1rem 2.5rem}.lb-fig img{width:min(100%,calc((100vh - 7.25rem) * var(--ar,.75)));width:min(100%,calc((100dvh - 7.25rem) * var(--ar,.75)))}}   /* a phone held sideways: the photo starts under the count label */
 
 /* ---------- toast, fly, reveal */
 .toast{position:fixed;left:var(--gl);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:100;background:var(--ink);color:#fff;padding:.7rem .75rem .7rem 1.1rem;border-radius:999px;display:flex;gap:1rem;align-items:center;font-size:.9rem;font-weight:500;transform:translateY(20px);opacity:0;pointer-events:none;transition:.4s var(--out);box-shadow:0 20px 50px -20px rgba(0,0,0,.5);max-width:calc(100vw - var(--gl) - var(--gr))}
@@ -545,26 +559,30 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
     <div class="hero-media">
       <div class="hero-slide on">
         <picture>
-          <source type="image/webp" srcset="images/number-50-marble-480.webp 480w, images/number-50-marble-960.webp 960w, images/number-50-marble-1600.webp 1600w" sizes="100vw">
-          <img src="images/number-50-marble-960.jpg" srcset="images/number-50-marble-480.jpg 480w, images/number-50-marble-960.jpg 960w, images/number-50-marble-1600.jpg 1600w" sizes="100vw" alt="A 50 number cake in a marble box with gold almonds, chocolate-dipped strawberries, Ferrero Rocher and a gold crown" width="1280" height="1600" fetchpriority="high" decoding="async">
+          <source media="(max-width:900px)" type="image/webp" srcset="images/number-50-marble-480.webp 384w, images/number-50-marble-960.webp 768w" sizes="100vw">
+          <source type="image/webp" srcset="images/number-50-marble-480.webp 384w, images/number-50-marble-960.webp 768w, images/number-50-marble-1600.webp 1280w" sizes="58vw">
+          <img src="images/number-50-marble-960.jpg" srcset="images/number-50-marble-480.jpg 384w, images/number-50-marble-960.jpg 768w, images/number-50-marble-1600.jpg 1280w" sizes="(max-width:900px) 100vw, 58vw" alt="A 50 number cake in a marble box with gold almonds, chocolate-dipped strawberries, Ferrero Rocher and a gold crown" width="1280" height="1600" fetchpriority="high" decoding="async">
         </picture>
       </div>
       <div class="hero-slide" aria-hidden="true">
         <picture>
-          <source type="image/webp" data-srcset="images/letter-m-pastel-480.webp 480w, images/letter-m-pastel-960.webp 960w, images/letter-m-pastel-1600.webp 1600w" sizes="100vw">
-          <img data-src="images/letter-m-pastel-960.jpg" data-srcset="images/letter-m-pastel-480.jpg 480w, images/letter-m-pastel-960.jpg 960w, images/letter-m-pastel-1600.jpg 1600w" sizes="100vw" alt="" width="1200" height="1600" decoding="async">
+          <source media="(max-width:900px)" type="image/webp" data-srcset="images/letter-m-pastel-480.webp 360w, images/letter-m-pastel-960.webp 720w" sizes="100vw">
+          <source type="image/webp" data-srcset="images/letter-m-pastel-480.webp 360w, images/letter-m-pastel-960.webp 720w, images/letter-m-pastel-1600.webp 1200w" sizes="58vw">
+          <img data-src="images/letter-m-pastel-960.jpg" data-srcset="images/letter-m-pastel-480.jpg 360w, images/letter-m-pastel-960.jpg 720w, images/letter-m-pastel-1600.jpg 1200w" sizes="(max-width:900px) 100vw, 58vw" alt="" width="1200" height="1600" decoding="async">
         </picture>
       </div>
       <div class="hero-slide" aria-hidden="true">
         <picture>
-          <source type="image/webp" data-srcset="images/ring-shani-480.webp 480w, images/ring-shani-960.webp 960w, images/ring-shani-1600.webp 1600w" sizes="100vw">
-          <img data-src="images/ring-shani-960.jpg" data-srcset="images/ring-shani-480.jpg 480w, images/ring-shani-960.jpg 960w, images/ring-shani-1600.jpg 1600w" sizes="100vw" alt="" width="1200" height="1600" decoding="async">
+          <source media="(max-width:900px)" type="image/webp" data-srcset="images/ring-shani-480.webp 360w, images/ring-shani-960.webp 720w" sizes="100vw">
+          <source type="image/webp" data-srcset="images/ring-shani-480.webp 360w, images/ring-shani-960.webp 720w, images/ring-shani-1600.webp 1200w" sizes="58vw">
+          <img data-src="images/ring-shani-960.jpg" data-srcset="images/ring-shani-480.jpg 360w, images/ring-shani-960.jpg 720w, images/ring-shani-1600.jpg 1200w" sizes="(max-width:900px) 100vw, 58vw" alt="" width="1200" height="1600" decoding="async">
         </picture>
       </div>
       <div class="hero-slide" aria-hidden="true">
         <picture>
-          <source type="image/webp" data-srcset="images/vintage-30-top-480.webp 480w, images/vintage-30-top-960.webp 960w, images/vintage-30-top-1600.webp 1600w" sizes="100vw">
-          <img data-src="images/vintage-30-top-960.jpg" data-srcset="images/vintage-30-top-480.jpg 480w, images/vintage-30-top-960.jpg 960w, images/vintage-30-top-1600.jpg 1600w" sizes="100vw" alt="" width="1086" height="1448" decoding="async">
+          <source media="(max-width:900px)" type="image/webp" data-srcset="images/vintage-30-top-480.webp 360w, images/vintage-30-top-960.webp 720w" sizes="100vw">
+          <source type="image/webp" data-srcset="images/vintage-30-top-480.webp 360w, images/vintage-30-top-960.webp 720w, images/vintage-30-top-1600.webp 1086w" sizes="58vw">
+          <img data-src="images/vintage-30-top-960.jpg" data-srcset="images/vintage-30-top-480.jpg 360w, images/vintage-30-top-960.jpg 720w, images/vintage-30-top-1600.jpg 1086w" sizes="(max-width:900px) 100vw, 58vw" alt="" width="1086" height="1448" decoding="async">
         </picture>
       </div>
       <div class="hero-scrim" aria-hidden="true"></div>
@@ -627,8 +645,8 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
         <button class="btn btn-pink" type="button" data-open="name-cake" data-preset='{"style":"black-gold"}'>Build a Name cake</button>
       </div>
       <div class="band-photos">
-        <figure class="rv"><button class="ph" type="button" data-lb="name-cake-nissim" aria-label="View larger"><picture><source type="image/webp" srcset="images/name-cake-nissim-480.webp 480w, images/name-cake-nissim-960.webp 960w" sizes="(max-width:860px) 50vw, 30vw"><img src="images/name-cake-nissim-960.jpg" srcset="images/name-cake-nissim-480.jpg 480w, images/name-cake-nissim-960.jpg 960w" sizes="(max-width:860px) 50vw, 30vw" alt="A white cake with NISSIM in gold letters, black and gold pearls and two mini whisky bottles on top" width="720" height="960" loading="lazy" decoding="async"></picture></button><figcaption>Name cake · black &amp; gold</figcaption></figure>
-        <figure class="rv"><button class="ph" type="button" data-lb="heart-strawberries" aria-label="View larger"><picture><source type="image/webp" srcset="images/heart-strawberries-480.webp 480w, images/heart-strawberries-960.webp 960w" sizes="(max-width:860px) 50vw, 30vw"><img src="images/heart-strawberries-960.jpg" srcset="images/heart-strawberries-480.jpg 480w, images/heart-strawberries-960.jpg 960w" sizes="(max-width:860px) 50vw, 30vw" alt="A heart-shaped cream tart covered in chopped strawberries on a black marble tray" width="720" height="960" loading="lazy" decoding="async"></picture></button><figcaption>Heart tart · strawberries</figcaption></figure>
+        <figure class="rv"><button class="ph" type="button" data-lb="name-cake-nissim"><picture><source type="image/webp" data-srcset="images/name-cake-nissim-480.webp 360w, images/name-cake-nissim-960.webp 720w" sizes="(max-width:860px) 50vw, 30vw"><img data-src="images/name-cake-nissim-960.jpg" data-srcset="images/name-cake-nissim-480.jpg 360w, images/name-cake-nissim-960.jpg 720w" sizes="(max-width:860px) 50vw, 30vw" alt="A white cake with NISSIM in gold letters, black and gold pearls and two mini whisky bottles on top" width="720" height="960" decoding="async"></picture></button><figcaption>Name cake · black &amp; gold</figcaption></figure>
+        <figure class="rv"><button class="ph" type="button" data-lb="heart-strawberries"><picture><source type="image/webp" data-srcset="images/heart-strawberries-480.webp 360w, images/heart-strawberries-960.webp 720w" sizes="(max-width:860px) 50vw, 30vw"><img data-src="images/heart-strawberries-960.jpg" data-srcset="images/heart-strawberries-480.jpg 360w, images/heart-strawberries-960.jpg 720w" sizes="(max-width:860px) 50vw, 30vw" alt="A heart-shaped cream tart covered in chopped strawberries on a black marble tray" width="720" height="960" decoding="async"></picture></button><figcaption>Heart tart · strawberries</figcaption></figure>
       </div>
     </div>
   </section>
@@ -643,34 +661,34 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
     </div>
     <div class="strip" id="strip">
       <div class="strip-track">
-        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-m-pastel" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/letter-m-pastel-480.webp 480w, images/letter-m-pastel-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/letter-m-pastel-960.jpg" data-srcset="images/letter-m-pastel-480.jpg 480w, images/letter-m-pastel-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="Letter M cream tart with pink, blue and lilac piping, Hershey&#x27;s hearts and Kinder bars" width="720" height="960" decoding="sync"></picture></button><figcaption>M · pastel candy, Hershey's hearts</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="vintage-30-top" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/vintage-30-top-480.webp 480w, images/vintage-30-top-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/vintage-30-top-960.jpg" data-srcset="images/vintage-30-top-480.jpg 480w, images/vintage-30-top-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="Top view of a white vintage cake with pink shell piping, pearls and a gold 30, in a clear box with ribbon" width="720" height="960" decoding="sync"></picture></button><figcaption>30 · vintage ruffles, baby's breath</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="bar-mitzvah-13" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/bar-mitzvah-13-480.webp 480w, images/bar-mitzvah-13-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/bar-mitzvah-13-960.jpg" data-srcset="images/bar-mitzvah-13-480.jpg 480w, images/bar-mitzvah-13-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="A 13 number cake with blue and white piping and Lindt truffles for a Bar Mitzvah" width="960" height="640" decoding="sync"></picture></button><figcaption>13 · Bar Mitzvah, blue &amp; white</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-j-rose" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/letter-j-rose-480.webp 480w, images/letter-j-rose-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/letter-j-rose-960.jpg" data-srcset="images/letter-j-rose-480.jpg 480w, images/letter-j-rose-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="Letter J cream tart with a pink rose, macarons, pretzels and gold chocolate bars" width="640" height="960" decoding="sync"></picture></button><figcaption>J · pink rose, macarons, gold bars</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="name-cake-chen" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/name-cake-chen-480.webp 480w, images/name-cake-chen-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/name-cake-chen-960.jpg" data-srcset="images/name-cake-chen-480.jpg 480w, images/name-cake-chen-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="A white cake with CHEN in gold letters, white flowers, baby&#x27;s breath and gold balls" width="720" height="960" decoding="sync"></picture></button><figcaption>Chen · white florals &amp; gold</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-l-crown" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/letter-l-crown-480.webp 480w, images/letter-l-crown-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/letter-l-crown-960.jpg" data-srcset="images/letter-l-crown-480.jpg 480w, images/letter-l-crown-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="Letter L cream tart with a gold crown, dragon fruit, Ferrero Rocher and a ruby KitKat, with Happy Birthday in gold letters" width="540" height="960" decoding="sync"></picture></button><figcaption>L · crown, dragon fruit, KitKat</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="number-pastel-hearts" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-pastel-hearts-480.webp 480w, images/number-pastel-hearts-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/number-pastel-hearts-960.jpg" data-srcset="images/number-pastel-hearts-480.jpg 480w, images/number-pastel-hearts-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="A pastel number cake with pink Hershey&#x27;s hearts, Kinder bars, pearls and a gold Happy Birthday topper" width="720" height="960" decoding="sync"></picture></button><figcaption>Pastel number · Kinder &amp; pearls</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="ring-shani" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/ring-shani-480.webp 480w, images/ring-shani-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/ring-shani-960.jpg" data-srcset="images/ring-shani-480.jpg 480w, images/ring-shani-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="A ring cream tart with three colors of cream, strawberries, blackberries, macarons and gold hearts" width="720" height="960" decoding="sync"></picture></button><figcaption>Ring · three creams, blackberries</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="marble-box-detail" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/marble-box-detail-480.webp 480w, images/marble-box-detail-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/marble-box-detail-960.jpg" data-srcset="images/marble-box-detail-480.jpg 480w, images/marble-box-detail-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="The corner of a marble-print box holding a cream tart with macarons and dragon fruit" width="720" height="960" decoding="sync"></picture></button><figcaption>Every order leaves in the marble box</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="bomboloni-oreo-mm" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/bomboloni-oreo-mm-480.webp 480w, images/bomboloni-oreo-mm-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/bomboloni-oreo-mm-960.jpg" data-srcset="images/bomboloni-oreo-mm-480.jpg 480w, images/bomboloni-oreo-mm-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="Bomboloni with Oreo cream and powdered sugar next to chocolate-glazed doughnuts with M&amp;M&#x27;s" width="720" height="960" decoding="sync"></picture></button><figcaption>Cookies &amp; cream · chocolate &amp; M&amp;M's</figcaption></figure>
-        <figure class="strip-item"><button class="ph" type="button" data-lb="number-60-lilac" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-60-lilac-480.webp 480w, images/number-60-lilac-960.webp 960w" sizes="(max-width:680px) 58vw, 400px"><img data-src="images/number-60-lilac-960.jpg" data-srcset="images/number-60-lilac-480.jpg 480w, images/number-60-lilac-960.jpg 960w" sizes="(max-width:680px) 58vw, 400px" alt="A 60 number cake with lilac, white and blush piping and a gold Happy Birthday banner" width="960" height="720" decoding="sync"></picture></button><figcaption>60 · lilac &amp; white</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-m-pastel"><picture><source type="image/webp" data-srcset="images/letter-m-pastel-480.webp 360w, images/letter-m-pastel-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/letter-m-pastel-960.jpg" data-srcset="images/letter-m-pastel-480.jpg 360w, images/letter-m-pastel-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="Letter M cream tart with pink, blue and lilac piping, Hershey&#x27;s hearts and Kinder bars" width="720" height="960" decoding="sync"></picture></button><figcaption>M · pastel candy, Hershey's hearts</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="vintage-30-top"><picture><source type="image/webp" data-srcset="images/vintage-30-top-480.webp 360w, images/vintage-30-top-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/vintage-30-top-960.jpg" data-srcset="images/vintage-30-top-480.jpg 360w, images/vintage-30-top-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="Top view of a white vintage cake with pink shell piping, pearls and a gold 30, in a clear box with ribbon" width="720" height="960" decoding="sync"></picture></button><figcaption>30 · vintage ruffles, baby's breath</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="bar-mitzvah-13"><picture><source type="image/webp" data-srcset="images/bar-mitzvah-13-480.webp 480w, images/bar-mitzvah-13-960.webp 960w" sizes="(max-width:680px) 105vw, (max-width:1300px) 60vw, 780px"><img data-src="images/bar-mitzvah-13-960.jpg" data-srcset="images/bar-mitzvah-13-480.jpg 480w, images/bar-mitzvah-13-960.jpg 960w" sizes="(max-width:680px) 105vw, (max-width:1300px) 60vw, 780px" alt="A 13 number cake with blue and white piping and Lindt truffles for a Bar Mitzvah" width="960" height="640" decoding="sync"></picture></button><figcaption>13 · Bar Mitzvah, blue &amp; white</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-j-rose"><picture><source type="image/webp" data-srcset="images/letter-j-rose-480.webp 320w, images/letter-j-rose-960.webp 640w" sizes="(max-width:680px) 47vw, (max-width:1300px) 27vw, 347px"><img data-src="images/letter-j-rose-960.jpg" data-srcset="images/letter-j-rose-480.jpg 320w, images/letter-j-rose-960.jpg 640w" sizes="(max-width:680px) 47vw, (max-width:1300px) 27vw, 347px" alt="Letter J cream tart with a pink rose, macarons, pretzels and gold chocolate bars" width="640" height="960" decoding="sync"></picture></button><figcaption>J · pink rose, macarons, gold bars</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="name-cake-chen"><picture><source type="image/webp" data-srcset="images/name-cake-chen-480.webp 360w, images/name-cake-chen-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/name-cake-chen-960.jpg" data-srcset="images/name-cake-chen-480.jpg 360w, images/name-cake-chen-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="A white cake with CHEN in gold letters, white flowers, baby&#x27;s breath and gold balls" width="720" height="960" decoding="sync"></picture></button><figcaption>Chen · white florals &amp; gold</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="letter-l-crown"><picture><source type="image/webp" data-srcset="images/letter-l-crown-480.webp 270w, images/letter-l-crown-960.webp 540w" sizes="(max-width:680px) 39vw, (max-width:1300px) 22vw, 292px"><img data-src="images/letter-l-crown-960.jpg" data-srcset="images/letter-l-crown-480.jpg 270w, images/letter-l-crown-960.jpg 540w" sizes="(max-width:680px) 39vw, (max-width:1300px) 22vw, 292px" alt="Letter L cream tart with a gold crown, dragon fruit, Ferrero Rocher and a ruby KitKat, with Happy Birthday in gold letters" width="540" height="960" decoding="sync"></picture></button><figcaption>L · crown, dragon fruit, KitKat</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="number-pastel-hearts"><picture><source type="image/webp" data-srcset="images/number-pastel-hearts-480.webp 360w, images/number-pastel-hearts-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/number-pastel-hearts-960.jpg" data-srcset="images/number-pastel-hearts-480.jpg 360w, images/number-pastel-hearts-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="A pastel number cake with pink Hershey&#x27;s hearts, Kinder bars, pearls and a gold Happy Birthday topper" width="720" height="960" decoding="sync"></picture></button><figcaption>Pastel number · Kinder &amp; pearls</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="ring-shani"><picture><source type="image/webp" data-srcset="images/ring-shani-480.webp 360w, images/ring-shani-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/ring-shani-960.jpg" data-srcset="images/ring-shani-480.jpg 360w, images/ring-shani-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="A ring cream tart with three colors of cream, strawberries, blackberries, macarons and gold hearts" width="720" height="960" decoding="sync"></picture></button><figcaption>Ring · three creams, blackberries</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="marble-box-detail"><picture><source type="image/webp" data-srcset="images/marble-box-detail-480.webp 360w, images/marble-box-detail-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/marble-box-detail-960.jpg" data-srcset="images/marble-box-detail-480.jpg 360w, images/marble-box-detail-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="The corner of a marble-print box holding a cream tart with macarons and dragon fruit" width="720" height="960" decoding="sync"></picture></button><figcaption>Every order leaves in the marble box</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="bomboloni-oreo-mm"><picture><source type="image/webp" data-srcset="images/bomboloni-oreo-mm-480.webp 360w, images/bomboloni-oreo-mm-960.webp 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px"><img data-src="images/bomboloni-oreo-mm-960.jpg" data-srcset="images/bomboloni-oreo-mm-480.jpg 360w, images/bomboloni-oreo-mm-960.jpg 720w" sizes="(max-width:680px) 52vw, (max-width:1300px) 30vw, 390px" alt="Bomboloni with Oreo cream and powdered sugar next to chocolate-glazed doughnuts with M&amp;M&#x27;s" width="720" height="960" decoding="sync"></picture></button><figcaption>Cookies &amp; cream · chocolate &amp; M&amp;M's</figcaption></figure>
+        <figure class="strip-item"><button class="ph" type="button" data-lb="number-60-lilac"><picture><source type="image/webp" data-srcset="images/number-60-lilac-480.webp 480w, images/number-60-lilac-960.webp 960w" sizes="(max-width:680px) 93vw, (max-width:1300px) 53vw, 693px"><img data-src="images/number-60-lilac-960.jpg" data-srcset="images/number-60-lilac-480.jpg 480w, images/number-60-lilac-960.jpg 960w" sizes="(max-width:680px) 93vw, (max-width:1300px) 53vw, 693px" alt="A 60 number cake with lilac, white and blush piping and a gold Happy Birthday banner" width="960" height="720" decoding="sync"></picture></button><figcaption>60 · lilac &amp; white</figcaption></figure>
       </div>
     </div>
     <div class="wall">
-      <figure class="rv feat"><button class="ph" type="button" data-lb="cake-50-ferrero" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-50-ferrero-480.webp 480w, images/cake-50-ferrero-960.webp 960w" sizes="(max-width:900px) 100vw, 50vw"><img data-src="images/cake-50-ferrero-960.jpg" data-srcset="images/cake-50-ferrero-480.jpg 480w, images/cake-50-ferrero-960.jpg 960w" sizes="(max-width:900px) 100vw, 50vw" alt="A blush cake with mocha ruffle piping, Ferrero Rocher and a gold 50 topper, photographed by a pool" width="720" height="960" decoding="sync"></picture></button><figcaption>50 · Ferrero, mocha ruffles</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="number-fruit" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-fruit-480.webp 480w, images/number-fruit-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-fruit-960.jpg" data-srcset="images/number-fruit-480.jpg 480w, images/number-fruit-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A number cake topped with strawberries, kiwi, mango, blackberries, blueberries and dragon fruit" width="720" height="960" decoding="sync"></picture></button><figcaption>Fresh fruit · kiwi, mango, dragon fruit</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-vogue-12" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-vogue-12-480.webp 480w, images/cake-vogue-12-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-vogue-12-960.jpg" data-srcset="images/cake-vogue-12-480.jpg 480w, images/cake-vogue-12-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A cream vintage cake with a piped VOGUE frame, black and pink pearls, a gold 12 and three pink candles" width="640" height="960" decoding="sync"></picture></button><figcaption>12 · Vogue, candles</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-gold-pampas" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-gold-pampas-480.webp 480w, images/cake-gold-pampas-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-gold-pampas-960.jpg" data-srcset="images/cake-gold-pampas-480.jpg 480w, images/cake-gold-pampas-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with gold pearls, a gold Happy Birthday topper and a spray of gold pampas grass" width="768" height="960" decoding="sync"></picture></button><figcaption>Gold &amp; pampas</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="number-12-boho" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-12-boho-480.webp 480w, images/number-12-boho-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-12-boho-960.jpg" data-srcset="images/number-12-boho-480.jpg 480w, images/number-12-boho-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A 12 number cake in cream and blush with pampas sprigs, in a white box on macramé" width="720" height="960" decoding="sync"></picture></button><figcaption>12 · boho neutrals, pampas</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="number-chocolate" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-chocolate-480.webp 480w, images/number-chocolate-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-chocolate-960.jpg" data-srcset="images/number-chocolate-480.jpg 480w, images/number-chocolate-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A number cake with Ferrero Rocher, Raffaello, strawberries, macarons and a mini Nutella jar" width="768" height="960" decoding="sync"></picture></button><figcaption>Chocolate lover's · mini Nutella</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-blue-white-lemons" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-blue-white-lemons-480.webp 480w, images/cake-blue-white-lemons-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-blue-white-lemons-960.jpg" data-srcset="images/cake-blue-white-lemons-480.jpg 480w, images/cake-blue-white-lemons-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A blue-and-white porcelain-style cake with daisies and lemons, between blue candles and white roses" width="720" height="960" decoding="sync"></picture></button><figcaption>Blue &amp; white · lemons, daisies</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="name-cake-chava" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/name-cake-chava-480.webp 480w, images/name-cake-chava-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/name-cake-chava-960.jpg" data-srcset="images/name-cake-chava-480.jpg 480w, images/name-cake-chava-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with CHAVA in silver letters, purple and pink roses and baby&#x27;s breath" width="720" height="960" decoding="sync"></picture></button><figcaption>Chava · purple roses, silver</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="number-15-pink" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/number-15-pink-480.webp 480w, images/number-15-pink-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-15-pink-960.jpg" data-srcset="images/number-15-pink-480.jpg 480w, images/number-15-pink-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A 15 number cake covered in pink and white piping with a gold Happy Birthday banner" width="720" height="960" decoding="sync"></picture></button><figcaption>15 · pink on pink</figcaption></figure>
-      <figure class="rv feat"><button class="ph" type="button" data-lb="cake-red-roses" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-red-roses-480.webp 480w, images/cake-red-roses-960.webp 960w" sizes="(max-width:900px) 100vw, 50vw"><img data-src="images/cake-red-roses-960.jpg" data-srcset="images/cake-red-roses-480.jpg 480w, images/cake-red-roses-960.jpg 960w" sizes="(max-width:900px) 100vw, 50vw" alt="A white cake with a diagonal cascade of red roses and baby&#x27;s breath and a gold Happy Birthday topper" width="720" height="960" decoding="sync"></picture></button><figcaption>Red roses &amp; baby's breath</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-rainbow-babys-breath" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-rainbow-babys-breath-480.webp 480w, images/cake-rainbow-babys-breath-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-rainbow-babys-breath-960.jpg" data-srcset="images/cake-rainbow-babys-breath-480.jpg 480w, images/cake-rainbow-babys-breath-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A white textured cake with a cascade of rainbow-dyed baby&#x27;s breath and a white carnation" width="720" height="960" decoding="sync"></picture></button><figcaption>Rainbow baby's breath</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="name-cake-chen-peach" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/name-cake-chen-peach-480.webp 480w, images/name-cake-chen-peach-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/name-cake-chen-peach-960.jpg" data-srcset="images/name-cake-chen-peach-480.jpg 480w, images/name-cake-chen-peach-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with CHEN in gold, peach roses, blush pearls and gold butterflies" width="720" height="960" decoding="sync"></picture></button><figcaption>Chen · peach roses, butterflies</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-vogue-12-party" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-vogue-12-party-480.webp 480w, images/cake-vogue-12-party-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-vogue-12-party-960.jpg" data-srcset="images/cake-vogue-12-party-480.jpg 480w, images/cake-vogue-12-party-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="The Vogue 12 cake on a pink dessert table surrounded by pastries" width="720" height="960" decoding="sync"></picture></button><figcaption>12 · Vogue, at the party</figcaption></figure>
-      <figure class="rv"><button class="ph" type="button" data-lb="cake-gold-candles" aria-label="View larger"><picture><source type="image/webp" data-srcset="images/cake-gold-candles-480.webp 480w, images/cake-gold-candles-960.webp 960w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-gold-candles-960.jpg" data-srcset="images/cake-gold-candles-480.jpg 480w, images/cake-gold-candles-960.jpg 960w" sizes="(max-width:900px) 50vw, 25vw" alt="A white vintage cake with gold Happy Birthday letter candles and pearls" width="720" height="960" decoding="sync"></picture></button><figcaption>Gold candles</figcaption></figure>
+      <figure class="rv feat"><button class="ph" type="button" data-lb="cake-50-ferrero"><picture><source type="image/webp" data-srcset="images/cake-50-ferrero-480.webp 360w, images/cake-50-ferrero-960.webp 720w" sizes="(max-width:900px) 100vw, 50vw"><img data-src="images/cake-50-ferrero-960.jpg" data-srcset="images/cake-50-ferrero-480.jpg 360w, images/cake-50-ferrero-960.jpg 720w" sizes="(max-width:900px) 100vw, 50vw" alt="A blush cake with mocha ruffle piping, Ferrero Rocher and a gold 50 topper, photographed by a pool" width="720" height="960" decoding="sync"></picture></button><figcaption>50 · Ferrero, mocha ruffles</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="number-fruit"><picture><source type="image/webp" data-srcset="images/number-fruit-480.webp 360w, images/number-fruit-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-fruit-960.jpg" data-srcset="images/number-fruit-480.jpg 360w, images/number-fruit-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A number cake topped with strawberries, kiwi, mango, blackberries, blueberries and dragon fruit" width="720" height="960" decoding="sync"></picture></button><figcaption>Fresh fruit · kiwi, mango, dragon fruit</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-vogue-12"><picture><source type="image/webp" data-srcset="images/cake-vogue-12-480.webp 320w, images/cake-vogue-12-960.webp 640w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-vogue-12-960.jpg" data-srcset="images/cake-vogue-12-480.jpg 320w, images/cake-vogue-12-960.jpg 640w" sizes="(max-width:900px) 50vw, 25vw" alt="A cream vintage cake with a piped VOGUE frame, black and pink pearls, a gold 12 and three pink candles" width="640" height="960" decoding="sync"></picture></button><figcaption>12 · Vogue, candles</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-gold-pampas"><picture><source type="image/webp" data-srcset="images/cake-gold-pampas-480.webp 384w, images/cake-gold-pampas-960.webp 768w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-gold-pampas-960.jpg" data-srcset="images/cake-gold-pampas-480.jpg 384w, images/cake-gold-pampas-960.jpg 768w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with gold pearls, a gold Happy Birthday topper and a spray of gold pampas grass" width="768" height="960" decoding="sync"></picture></button><figcaption>Gold &amp; pampas</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="number-12-boho"><picture><source type="image/webp" data-srcset="images/number-12-boho-480.webp 360w, images/number-12-boho-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-12-boho-960.jpg" data-srcset="images/number-12-boho-480.jpg 360w, images/number-12-boho-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A 12 number cake in cream and blush with pampas sprigs, in a white box on macramé" width="720" height="960" decoding="sync"></picture></button><figcaption>12 · boho neutrals, pampas</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="number-chocolate"><picture><source type="image/webp" data-srcset="images/number-chocolate-480.webp 384w, images/number-chocolate-960.webp 768w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-chocolate-960.jpg" data-srcset="images/number-chocolate-480.jpg 384w, images/number-chocolate-960.jpg 768w" sizes="(max-width:900px) 50vw, 25vw" alt="A number cake with Ferrero Rocher, Raffaello, strawberries, macarons and a mini Nutella jar" width="768" height="960" decoding="sync"></picture></button><figcaption>Chocolate lover's · mini Nutella</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-blue-white-lemons"><picture><source type="image/webp" data-srcset="images/cake-blue-white-lemons-480.webp 360w, images/cake-blue-white-lemons-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-blue-white-lemons-960.jpg" data-srcset="images/cake-blue-white-lemons-480.jpg 360w, images/cake-blue-white-lemons-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A blue-and-white porcelain-style cake with daisies and lemons, between blue candles and white roses" width="720" height="960" decoding="sync"></picture></button><figcaption>Blue &amp; white · lemons, daisies</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="name-cake-chava"><picture><source type="image/webp" data-srcset="images/name-cake-chava-480.webp 360w, images/name-cake-chava-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/name-cake-chava-960.jpg" data-srcset="images/name-cake-chava-480.jpg 360w, images/name-cake-chava-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with CHAVA in silver letters, purple and pink roses and baby&#x27;s breath" width="720" height="960" decoding="sync"></picture></button><figcaption>Chava · purple roses, silver</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="number-15-pink"><picture><source type="image/webp" data-srcset="images/number-15-pink-480.webp 360w, images/number-15-pink-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/number-15-pink-960.jpg" data-srcset="images/number-15-pink-480.jpg 360w, images/number-15-pink-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A 15 number cake covered in pink and white piping with a gold Happy Birthday banner" width="720" height="960" decoding="sync"></picture></button><figcaption>15 · pink on pink</figcaption></figure>
+      <figure class="rv feat"><button class="ph" type="button" data-lb="cake-red-roses"><picture><source type="image/webp" data-srcset="images/cake-red-roses-480.webp 360w, images/cake-red-roses-960.webp 720w" sizes="(max-width:900px) 100vw, 50vw"><img data-src="images/cake-red-roses-960.jpg" data-srcset="images/cake-red-roses-480.jpg 360w, images/cake-red-roses-960.jpg 720w" sizes="(max-width:900px) 100vw, 50vw" alt="A white cake with a diagonal cascade of red roses and baby&#x27;s breath and a gold Happy Birthday topper" width="720" height="960" decoding="sync"></picture></button><figcaption>Red roses &amp; baby's breath</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-rainbow-babys-breath"><picture><source type="image/webp" data-srcset="images/cake-rainbow-babys-breath-480.webp 360w, images/cake-rainbow-babys-breath-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-rainbow-babys-breath-960.jpg" data-srcset="images/cake-rainbow-babys-breath-480.jpg 360w, images/cake-rainbow-babys-breath-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A white textured cake with a cascade of rainbow-dyed baby&#x27;s breath and a white carnation" width="720" height="960" decoding="sync"></picture></button><figcaption>Rainbow baby's breath</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="name-cake-chen-peach"><picture><source type="image/webp" data-srcset="images/name-cake-chen-peach-480.webp 360w, images/name-cake-chen-peach-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/name-cake-chen-peach-960.jpg" data-srcset="images/name-cake-chen-peach-480.jpg 360w, images/name-cake-chen-peach-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A white cake with CHEN in gold, peach roses, blush pearls and gold butterflies" width="720" height="960" decoding="sync"></picture></button><figcaption>Chen · peach roses, butterflies</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-vogue-12-party"><picture><source type="image/webp" data-srcset="images/cake-vogue-12-party-480.webp 360w, images/cake-vogue-12-party-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-vogue-12-party-960.jpg" data-srcset="images/cake-vogue-12-party-480.jpg 360w, images/cake-vogue-12-party-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="The Vogue 12 cake on a pink dessert table surrounded by pastries" width="720" height="960" decoding="sync"></picture></button><figcaption>12 · Vogue, at the party</figcaption></figure>
+      <figure class="rv"><button class="ph" type="button" data-lb="cake-gold-candles"><picture><source type="image/webp" data-srcset="images/cake-gold-candles-480.webp 360w, images/cake-gold-candles-960.webp 720w" sizes="(max-width:900px) 50vw, 25vw"><img data-src="images/cake-gold-candles-960.jpg" data-srcset="images/cake-gold-candles-480.jpg 360w, images/cake-gold-candles-960.jpg 720w" sizes="(max-width:900px) 50vw, 25vw" alt="A white vintage cake with gold Happy Birthday letter candles and pearls" width="720" height="960" decoding="sync"></picture></button><figcaption>Gold candles</figcaption></figure>
     </div>
   </section>
 
@@ -886,9 +904,7 @@ const storage = {
 };
 
 let CAT = null;                                   // filled from catalog.json at boot
-// A photo that is missing or still failing hides itself, so the pastry plate painted on its container shows instead
-// (Safari and Firefox never render ::after on <img>, so CSS alone cannot do this). Capture phase catches every <img>.
-document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('is-missing'); }, true);
+// (The capture-phase error listener that hides a failed <img> is in <head>, so it is in place before the hero exists.)
 const product = id => (CAT ? Pricing.findProduct(CAT, id) : null);
 const imgPath = name => `images/${name}.jpg`;
 /* ---- presentation helpers (Studio Light redesign, Oct 2026). Responsive <picture> markup for the templates below;
@@ -897,7 +913,8 @@ const imgPath = name => `images/${name}.jpg`;
 const imgSrc = (name, w) => `images/${name}-${w}.jpg`;
 const CARD_SIZES = '(max-width:680px) calc(50vw - 20px), (max-width:1000px) 31vw, 300px';
 function pic(name, { alt = '', cls = '', sizes = '100vw', lazy = true, w = 720, h = 960, max = 960, defer = false, attrs = '' } = {}) {
-  const set = ext => [480, 960, 1600].filter(x => x <= max).map(x => `images/${name}-${x}.${ext} ${x}w`).join(', ');
+  const rw = x => (w >= h ? x : Math.round(x * w / h));   // the files are scaled by their longest side, so a portrait "480" is 360 px wide: say so
+  const set = ext => [480, 960, 1600].filter(x => x <= max).map(x => `images/${name}-${x}.${ext} ${rw(x)}w`).join(', ');
   const d = defer ? 'data-' : '';
   return `<picture><source type="image/webp" ${d}srcset="${set('webp')}" sizes="${sizes}"><img${cls ? ` class="${cls}"` : ''} ${d}src="${imgSrc(name, Math.min(960, max))}" ${d}srcset="${set('jpg')}" sizes="${sizes}" alt="${esc(alt)}" width="${w}" height="${h}"${lazy ? ' loading="lazy"' : ''} decoding="async"${attrs ? ' ' + attrs : ''}></picture>`;
 }
@@ -983,7 +1000,7 @@ function renderGrid() {
     const alt = p.images[1];
     grid.append(el(`<article class="card" style="animation-delay:${i * 60}ms">
       <div class="card-media" data-open="${p.id}" role="button" tabindex="0" aria-label="View ${esc(p.name)}">
-        ${pic(p.images[0], { cls: 'main', alt: p.alt || p.name, sizes: CARD_SIZES })}
+        ${pic(p.images[0], { cls: 'main', alt: p.alt || p.name, sizes: CARD_SIZES, defer: true, lazy: false })}
         ${alt ? pic(alt, { cls: 'alt', alt: '', sizes: CARD_SIZES, defer: true, attrs: 'aria-hidden="true"' }) : ''}
         ${p.tag ? `<span class="card-tag">${esc(p.tag)}</span>` : ''}
       </div>
@@ -1033,6 +1050,8 @@ function deltaLabel(o, c) {
   if (o.type === 'size') return `<span class="delta">${money(c.price)}</span>`;
   return c.delta ? `<span class="delta">+${money(c.delta)}</span>` : '';
 }
+const PDP_SIZES = '(max-width:760px) 88vw, 540px';   // the pane is 96vw on a phone; claiming 88vw keeps a 2x phone on the 768 px file (0.94x on a 400 px screen) rather than the 1280 px one, 3x phones still get the large file
+const pdpMain = (p, i) => pic(p.images[i], { alt: p.alt || p.name, sizes: PDP_SIZES, lazy: false, max: 1600, attrs: 'id="pdp-img"' });
 function renderPdp() {
   const { p } = pdp;
   const d = $('#pdp');
@@ -1040,8 +1059,8 @@ function renderPdp() {
     <button class="pdp-close" type="button" data-close aria-label="Close">×</button>
     <div class="pdp-grid">
       <div class="pdp-media">
-        <div class="pdp-main"><img id="pdp-img" src="${imgSrc(p.images[0], 960)}" alt="${esc(p.alt || p.name)}" width="720" height="960" decoding="async"></div>
-        ${p.images.length > 1 ? `<div class="pdp-thumbs">${p.images.map((im, i) => `<button type="button" data-img="${i}" aria-current="${i === 0}" aria-label="Photo ${i + 1} of ${p.images.length}"><img src="${imgSrc(im, 480)}" alt="" loading="lazy" decoding="async" width="360" height="480"></button>`).join('')}</div>` : ''}
+        <div class="pdp-main">${pdpMain(p, 0)}</div>
+        ${p.images.length > 1 ? `<div class="pdp-thumbs">${p.images.map((im, i) => `<button type="button" data-img="${i}" aria-current="${i === 0}" aria-label="Photo ${i + 1} of ${p.images.length}">${pic(im, { sizes: '48px', w: 360, h: 480, max: 480 })}</button>`).join('')}</div>` : ''}
       </div>
       <div class="pdp-body">
         <div>
@@ -1082,7 +1101,7 @@ $('#pdp').addEventListener('click', e => {
   if (t.hasAttribute('data-close')) return closePdp();
   if (t.dataset.img != null) {
     const i = +t.dataset.img;
-    const img = $('#pdp-img'); img.src = imgSrc(pdp.p.images[i], 960); img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+    $('.pdp-main', d).innerHTML = pdpMain(pdp.p, i);   // a fresh <picture>: the fade plays again and the right size is fetched
     $$('.pdp-thumbs button', d).forEach(b => b.setAttribute('aria-current', String(b === t)));
     return;
   }
@@ -1514,20 +1533,30 @@ const wake = root => $$('[data-srcset]', root).forEach(n => { n.srcset = n.datas
 /* hero: slides 2–4 are fetched only once the first photo has painted, then the set crossfades every few seconds.
    The incoming slide fades in on top of the outgoing one, so the photo never dips to the dark background between. */
 const slides = $$('.hero-slide');
-if (slides.length > 1 && !reduceMotion && !slow) {
+if (slides.length > 1) {
   let i = 0, timer = null;
+  const broken = s => { const im = $('img', s); return !!(im.getAttribute('src') && im.complete && !im.naturalWidth); };   // fetched and failed
   const step = () => {
     if (document.hidden) return;
     const prev = slides[i];
-    i = (i + 1) % slides.length;
+    let n = i;
+    for (let k = 1; k < slides.length; k++) { const c = (i + k) % slides.length; if (!broken(slides[c])) { n = c; break; } }   // skip a slide whose photo failed
+    if (n === i) return;
+    i = n;
     prev.classList.remove('on'); prev.classList.add('was');
     slides[i].classList.add('on');
     setTimeout(() => prev.classList.remove('was'), 1800);
   };
-  const arm = () => { slides.slice(1).forEach(wake); timer = setInterval(step, 5600); };
+  const crossfade = !reduceMotion && !slow;
+  const arm = () => { slides.slice(1).forEach(wake); if (crossfade) timer = setInterval(step, 5600); };
   const first = $('img', slides[0]);
   const go = () => setTimeout(arm, 1800);
-  if (first.complete && first.naturalWidth) go(); else first.addEventListener('load', go, { once: true });
+  const fail = () => { if (crossfade) arm(); else wake(slides[1]); step(); };   // the first photo failed: bring the next one in now rather than sit on a dark panel
+  if (broken(slides[0])) fail();
+  else {
+    if (crossfade) { if (first.complete && first.naturalWidth) go(); else first.addEventListener('load', go, { once: true }); }
+    first.addEventListener('error', fail, { once: true });
+  }
   addEventListener('pagehide', () => clearInterval(timer));
 }
 
@@ -1540,26 +1569,28 @@ const loadAlt = card => {
 $('#grid').addEventListener('pointerover', e => { const c = e.target.closest('.card'); if (c) loadAlt(c); });
 $('#grid').addEventListener('focusin', e => { const c = e.target.closest('.card'); if (c) loadAlt(c); });
 
-/* menu: the eight product photos are lazy in the markup so they never compete with the hero for the first paint, then
-   they are all fetched together once the page has loaded (and again whenever a filter re-renders the grid), so a fast
-   scroll through the menu never meets a grey card. Eight 480 px photos is a small price on any connection. */
+/* menu: the eight product photos carry no src in the markup (native lazy-loading would start them under the hero on a 3x
+   phone), then they are all woken together once the hero has painted (and again whenever a filter re-renders the grid),
+   so a fast scroll through the menu never meets a grey card. Eight 480 px photos is a small price on any connection. */
 let menuWarm = false;
-const warmMenu = () => $$('#grid img.main[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
+const warmMenu = () => $$('#grid img.main[data-srcset]').forEach(img => wake(img.parentElement));   // the <picture>, not the card: the hover photo waits for a hover
 afterLoad(() => { menuWarm = true; warmMenu(); });
 new MutationObserver(() => { if (menuWarm) warmMenu(); }).observe($('#grid'), { childList: true });
 
-/* gallery: these photos sit far below the fold, so they carry no src until the page has finished loading. On a normal
-   connection they are then fetched in one quiet pass, in page order, so scrolling (and a full-page capture) never meets
-   an empty tile. On a slow or metered one each tile is fetched as it comes within a screen of the viewport, and only
-   the first two strip tiles are warmed, so the section never opens on grey. */
-const tiles = [...$$('#gallery .feat .ph'), ...$$('#gallery .ph')];   // the two large feature tiles first; waking twice is harmless
-if (slow && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { wake(en.target); io.unobserve(en.target); } }), { rootMargin: '600px 0px' });
-  tiles.forEach(t => io.observe(t));
-  afterLoad(() => tiles.slice(0, 2).forEach(t => { wake(t); io.unobserve(t); }));
-} else {
-  afterLoad(() => tiles.forEach(wake));
-}
+/* band + gallery: these photos sit far below the fold, so they carry no src until the hero has painted. Then the band,
+   the two large feature tiles and the first three strip tiles are fetched at once, so neither section ever opens on
+   grey, and every other tile is fetched as it comes within about a screen of the viewport. (Waking all 27 at once cost
+   a 3x phone 2.6 MB whether or not anyone scrolled past the menu.) On a slow or metered connection only the two feature
+   tiles are warmed and the margin is smaller. */
+const tiles = [...$$('#dark .ph'), ...$$('#gallery .feat .ph'), ...$$('#gallery .ph')];   // waking twice is harmless
+const warm = slow ? tiles.slice(2, 4) : [...tiles.slice(0, 4), ...$$('.strip-item .ph').slice(0, 3)];
+afterLoad(() => {
+  warm.forEach(wake);
+  const rest = tiles.filter(t => !warm.includes(t));
+  if (!('IntersectionObserver' in window)) return rest.forEach(wake);
+  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { wake(en.target); io.unobserve(en.target); } }), { rootMargin: slow ? '600px 0px' : '1000px 0px' });
+  rest.forEach(t => io.observe(t));
+});
 
 /* recent boxes strip: the two arrows scroll by most of a screen; the strip itself is a native snap scroller. */
 const strip = $('#strip');
@@ -1576,9 +1607,12 @@ function show(n) {
   cur = (n + shots.length) % shots.length;
   const b = shots[cur], name = b.dataset.lb, thumb = $('img', b), fig = b.closest('figure'), cap = fig && $('figcaption', fig);
   lbImg.classList.remove('is-missing');
-  lbImg.width = thumb ? thumb.width : 1200; lbImg.height = thumb ? thumb.height : 1600;
-  lbSrc.srcset = `images/${name}-960.webp 960w, images/${name}-1600.webp 1600w`;
-  lbImg.srcset = `images/${name}-960.jpg 960w, images/${name}-1600.jpg 1600w`;
+  const aw = (thumb && +thumb.getAttribute('width')) || 1200, ah = (thumb && +thumb.getAttribute('height')) || 1600;   // the photo's own ratio (a wall tile renders 4:5 whatever its photo is)
+  lbImg.width = aw; lbImg.height = ah;
+  lbImg.style.setProperty('--ar', (aw / ah).toFixed(4));   // sizes the photo to the screen (see .lb-fig img)
+  const rw = x => Math.round(aw >= ah ? x : x * aw / ah);   // the files are scaled by their longest side: true widths
+  lbSrc.srcset = `images/${name}-960.webp ${rw(960)}w, images/${name}-1600.webp ${rw(1600)}w`;
+  lbImg.srcset = `images/${name}-960.jpg ${rw(960)}w, images/${name}-1600.jpg ${rw(1600)}w`;
   lbImg.src = `images/${name}-1600.jpg`;
   lbImg.alt = thumb ? thumb.alt : '';
   lbCap.textContent = cap ? cap.textContent : '';

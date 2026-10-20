@@ -14,11 +14,18 @@ fs.mkdirSync(out, { recursive: true });
 const written = [];
 const shot = async (page, name, opts = {}) => { const file = path.resolve(out, name + '.png'); await page.screenshot({ path: file, ...opts }); written.push(file); };
 const settle = (page, ms = 1400) => page.waitForTimeout(ms);
+// The gallery photos are fetched as they come within a screen of the viewport, so a full-page capture first walks the
+// page the way a visitor would, then returns to the top.
+const scrollThrough = async page => {
+  const h = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < h; y += 500) { await page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), y); await page.waitForTimeout(60); }
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await settle(page, 1200);
+};
 
 async function tour(page, tag, { full = true } = {}) {
   await page.goto(base + '/'); await page.waitForSelector('#grid .card'); await settle(page);
   await shot(page, `home-${tag}`);
-  if (full) await shot(page, `home-${tag}-full`, { fullPage: true });
+  if (full) { await scrollThrough(page); await shot(page, `home-${tag}-full`, { fullPage: true }); }
   await page.locator('#shop').scrollIntoViewIfNeeded(); await settle(page, 900);
   await shot(page, `menu-${tag}`);
   await page.locator('#gallery').scrollIntoViewIfNeeded(); await settle(page, 900);
