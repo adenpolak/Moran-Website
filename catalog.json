@@ -71,7 +71,11 @@
         "number-pastel-hearts",
         "letter-j-rose",
         "letter-l-crown",
-        "bar-mitzvah-13"
+        "bar-mitzvah-13",
+        "number-fruit",
+        "number-60-lilac",
+        "number-12-boho",
+        "number-15-pink"
       ],
       "options": [
         {
@@ -435,7 +439,9 @@
       "alt": "A white vintage-style cake with pink shell piping, pearls, pink baby's breath and a gold 30 topper, in a clear box",
       "images": [
         "vintage-30-side",
-        "vintage-30-top"
+        "vintage-30-top",
+        "vintage-30-boxed",
+        "cake-gold-candles"
       ],
       "options": [
         {
@@ -583,7 +589,10 @@
       "alt": "A white cake with the name CHEN in gold letters, white flowers, baby's breath and gold balls",
       "images": [
         "name-cake-chen",
-        "name-cake-nissim"
+        "name-cake-nissim",
+        "name-cake-chava",
+        "name-cake-chen-peach",
+        "cake-red-roses"
       ],
       "options": [
         {
