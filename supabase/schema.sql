@@ -1,4 +1,4 @@
--- Marble Box orders table. Run once in Supabase → SQL editor (project "marble-box").
+-- My Sweetart orders table. Run once in Supabase → SQL editor (project "my-sweetart").
 -- Only the server touches this table, with the service-role key. RLS is on with no policies, so the anon key sees nothing.
 
 create table if not exists public.orders (

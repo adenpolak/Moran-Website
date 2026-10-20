@@ -1,13 +1,13 @@
 {
   "brand": {
-    "name": "Marble Box",
+    "name": "My Sweetart",
     "descriptor": "Bakery",
     "tagline": "Number cakes, bomboloni and kunafa cups, made to order.",
     "city": "Houston, TX",
     "cityShort": "Houston",
     "phone": "+1 (713) 555-0142",
-    "email": "orders@marbleboxbakery.com",
-    "instagram": "marblebox.bakery",
+    "email": "orders@mysweetart.com",
+    "instagram": "mysweetart",
     "currency": "usd",
     "pickupDays": [
       4,

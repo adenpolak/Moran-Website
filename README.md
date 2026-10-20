@@ -1,4 +1,4 @@
-# Marble Box storefront
+# My Sweetart storefront
 
 A cake-shop store that works like a small Shopify site: product options, a cart, a checkout form, Stripe payments,
 an orders table, two confirmation emails and a day sheet for the kitchen. Plain HTML/CSS/JS and a handful of

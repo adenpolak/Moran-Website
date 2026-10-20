@@ -114,7 +114,7 @@ const good = over => ({
   items: [{ productId: 'number-cake', options: { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }, qty: 1 }, { productId: 'bomboloni', options: { size: 'six', mix: 'assorted' }, qty: 1 }],
   customer: { name: 'Dana Levi', email: 'dana@example.com', phone: '713 555 0199' },
   fulfillment: { method: 'pickup', date: nextOpenDate(4), window: WINDOW, address: '', notes: 'candles' },
-  ref: 'MB-1234', ...over
+  ref: 'MS-1234', ...over
 });
 const post = body => call(checkout, { method: 'POST', url: '/api/checkout', body, headers: { origin: 'http://localhost:3000' } });
 const reset = () => { fake.rows = []; fake.stripeCalls = []; fake.sessions = {}; fake.resend = []; auth._reset(); };
@@ -138,7 +138,7 @@ test('checkout: pickup order → pending row + Stripe session with server prices
   const res = await post(good());
   assert.equal(res.statusCode, 200, JSON.stringify(res.body));
   assert.match(res.body.url, /^https:\/\/checkout\.stripe\.com\//);
-  assert.equal(res.body.ref, 'MB-1234');
+  assert.equal(res.body.ref, 'MS-1234');
   assert.equal(fake.rows.length, 1);
   const row = fake.rows[0];
   assert.equal(row.status, 'pending');
@@ -153,7 +153,7 @@ test('checkout: pickup order → pending row + Stripe session with server prices
   assert.equal(form.get('metadata[order_id]'), row.id);
   assert.equal(form.get('payment_intent_data[metadata][order_id]'), row.id);
   assert.equal(form.get('allow_promotion_codes'), 'true');
-  assert.equal(form.get('client_reference_id'), 'MB-1234');
+  assert.equal(form.get('client_reference_id'), 'MS-1234');
   assert.ok(Number(form.get('expires_at')) > Date.now() / 1000 + 30 * 60);
   assert.match(form.get('success_url'), /^http:\/\/localhost:3000\/\?order=success&session_id=\{CHECKOUT_SESSION_ID\}$/);
 });
@@ -245,11 +245,11 @@ test('webhook: bad signature → 400 and nothing changes; good signature → pai
   assert.equal(fake.resend.length, 2);
   const [baker, customer] = fake.resend;
   assert.deepEqual(baker.to, ['owner@example.com']);
-  assert.match(baker.subject, /^New order MB-1234 · \w{3} \w{3} \d{1,2} · 10:00 – 12:00 · pickup$/);
+  assert.match(baker.subject, /^New order MS-1234 · \w{3} \w{3} \d{1,2} · 10:00 – 12:00 · pickup$/);
   assert.match(baker.html, /candles/);
   assert.match(baker.html, /dashboard\.stripe\.com\/test\/payments\/pi_abc/);
   assert.deepEqual(customer.to, ['dana@example.com']);
-  assert.equal(customer.subject, 'Your Marble Box order MB-1234 is in');
+  assert.equal(customer.subject, 'Your My Sweetart order MS-1234 is in');
   assert.match(customer.html, /18 · Gold &amp; crown · Pistachio · gold topper/);
   res = await call(webhook, { method: 'POST', raw, headers: { 'stripe-signature': sign(raw) } });
   assert.equal(res.statusCode, 200);
@@ -277,7 +277,7 @@ test('order api: pending until paid; settles from Stripe when the webhook is lat
   fake.sessions[sid].payment_status = 'paid';
   res = await call(orderApi, { url: `/api/order?session_id=${sid}` });
   assert.equal(res.statusCode, 200, JSON.stringify(res.body));
-  assert.equal(res.body.ref, 'MB-1234');
+  assert.equal(res.body.ref, 'MS-1234');
   assert.equal(res.body.status, 'paid');
   assert.equal(res.body.first_name, 'Dana');
   assert.equal(res.body.email_masked, 'd•••@example.com');
@@ -313,13 +313,13 @@ test('admin: lists paid orders by date range and search, hides pending, moves st
   reset();
   const H = { authorization: 'Bearer correct-horse-battery' };
   await post(good());                                                     // pending, hidden
-  const co = await post(good({ ref: 'MB-2222', customer: { name: 'Noa Cohen', email: 'noa@example.com', phone: '713 555 0100' } }));
+  const co = await post(good({ ref: 'MS-2222', customer: { name: 'Noa Cohen', email: 'noa@example.com', phone: '713 555 0100' } }));
   const raw = paidEvent(co.body.id, fake.rows[1].id);
   await call(webhook, { method: 'POST', raw, headers: { 'stripe-signature': sign(raw) } });
   let res = await call(adminList, { url: `/api/admin/orders?from=${nextOpenDate(4)}&to=${nextOpenDate(4)}`, headers: H });
   assert.equal(res.statusCode, 200);
   assert.equal(res.body.orders.length, 1);
-  assert.equal(res.body.orders[0].ref, 'MB-2222');
+  assert.equal(res.body.orders[0].ref, 'MS-2222');
   res = await call(adminList, { url: '/api/admin/orders?q=cohen', headers: H });
   assert.equal(res.body.orders.length, 1);
   res = await call(adminList, { url: '/api/admin/orders?q=zzz', headers: H });
@@ -339,7 +339,7 @@ test('admin: lists paid orders by date range and search, hides pending, moves st
 test('emails: templates render the sample order with totals and the change policy', () => {
   const o = emails.sampleOrder();
   const b = emails.bakerEmail(o, { paymentUrl: 'https://dashboard.stripe.com/test/payments/pi_sample' });
-  assert.equal(b.subject, 'New order MB-1234 · Sat Oct 24 · 10:00 – 12:00 · pickup');
+  assert.equal(b.subject, 'New order MS-1234 · Sat Oct 24 · 10:00 – 12:00 · pickup');
   assert.match(b.html, /\$252/); assert.match(b.text, /Paid \$252/);
   assert.match(b.html, /Candles please/);
   const c = emails.customerEmail(o);

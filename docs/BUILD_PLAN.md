@@ -31,7 +31,7 @@ Goal: every paid order is a row in a database and two emails go out. This is the
 
 ### 1a. Supabase table
 
-Run in the Supabase SQL editor (Aden has a Supabase account; ask him for the project or create one named `marble-box`):
+Run in the Supabase SQL editor (Aden has a Supabase account; ask him for the project or create one named `my-sweetart`):
 
 ```sql
 create table public.orders (
@@ -97,9 +97,9 @@ Stripe metadata is capped at 500 characters per value, which a three-item box ca
 Two plain, well-set HTML emails that share the storefront's look (pink, the display face, the marble ticket).
 Put the templates in `lib/emails.js` so they are testable.
 
-- **To the baker** (`ORDER_EMAIL_TO`): subject `New order MB-1234 · Sat Oct 24 · 10:00–12:00 · pickup`. Body: customer,
+- **To the baker** (`ORDER_EMAIL_TO`): subject `New order MS-1234 · Sat Oct 24 · 10:00–12:00 · pickup`. Body: customer,
   phone, method, date, window, address, notes, each item with its summary line, totals, a link to the Stripe payment.
-- **To the customer**: subject `Your Marble Box order MB-1234 is in`. Body: what they ordered, when and how they get it,
+- **To the customer**: subject `Your My Sweetart order MS-1234 is in`. Body: what they ordered, when and how they get it,
   the "we text the day before" line, the allergen line, how to change the order (text the number, 48 h rule from the FAQ).
   Stripe's own receipt covers the payment; this email covers the pickup.
 - Resend only delivers to Aden's own address until a sending domain is verified. Phase 4 handles the domain.
@@ -188,7 +188,7 @@ Do not ship any of it without confirmation:
 
 | Placeholder | Where |
 | --- | --- |
-| Bakery name "Marble Box", tagline, "two-person kitchen" story | `catalog.json` → brand, `index.html` details/FAQ copy |
+| Bakery name "My Sweetart" (confirmed), tagline, "two-person kitchen" story | `catalog.json` → brand, `index.html` details/FAQ copy |
 | City Houston, phone +1 (713) 555-0142, email, Instagram handle | `catalog.json` → brand |
 | Pickup Thu–Sun 10–6, four 2-hour windows, 15-mile delivery, $12 fee, free over $150 | `catalog.json` |
 | Every price, every lead time, serving counts | `catalog.json` → products, `index.html` specs table |

@@ -6,7 +6,7 @@ const { test, expect } = require('@playwright/test');
 
 const hasStripe = /^sk_test_/.test(process.env.STRIPE_SECRET_KEY || '');
 
-test.describe('Marble Box purchase path', () => {
+test.describe('My Sweetart purchase path', () => {
   test('build a cake, fill the box, reach Stripe', async ({ page }) => {
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
@@ -65,7 +65,7 @@ test.describe('Marble Box purchase path', () => {
     expect(payload.items[0]).toEqual({ productId: 'number-cake', options: { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }, qty: 1 });
     expect(payload.customer.email).toBe('tester@example.com');
     expect(payload.fulfillment.method).toBe('pickup');
-    expect(payload.ref).toMatch(/^MB-\d{4}$/);
+    expect(payload.ref).toMatch(/^MS-\d{4}$/);
     expect(payload).not.toHaveProperty('total');                 // the browser never sends prices
 
     const body = await response.json();

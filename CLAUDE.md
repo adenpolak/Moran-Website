@@ -1,4 +1,4 @@
-# Marble Box — cake storefront
+# My Sweetart — cake storefront
 
 A Shopify-style store for a small bakery: number/letter cakes, bomboloni, kunafa cups, vintage cakes.
 Customers build a cake (number, cream, toppings), add it to a box, pick a pickup/delivery date, and pay on Stripe Checkout.

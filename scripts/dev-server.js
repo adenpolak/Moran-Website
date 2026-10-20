@@ -85,4 +85,4 @@ const server = http.createServer(async (req, res) => {
   return serveStatic(pathname, res);
 });
 
-server.listen(PORT, () => console.log(`Marble Box dev server → http://localhost:${PORT}  (Stripe ${process.env.STRIPE_SECRET_KEY ? 'key set' : 'key missing'}, Supabase ${process.env.SUPABASE_URL ? 'set' : 'missing'})`));
+server.listen(PORT, () => console.log(`My Sweetart dev server → http://localhost:${PORT}  (Stripe ${process.env.STRIPE_SECRET_KEY ? 'key set' : 'key missing'}, Supabase ${process.env.SUPABASE_URL ? 'set' : 'missing'})`));

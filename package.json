@@ -1,5 +1,5 @@
 {
-  "name": "marble-box-storefront",
+  "name": "my-sweetart-storefront",
   "private": true,
   "version": "1.0.0",
   "description": "Cake storefront: static site + Stripe Checkout serverless functions. No framework, no build step.",
