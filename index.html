@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#FF5C9A">
+<meta name="theme-color" content="#141011">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta charset="utf-8">
@@ -21,556 +21,469 @@
 <meta name="twitter:image" content="images/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Instrument+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Frosting & piping: the page is built like a cake. Cream paper with strawberry-pink, pistachio and chocolate colour
-   blocks stacked as tiers, their edges either dripping (inline SVG) or piped as ink-outlined shells, and every card,
-   photo and button sitting on a pastel plate with a thick ink outline and a hard chocolate shadow. */
+/* NOIR LUXE. One warm near-black ground with a faint grain, cream type, a single champagne-gold accent, and the brand
+   pink kept for the primary buttons and the live price. The photographs are the light source: every section is either a
+   photograph or a hairline-ruled sheet of type. Nothing is rotated, outlined, dripped or stickered. */
 :root{
-  --paper:#FFF7EE; --paper-2:#FFEBDC; --ink:#2B1511; --ink-2:#6E4B3F; --line:#E9CDBF;
-  --pink:#FF5C9A; --pink-deep:#D3296B; --pink-soft:#FFDCE8; --raspberry:#E03A7C; --strawberry:#FFA3C4;
-  --blue:#9ADCF5; --blue-soft:#DDF3FB; --lilac:#D9C4F2; --lilac-soft:#EEE4FA; --cream:#FFF1D6; --gold:#C8953F;
-  --night:#3A1D14; --night-2:#56281B; --night-fg:#FFF1E3; --night-mute:#DDBBA9;
-  --choc:#4A2418; --pistachio:#BFE6AE; --pistachio-soft:#E2F3D8; --pistachio-deep:#5E9E55;
-  --butter:#FFE28A; --butter-soft:#FFF3C4; --cherry:#E6303F; --white:#FFFDFA;
+  --paper:#141011; --paper-2:#1B1617; --ink:#F3EBDF; --ink-2:#A99D91; --line:rgba(243,235,223,.15);
+  --pink:#FF5C9A; --pink-deep:#FF7AAE; --pink-soft:rgba(255,92,154,.12); --raspberry:#FF5C9A; --strawberry:#FFA3C4;
+  --blue:#231D1E; --blue-soft:#1B1617; --lilac:#231D1E; --lilac-soft:#1B1617; --cream:#F3EBDF; --gold:#D4B47A;
+  --night:#0E0B0C; --night-2:#231D1E; --night-fg:#F3EBDF; --night-mute:#A99D91;
+  --choc:#231D1E; --pistachio:#D4B47A; --pistachio-soft:rgba(212,180,122,.12); --pistachio-deep:#D4B47A;
+  --butter:#D4B47A; --butter-soft:rgba(212,180,122,.12); --cherry:#FF7A7A; --white:#FFFFFF;
+  --surface:#1B1617; --surface-2:#231D1E; --line-2:rgba(243,235,223,.42); --gold-soft:rgba(212,180,122,.16);
+  --fg-2:rgba(243,235,223,.78); --fg-3:rgba(243,235,223,.62);
   --display:'Shrikhand','Cooper Black',Georgia,serif;
   --sans:'Instrument Sans','Helvetica Neue',Arial,sans-serif;
   --mono:'DM Mono',ui-monospace,'SF Mono',Menlo,monospace;
-  --wrap:1280px; --r:18px; --bw:2.5px;
-  --spring:cubic-bezier(.34,1.56,.64,1); --out:cubic-bezier(.2,.7,.2,1);
+  --wrap:1360px; --r:6px; --bw:1px;
+  --spring:cubic-bezier(.2,.7,.2,1); --out:cubic-bezier(.2,.7,.2,1);
   --gl:max(16px,env(safe-area-inset-left,0px)); --gr:max(16px,env(safe-area-inset-right,0px));
-  --checker:repeating-conic-gradient(var(--pink) 0 25%,var(--cream) 0 50%) 0 0/26px 26px;
-  --dots:radial-gradient(circle,var(--pink-soft) 3px,transparent 3.6px) 0 0/26px 26px;
-  --sprinkles:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><g fill='none' stroke-width='5' stroke-linecap='round'><path stroke='%23FF5C9A' d='M14 24l14-6M98 12l12 10M34 128l14 2M138 96l-4 14'/><path stroke='%235E9E55' d='M62 44l14 6M8 86l10-10M116 140l14 4'/><path stroke='%23FFC63A' d='M78 100l12-10M36 66l4 14M146 30l-12 8'/><path stroke='%239ADCF5' d='M104 58l10 10M56 150l14-4'/><path stroke='%23B48CE8' d='M130 60l-6 12M20 150l10 4M86 134l10-10'/></g></svg>");
-  --squiggle:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'><path d='M0 6Q5 0 10 6T20 6' fill='none' stroke='%23FF5C9A' stroke-width='3.5' stroke-linecap='round'/></svg>");
-  --icon-cake:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 170'><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'><ellipse cx='80' cy='146' rx='66' ry='10' fill='%23FFF1D6'/><rect x='24' y='94' width='112' height='52' rx='8' fill='%23FF5C9A'/><rect x='40' y='52' width='80' height='44' rx='7' fill='%23BFE6AE'/><path d='M30 88H130Q136 88 136 94V100H122V112A7 7 0 0 1 108 112V100H98V122A8 8 0 0 1 82 122V100H72V108A6 6 0 0 1 60 108V100H50V116A7 7 0 0 1 36 116V100H24V94Q24 88 30 88Z' fill='%23FFF1D6'/><path d='M46 46H114Q120 46 120 52V58H108V66A5 5 0 0 1 98 66V58H90V74A6 6 0 0 1 78 74V58H70V64A4 4 0 0 1 62 64V58H52V70A5 5 0 0 1 42 70V58H40V52Q40 46 46 46Z' fill='%234A2418'/><path d='M80 30q2-14 14-18' fill='none'/><circle cx='80' cy='38' r='9' fill='%23E6303F'/></g><g stroke-width='3' stroke-linecap='round' fill='none'><path stroke='%23FFF1D6' d='M40 136l7-3M110 138l7-2M76 134l6-3'/><path stroke='%23FFC63A' d='M52 86l6-2M104 84l6 2'/><path stroke='%23FF5C9A' d='M64 68l6-2M96 70l6 2'/></g></svg>");
-  --icon-donut:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round'><path fill-rule='evenodd' fill='%23F2C58C' d='M60 8a52 52 0 1 0 0 104a52 52 0 1 0 0-104zm0 36a16 16 0 1 0 0 32a16 16 0 1 0 0-32z'/><path fill-rule='evenodd' fill='%23FF5C9A' d='M60 14a46 46 0 0 1 46 46c0 7-7 8-9 14s3 11-5 14-11-6-17-2-2 11-10 11-6-8-14-6-7 9-15 6-3-13-11-14-10 3-12-7 5-10 1-16A46 46 0 0 1 60 14zm0 30a16 16 0 1 0 0 32a16 16 0 1 0 0-32z'/></g><g stroke-width='4' stroke-linecap='round' fill='none'><path stroke='%23FFF1D6' d='M36 40l8-4M80 34l6 6M44 70l6 4'/><path stroke='%23FFC63A' d='M60 26l8 2M90 56l-2 8'/><path stroke='%235E9E55' d='M28 56l6 4M74 76l6-4'/></g></svg>");
-  --icon-cupcake:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 130'><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'><path d='M28 70h64l-9 50H37z' fill='%23FFE28A'/><path d='M44 74l-3 42M60 74v42M76 74l3 42' fill='none' stroke='%23C8953F' stroke-width='2.5'/><ellipse cx='60' cy='68' rx='38' ry='13' fill='%23FF5C9A'/><ellipse cx='60' cy='52' rx='29' ry='12' fill='%23FF5C9A'/><ellipse cx='60' cy='38' rx='19' ry='11' fill='%23FF5C9A'/><path d='M60 20q3-12 13-14' fill='none'/><circle cx='60' cy='26' r='8' fill='%23E6303F'/></g><g stroke-width='3.5' stroke-linecap='round' fill='none'><path stroke='%23FFF1D6' d='M40 66l7-3M72 54l6 3M50 44l6-2'/><path stroke='%235E9E55' d='M78 68l6-2M44 52l5 3'/></g></svg>");
-  --icon-number:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 190'><ellipse cx='88' cy='178' rx='70' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M48 68C48 42 68 30 88 30C110 30 126 44 126 62C126 94 52 114 48 156H130' transform='translate(0 8)' stroke='%232B1511' stroke-width='40'/><path d='M48 68C48 42 68 30 88 30C110 30 126 44 126 62C126 94 52 114 48 156H130' transform='translate(0 8)' stroke='%23F2C58C' stroke-width='34'/><path d='M48 68C48 42 68 30 88 30C110 30 126 44 126 62C126 94 52 114 48 156H130' stroke='%232B1511' stroke-width='40'/><path d='M48 68C48 42 68 30 88 30C110 30 126 44 126 62C126 94 52 114 48 156H130' stroke='%23FF5C9A' stroke-width='34'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='52' cy='64' r='8' fill='%23FFF1D6'/><circle cx='70' cy='40' r='8' fill='%23FFFDFA'/><circle cx='106' cy='40' r='8' fill='%23FFF1D6'/><circle cx='122' cy='70' r='8' fill='%23FFFDFA'/><circle cx='98' cy='100' r='8' fill='%23FFF1D6'/><circle cx='68' cy='124' r='8' fill='%23FFFDFA'/><circle cx='56' cy='156' r='8' fill='%23FFF1D6'/><circle cx='96' cy='156' r='8' fill='%23FFFDFA'/><circle cx='126' cy='156' r='8' fill='%23FFF1D6'/><circle cx='88' cy='32' r='7' fill='%23E6303F'/><circle cx='112' cy='88' r='7' fill='%23E6303F'/><circle cx='78' cy='156' r='7' fill='%23E6303F'/><ellipse cx='122' cy='52' rx='7' ry='4' fill='%235E9E55' transform='rotate(-30 122 52)'/><ellipse cx='84' cy='112' rx='7' ry='4' fill='%235E9E55' transform='rotate(-30 84 112)'/><ellipse cx='114' cy='156' rx='7' ry='4' fill='%235E9E55'/><circle cx='60' cy='46' r='4' fill='%23FFE28A'/><circle cx='118' cy='106' r='4' fill='%23FFE28A'/><circle cx='52' cy='140' r='4' fill='%23FFE28A'/></g></svg>");
-  --icon-heart:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 176'><ellipse cx='88' cy='164' rx='70' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round'><path d='M88 150C46 122 16 98 16 64C16 40 34 24 56 24C70 24 81 32 88 44C95 32 106 24 120 24C142 24 160 40 160 64C160 98 130 122 88 150Z' fill='%23F2C58C' transform='translate(0 8)'/><path d='M88 150C46 122 16 98 16 64C16 40 34 24 56 24C70 24 81 32 88 44C95 32 106 24 120 24C142 24 160 40 160 64C160 98 130 122 88 150Z' fill='%23FF5C9A'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='50' cy='54' r='9' fill='%23FFF1D6'/><circle cx='72' cy='44' r='9' fill='%23FFFDFA'/><circle cx='104' cy='44' r='9' fill='%23FFF1D6'/><circle cx='126' cy='54' r='9' fill='%23FFFDFA'/><circle cx='52' cy='80' r='9' fill='%23FFFDFA'/><circle cx='124' cy='80' r='9' fill='%23FFF1D6'/><circle cx='64' cy='104' r='9' fill='%23FFF1D6'/><circle cx='112' cy='104' r='9' fill='%23FFFDFA'/><circle cx='88' cy='124' r='9' fill='%23FFF1D6'/><circle cx='88' cy='66' r='8' fill='%23E6303F'/><circle cx='70' cy='78' r='7' fill='%23E6303F'/><circle cx='106' cy='78' r='7' fill='%23E6303F'/><circle cx='88' cy='98' r='7' fill='%23E6303F'/><ellipse cx='88' cy='48' rx='7' ry='4' fill='%235E9E55'/><ellipse cx='56' cy='66' rx='6' ry='3.5' fill='%235E9E55' transform='rotate(-40 56 66)'/><ellipse cx='120' cy='66' rx='6' ry='3.5' fill='%235E9E55' transform='rotate(40 120 66)'/><circle cx='76' cy='60' r='4' fill='%23FFE28A'/><circle cx='100' cy='60' r='4' fill='%23FFE28A'/><circle cx='80' cy='110' r='4' fill='%23D9C4F2'/><circle cx='96' cy='110' r='4' fill='%23D9C4F2'/></g></svg>");
-  --icon-ring:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 184'><ellipse cx='88' cy='172' rx='72' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round' fill-rule='evenodd'><path d='M88 22a64 64 0 1 0 0 128a64 64 0 1 0 0-128zm0 40a24 24 0 1 0 0 48a24 24 0 1 0 0-48z' fill='%23F2C58C' transform='translate(0 8)'/><path d='M88 22a64 64 0 1 0 0 128a64 64 0 1 0 0-128zm0 40a24 24 0 1 0 0 48a24 24 0 1 0 0-48z' fill='%23FF5C9A'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='88' cy='42' r='9' fill='%23FFF1D6'/><circle cx='120' cy='55' r='9' fill='%23FFFDFA'/><circle cx='132' cy='86' r='9' fill='%23FFF1D6'/><circle cx='120' cy='117' r='9' fill='%23FFFDFA'/><circle cx='88' cy='130' r='9' fill='%23FFF1D6'/><circle cx='56' cy='117' r='9' fill='%23FFFDFA'/><circle cx='44' cy='86' r='9' fill='%23FFF1D6'/><circle cx='56' cy='55' r='9' fill='%23FFFDFA'/><circle cx='106' cy='44' r='7' fill='%23E6303F'/><circle cx='130' cy='104' r='7' fill='%23E6303F'/><circle cx='70' cy='128' r='7' fill='%23E6303F'/><circle cx='46' cy='68' r='7' fill='%23E6303F'/><circle cx='70' cy='44' r='6' fill='%236E4B3F'/><circle cx='130' cy='68' r='6' fill='%236E4B3F'/><circle cx='106' cy='128' r='6' fill='%236E4B3F'/><circle cx='46' cy='104' r='6' fill='%236E4B3F'/><ellipse cx='88' cy='58' rx='7' ry='4' fill='%235E9E55'/><ellipse cx='88' cy='114' rx='7' ry='4' fill='%235E9E55'/><ellipse cx='60' cy='86' rx='4' ry='7' fill='%235E9E55'/><ellipse cx='116' cy='86' rx='4' ry='7' fill='%235E9E55'/></g></svg>");
-  --icon-cup:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 136'><g stroke='%232B1511' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'><ellipse cx='60' cy='126' rx='46' ry='7' fill='%23FFF1D6'/><path d='M26 66h68l-8 56H34z' fill='%23FFE28A'/><path d='M42 70l-3 48M60 70v48M78 70l3 48' fill='none' stroke='%23C8953F' stroke-width='2.5'/><ellipse cx='60' cy='66' rx='38' ry='12' fill='%23BFE6AE'/><path d='M30 60c0-18 14-28 30-28s30 10 30 28c-8 6-18 8-30 8s-22-2-30-8z' fill='%23FFF1D6'/><path d='M34 50c6-8 12 4 18-4s12 6 18-2 10 6 16 0' fill='none' stroke='%23C8953F' stroke-width='3.5'/><path d='M40 40c6-8 12 4 18-4s12 6 18-2' fill='none' stroke='%23C8953F' stroke-width='3.5'/><path d='M60 22q3-12 13-14' fill='none'/><circle cx='60' cy='26' r='8' fill='%23E6303F'/></g><g stroke-width='3.5' stroke-linecap='round' fill='none'><path stroke='%235E9E55' d='M42 60l6-2M72 62l6-2M56 58l5-2'/><path stroke='%23FF5C9A' d='M38 74l6-2M76 76l6-2'/></g></svg>");
-  --icon-letter-m:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 190'><ellipse cx='88' cy='178' rx='70' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M46 156V40L88 96L130 40V156' transform='translate(0 8)' stroke='%232B1511' stroke-width='40'/><path d='M46 156V40L88 96L130 40V156' transform='translate(0 8)' stroke='%23F2C58C' stroke-width='34'/><path d='M46 156V40L88 96L130 40V156' stroke='%232B1511' stroke-width='40'/><path d='M46 156V40L88 96L130 40V156' stroke='%23FF5C9A' stroke-width='34'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='46' cy='60' r='8' fill='%23FFF1D6'/><circle cx='46' cy='116' r='8' fill='%23FFFDFA'/><circle cx='66' cy='66' r='8' fill='%23FFF1D6'/><circle cx='88' cy='100' r='8' fill='%23FFFDFA'/><circle cx='110' cy='66' r='8' fill='%23FFF1D6'/><circle cx='130' cy='60' r='8' fill='%23FFFDFA'/><circle cx='130' cy='116' r='8' fill='%23FFF1D6'/><circle cx='46' cy='146' r='8' fill='%23FFFDFA'/><circle cx='130' cy='146' r='8' fill='%23FFF1D6'/><circle cx='46' cy='88' r='7' fill='%23E6303F'/><circle cx='78' cy='84' r='7' fill='%23E6303F'/><circle cx='130' cy='88' r='7' fill='%23E6303F'/><circle cx='98' cy='84' r='7' fill='%23E6303F'/><ellipse cx='58' cy='48' rx='7' ry='4' fill='%235E9E55' transform='rotate(-50 58 48)'/><ellipse cx='118' cy='48' rx='7' ry='4' fill='%235E9E55' transform='rotate(50 118 48)'/><ellipse cx='88' cy='124' rx='7' ry='4' fill='%235E9E55' transform='rotate(0 88 124)'/><circle cx='46' cy='132' r='4' fill='%23FFE28A'/><circle cx='130' cy='132' r='4' fill='%23FFE28A'/><circle cx='88' cy='80' r='4' fill='%23FFE28A'/></g></svg>");
-  --icon-letter-j:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 190'><ellipse cx='88' cy='178' rx='70' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M62 40H126M104 40V112A30 30 0 0 1 44 112' transform='translate(0 8)' stroke='%232B1511' stroke-width='40'/><path d='M62 40H126M104 40V112A30 30 0 0 1 44 112' transform='translate(0 8)' stroke='%23F2C58C' stroke-width='34'/><path d='M62 40H126M104 40V112A30 30 0 0 1 44 112' stroke='%232B1511' stroke-width='40'/><path d='M62 40H126M104 40V112A30 30 0 0 1 44 112' stroke='%23FF5C9A' stroke-width='34'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='70' cy='40' r='8' fill='%23FFF1D6'/><circle cx='118' cy='40' r='8' fill='%23FFFDFA'/><circle cx='104' cy='62' r='8' fill='%23FFF1D6'/><circle cx='104' cy='100' r='8' fill='%23FFFDFA'/><circle cx='84' cy='140' r='8' fill='%23FFF1D6'/><circle cx='52' cy='128' r='8' fill='%23FFFDFA'/><circle cx='94' cy='40' r='7' fill='%23E6303F'/><circle cx='104' cy='82' r='7' fill='%23E6303F'/><circle cx='66' cy='142' r='7' fill='%23E6303F'/><circle cx='46' cy='112' r='7' fill='%23E6303F'/><ellipse cx='112' cy='52' rx='7' ry='4' fill='%235E9E55' transform='rotate(-40 112 52)'/><ellipse cx='100' cy='120' rx='7' ry='4' fill='%235E9E55' transform='rotate(20 100 120)'/><circle cx='82' cy='48' r='4' fill='%23FFE28A'/><circle cx='60' cy='118' r='4' fill='%23FFE28A'/><circle cx='104' cy='70' r='4' fill='%23FFE28A'/></g></svg>");
-  --icon-letter-l:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 190'><ellipse cx='88' cy='178' rx='70' ry='9' fill='%23FFF1D6' stroke='%232B1511' stroke-width='3'/><g fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M56 40V150H130' transform='translate(0 8)' stroke='%232B1511' stroke-width='40'/><path d='M56 40V150H130' transform='translate(0 8)' stroke='%23F2C58C' stroke-width='34'/><path d='M56 40V150H130' stroke='%232B1511' stroke-width='40'/><path d='M56 40V150H130' stroke='%23FF5C9A' stroke-width='34'/></g><g stroke='%232B1511' stroke-width='2.5'><circle cx='56' cy='56' r='8' fill='%23FFF1D6'/><circle cx='56' cy='104' r='8' fill='%23FFFDFA'/><circle cx='56' cy='150' r='8' fill='%23FFF1D6'/><circle cx='100' cy='150' r='8' fill='%23FFFDFA'/><circle cx='130' cy='150' r='8' fill='%23FFF1D6'/><circle cx='56' cy='80' r='7' fill='%23E6303F'/><circle cx='56' cy='128' r='7' fill='%23E6303F'/><circle cx='82' cy='150' r='7' fill='%23E6303F'/><circle cx='116' cy='150' r='7' fill='%23E6303F'/><ellipse cx='66' cy='66' rx='7' ry='4' fill='%235E9E55' transform='rotate(-50 66 66)'/><ellipse cx='66' cy='116' rx='7' ry='4' fill='%235E9E55' transform='rotate(-50 66 116)'/><ellipse cx='96' cy='142' rx='7' ry='4' fill='%235E9E55' transform='rotate(0 96 142)'/><circle cx='64' cy='92' r='4' fill='%23FFE28A'/><circle cx='72' cy='154' r='4' fill='%23FFE28A'/><circle cx='126' cy='142' r='4' fill='%23FFE28A'/></g></svg>");
-  color-scheme:light;
+  --checker:none; --dots:none; --sprinkles:none; --squiggle:none;
+  --icon-cake:none; --icon-donut:none; --icon-cupcake:none; --icon-number:none; --icon-heart:none; --icon-ring:none; --icon-cup:none;
+  --icon-letter-m:none; --icon-letter-j:none; --icon-letter-l:none;
+  color-scheme:dark;
 }
+@media (min-width:1000px){:root{--gl:max(40px,env(safe-area-inset-left,0px));--gr:max(40px,env(safe-area-inset-right,0px))}}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 html,body{overflow-x:clip}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--sans);-webkit-font-smoothing:antialiased;letter-spacing:-.004em}
 body.locked{overflow:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+/* the grain: a 180px tile of warm fractal noise, fixed over the page at 6% */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .96 0 0 0 0 .88 0 0 0 0 .74 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>") 0 0/180px 180px}
 img{max-width:100%;display:block}
 img.is-missing{visibility:hidden}
+picture{display:contents}
+source{display:none}
+.sec,.band,.wall-sec{scroll-margin-top:72px}
 section:focus,main:focus{outline:none}
 [hidden]{display:none!important}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
 a{color:inherit}
-h1,h2,h3,h4{text-wrap:balance}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
 p{margin:0}
-:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
-.band :focus-visible,.foot :focus-visible,.toast :focus-visible{outline-color:var(--butter)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
 .wrap{width:min(var(--wrap),100%);margin-inline:auto;padding-left:var(--gl);padding-right:var(--gr)}
 .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:.6rem 1rem;z-index:200}
 .skip:focus{left:var(--gl)}
-.hint{font:400 .8rem/1.5 var(--mono);color:var(--ink-2)}
-.eyebrow{font:500 .76rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:.7rem;align-items:center;margin:0 0 1.1rem}
-.eyebrow::before{content:"";width:36px;height:9px;flex:none;background:radial-gradient(circle at 50% 100%,var(--pink) 4.5px,transparent 5px) 0 0/12px 9px repeat-x}
-.eyebrow.light{color:var(--night-mute)}
-.eyebrow.light::before{background-image:radial-gradient(circle at 50% 100%,var(--butter) 4.5px,transparent 5px)}
+.hint{font:400 .76rem/1.6 var(--mono);color:var(--ink-2)}
+.eyebrow{font:500 .66rem/1.3 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;gap:.8rem;align-items:center;margin:0 0 1.2rem}
+.eyebrow::before{content:"";width:22px;height:1px;flex:none;background:var(--gold)}
+.eyebrow.light{color:var(--gold)}
 
-/* ---------- buttons: flat candy with an ink outline and a hard chocolate shadow; they lift on hover and press on click */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.9rem 1.6rem;font-weight:700;font-size:.95rem;text-decoration:none;border:var(--bw) solid var(--ink);background:var(--white);color:var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .18s var(--out),box-shadow .18s var(--out),background .2s,color .2s;white-space:nowrap;line-height:1.2}
-.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--ink)}
-.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
-.btn-pink{background:var(--pink)}
-.btn-pink:hover{background:var(--strawberry)}
-.btn-ink{background:var(--choc);color:var(--cream)}
-.btn-ink:hover{background:var(--night-2)}
-.btn-line{background:var(--cream)}
-.btn-line:hover{background:var(--butter)}
+/* ---------- buttons: hairline pills; the primary is the one pink thing on the page */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;border-radius:999px;padding:.9rem 1.7rem;font-weight:600;font-size:.92rem;letter-spacing:.005em;text-decoration:none;border:1px solid var(--line-2);background:transparent;color:var(--ink);transition:background .25s var(--out),color .25s var(--out),border-color .25s var(--out),transform .25s var(--out);white-space:nowrap;line-height:1.2;min-height:48px}
+.btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:active{transform:scale(.985)}
+.btn-pink{background:var(--pink);border-color:var(--pink);color:#141011}
+.btn-pink:hover{background:var(--pink-deep);border-color:var(--pink-deep);color:#141011}
+.btn-ink{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:#fff;border-color:#fff;color:var(--paper)}
+.btn-line{background:transparent}
 .btn-wide{width:100%}
-.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:0 4px 0 var(--ink)!important}
-.link-arrow{font-weight:700;text-decoration:none;padding:.5rem .1rem .5rem;background:var(--squiggle) 0 100%/16px 9px repeat-x;transition:color .2s}
-.link-arrow:hover{color:var(--raspberry)}
-.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;line-height:1;border:2px solid var(--ink);background:var(--white);box-shadow:0 3px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .2s}
-.icon-btn:hover{background:var(--pink)}
-.icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none!important}
+.link-arrow{font-weight:500;font-size:.95rem;text-decoration:none;padding:.45rem 0;border-bottom:1px solid var(--line-2);transition:border-color .2s,color .2s}
+.link-arrow:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:1.2rem;line-height:1;border:1px solid var(--line-2);color:var(--ink);transition:background .2s,color .2s,border-color .2s}
+.icon-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-/* ---------- ticker + header */
-.ticker{background:var(--checker);border-bottom:var(--bw) solid var(--ink);overflow:hidden}
-.ticker-row{display:flex;gap:.6rem;padding-block:.6rem;justify-content:center;white-space:nowrap}
-.ticker-row span{font:500 .72rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--cream);border:2px solid var(--ink);border-radius:999px;padding:.45rem .75rem;flex:none}
+/* ---------- utility line + header */
+.ticker{border-bottom:1px solid var(--line);overflow:hidden;background:var(--paper)}
+.ticker-row{display:flex;gap:2.75rem;padding-block:.55rem;justify-content:center;white-space:nowrap}
+.ticker-row span{font:400 .64rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);flex:none;display:inline-flex;align-items:center;gap:2.75rem}
+.ticker-row span::after{content:"";width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.8}
 .ticker-row .dup{display:none}
 @media (max-width:860px){
-  .ticker-row{justify-content:flex-start;width:max-content;animation:slide 28s linear infinite;padding-left:.6rem}
-  .ticker-row .dup{display:inline-block}
+  .ticker-row{justify-content:flex-start;width:max-content;animation:slide 34s linear infinite;padding-left:1rem}
+  .ticker-row .dup{display:inline-flex}
 }
-.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);transition:box-shadow .3s}
-.site-head::after{content:"";position:absolute;left:0;right:0;top:100%;height:13px;pointer-events:none;background:radial-gradient(circle at 50% 0,var(--strawberry) 9px,var(--ink) 9.5px 11.5px,transparent 12px) 0 0/26px 13px repeat-x,var(--paper)}
-.site-head.scrolled{box-shadow:0 10px 30px -18px rgba(43,21,17,.4)}
-.head-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:14px;transition:padding .3s var(--out)}
-.site-head.scrolled .head-row{padding-block:8px}
-.wordmark{font:400 1.9rem/1 var(--display);text-decoration:none;display:inline-flex;align-items:baseline;gap:.55rem;color:var(--raspberry);text-shadow:.05em .05em 0 var(--choc);transition:font-size .3s var(--out);white-space:nowrap}
-.wordmark small{font:700 .6rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-shadow:none;background:var(--butter);border:2px solid var(--ink);padding:.32rem .42rem;border-radius:5px;transform:rotate(-4deg)}
-.site-head.scrolled .wordmark{font-size:1.5rem}
-.nav{display:flex;gap:1.5rem}
-.nav a{text-decoration:none;font-weight:600;font-size:.95rem;position:relative;padding:.2rem 0 .5rem;white-space:nowrap}
-.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;background:var(--squiggle) 0 0/16px 9px repeat-x;transform:scaleX(0);transform-origin:left;transition:transform .25s var(--out)}
+.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid transparent;transition:background .35s,border-color .35s}
+.site-head.scrolled{background:rgba(20,16,17,.72);-webkit-backdrop-filter:saturate(1.3) blur(18px);backdrop-filter:saturate(1.3) blur(18px);border-bottom-color:var(--line)}
+.head-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:18px;transition:padding .3s var(--out)}
+.site-head.scrolled .head-row{padding-block:11px}
+.wordmark{font:400 1.55rem/1 var(--display);text-decoration:none;display:inline-flex;align-items:baseline;gap:.6rem;color:var(--ink);white-space:nowrap}
+.wordmark small{font:500 .56rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.nav{display:flex;gap:2rem}
+.nav a{text-decoration:none;font-weight:500;font-size:.88rem;color:var(--fg-2);position:relative;padding:.3rem 0;white-space:nowrap;transition:color .2s}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--out)}
+.nav a:hover{color:var(--ink)}
 .nav a:hover::after{transform:scaleX(1)}
 .head-actions{display:flex;align-items:center;gap:.6rem}
-.menu-btn{display:none;min-height:40px;border:2px solid var(--ink);border-radius:999px;padding:.5rem .9rem;font-weight:700;font-size:.9rem;background:var(--cream);box-shadow:0 3px 0 var(--ink)}
-.bag-btn{display:inline-flex;align-items:center;gap:.6rem;border:var(--bw) solid var(--ink);border-radius:999px;padding:.45rem .5rem .45rem 1.05rem;font-weight:700;font-size:.9rem;background:var(--butter);box-shadow:0 4px 0 var(--ink);transition:transform .15s var(--out),box-shadow .15s var(--out),background .2s}
-.bag-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--ink);background:var(--pink)}
-.bag-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-.bag-count{font:700 .78rem/1 var(--mono);background:var(--ink);color:var(--butter);border:2px solid var(--ink);border-radius:999px;min-width:1.7rem;height:1.7rem;display:grid;place-items:center;padding-inline:.35rem;font-variant-numeric:tabular-nums}
-.bag-count.bump{animation:bump .5s var(--spring)}
+.menu-btn{display:none;min-height:40px;border:1px solid var(--line-2);border-radius:999px;padding:.5rem .9rem;font-weight:500;font-size:.82rem}
+.bag-btn{display:inline-flex;align-items:center;gap:.7rem;border:1px solid var(--line-2);border-radius:999px;padding:.4rem .4rem .4rem 1rem;font-weight:500;font-size:.85rem;min-height:40px;transition:background .25s,color .25s,border-color .25s}
+.bag-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.bag-count{font:500 .72rem/1 var(--mono);background:var(--gold);color:#141011;border-radius:999px;min-width:1.6rem;height:1.6rem;display:grid;place-items:center;padding-inline:.35rem;font-variant-numeric:tabular-nums}
+.bag-count.bump{animation:bump .5s var(--out)}
 @media (max-width:860px){
   .nav{display:none}
-  .menu-btn{display:inline-flex;padding:.45rem .75rem;font-size:.85rem}
+  .menu-btn{display:inline-flex}
   .head-actions{gap:.45rem}
-  .wordmark{font-size:1.45rem}
-  .site-head.scrolled .wordmark{font-size:1.3rem}
-  .bag-btn{padding:.4rem .4rem .4rem .8rem;gap:.45rem;font-size:.85rem}
-  .bag-count{min-width:1.5rem;height:1.5rem;font-size:.72rem}
-  .site-head.menu-open .nav{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:100%;z-index:1;background:var(--paper);border-bottom:var(--bw) solid var(--ink);padding:1.25rem var(--gl) 1.4rem var(--gl);gap:.9rem;box-shadow:0 20px 40px -20px rgba(43,21,17,.3);max-height:calc(100vh - 100% - 12px);max-height:calc(100dvh - 100% - 12px);overflow-y:auto;overscroll-behavior:contain}
-  .site-head.menu-open .nav a{font-size:1.1rem}
+  .wordmark{font-size:1.4rem}
+  .site-head.menu-open .nav{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:100%;z-index:1;background:rgba(20,16,17,.96);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:1.25rem var(--gl) 1.5rem var(--gl);gap:1rem;max-height:calc(100vh - 100% - 12px);max-height:calc(100dvh - 100% - 12px);overflow-y:auto;overscroll-behavior:contain}
+  .site-head.menu-open .nav a{font-size:1.15rem;color:var(--ink)}
 }
 @media (max-width:860px) and (max-height:480px){.site-head.menu-open .nav{flex-flow:row wrap;gap:.5rem 1.5rem;padding-block:.9rem}}
-@media (max-width:520px){
-  .site-head .wordmark{gap:.4rem;font-size:1.35rem}
-  .site-head .wordmark small{font-size:.5rem;padding:.26rem .34rem;letter-spacing:.12em}
-  .head-row{gap:.6rem}
-}
-@media (max-width:420px){
-  .site-head .wordmark{font-size:1.3rem}
-  .site-head .wordmark small{display:none}
-  .menu-btn{padding:.42rem .65rem;font-size:.82rem}
-  .bag-btn{white-space:nowrap;font-size:.8rem;padding-left:.7rem;gap:.4rem}
-}
-@media (max-width:340px){
-  .site-head .wordmark{font-size:1.15rem}
-  .menu-btn{padding:.4rem .55rem;font-size:.78rem}
-  .bag-btn{font-size:.76rem;padding:.38rem .35rem .38rem .6rem;gap:.3rem}
-}
+@media (max-width:520px){.site-head .wordmark{font-size:1.3rem;gap:.45rem}.head-row{gap:.6rem}}
+@media (max-width:420px){.site-head .wordmark small{display:none}.menu-btn{padding:.42rem .7rem;font-size:.78rem}.bag-btn{font-size:.8rem;padding-left:.8rem;gap:.45rem}}
+@media (max-width:340px){.site-head .wordmark{font-size:1.15rem}.menu-btn{padding:.4rem .55rem}.bag-btn{font-size:.76rem;padding:.35rem .35rem .35rem .65rem;gap:.3rem}}
 
-/* ---------- hero */
-.hero{position:relative;padding-block:2.75rem 4.5rem;overflow-x:clip}
-.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--sprinkles) 0 0/200px;-webkit-mask-image:radial-gradient(60% 70% at 78% 40%,#000 35%,transparent 75%);mask-image:radial-gradient(60% 70% at 78% 40%,#000 35%,transparent 75%)}
-.hero .wrap{position:relative}
-.hero-title{font:400 clamp(3rem,7.4vw,6.6rem)/.95 var(--display);margin:0 0 2.1rem;letter-spacing:-.005em;color:var(--raspberry);text-shadow:.045em .045em 0 var(--choc)}
-.hero-title .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .12em .16em 0;margin:0 0 -.16em 0}
-.hero-title .word{display:inline-block;animation:rise .9s var(--out) both;animation-delay:calc(var(--i)*90ms)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);gap:3.5rem;align-items:start}
+/* ---------- hero: the photograph, a scrim, the headline, and the builder as a glass panel */
+.hero{position:relative;overflow:hidden;background:var(--night);--heroH:min(76svh,640px)}
+.hero-media{position:absolute;inset:0;overflow:hidden}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;opacity:0;transition:opacity 1.8s var(--out);transform:scale(1.04);animation:kb 18s ease-in-out infinite alternate;animation-play-state:paused;will-change:transform,opacity}
+.hero-media img.on{opacity:1;animation-play-state:running}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,17,.98) 0%,rgba(20,16,17,.93) 28%,rgba(20,16,17,.74) 50%,rgba(20,16,17,.4) 70%,rgba(20,16,17,.1) 88%,rgba(20,16,17,0) 100%),linear-gradient(to right,rgba(20,16,17,.66),rgba(20,16,17,0) 60%)}
+.hero .wrap{position:relative;z-index:2;min-height:calc(100vh - 96px);min-height:calc(100svh - 96px);display:flex;flex-direction:column;justify-content:flex-end;padding-top:clamp(8rem,22vh,14rem);padding-bottom:clamp(2rem,4vw,3.25rem)}
+.hero-title{font:600 clamp(3rem,8vw,7.4rem)/.94 var(--sans);letter-spacing:-.045em;margin:0 0 1.6rem;color:var(--ink);max-width:11ch}
+.hero-title .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .06em .1em 0;margin:0 0 -.1em 0}
+.hero-title .word{display:inline-block;animation:rise .9s var(--out) both;animation-delay:calc(var(--i)*80ms)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:3rem 4rem;align-items:end}
 .hero-grid > *{min-width:0}
-.builder{border:var(--bw) solid var(--ink);border-radius:22px;padding:1.4rem 1.5rem 1.2rem;background:var(--white);margin-bottom:1.9rem;position:relative;box-shadow:0 7px 0 var(--ink)}
-.builder::before{content:"Try it";content:"Try it" / "";position:absolute;top:-.95em;left:1.2rem;background:var(--pink);color:var(--ink);font:700 .66rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:.45rem .65rem;border:2px solid var(--ink);border-radius:6px;transform:rotate(-3deg);box-shadow:2px 2px 0 var(--ink)}
-.candles{position:absolute;right:1.4rem;top:-30px;display:flex;gap:10px;align-items:flex-end;pointer-events:none}
-.candles i{display:block;width:12px;height:34px;border:2.5px solid var(--ink);border-radius:4px 4px 2px 2px;background:repeating-linear-gradient(-45deg,var(--pink) 0 5px,var(--white) 5px 10px);position:relative}
-.candles i:nth-child(2){height:42px;background:repeating-linear-gradient(-45deg,var(--pistachio) 0 5px,var(--white) 5px 10px)}
-.candles i:nth-child(3){height:30px;background:repeating-linear-gradient(-45deg,var(--blue) 0 5px,var(--white) 5px 10px)}
-.candles i::before{content:"";position:absolute;left:50%;top:-20px;width:12px;height:16px;margin-left:-6px;background:radial-gradient(circle at 50% 70%,var(--white) 0 18%,var(--butter) 19% 60%,var(--gold) 61%);border:2px solid var(--ink);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transform-origin:50% 100%;animation:flicker 1.1s ease-in-out infinite alternate;animation-play-state:paused}
-.builder:hover .candles i::before,.builder:focus-within .candles i::before{animation-play-state:running}
-.candles i:nth-child(2)::before{animation-delay:-.4s}
-.candles i:nth-child(3)::before{animation-delay:-.8s}
-.candles i::after{content:"";position:absolute;left:50%;top:-5px;width:2px;height:5px;margin-left:-1px;background:var(--ink)}
-.builder-label{display:block;font-weight:700;font-size:.92rem;margin-bottom:.65rem}
+.lede{font-size:1.08rem;max-width:32rem;color:var(--fg-2);margin-bottom:1.6rem;line-height:1.6}
+.cta-row{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.builder{position:relative;border:1px solid var(--line);border-radius:var(--r);padding:1.4rem 1.5rem 1.3rem;background:rgba(27,22,23,.66);-webkit-backdrop-filter:blur(20px) saturate(1.2);backdrop-filter:blur(20px) saturate(1.2);display:flex;flex-direction:column;gap:.85rem;animation:fadeup .9s var(--out) .35s both}
+.builder::before{content:"Try it";content:"Try it" / "";font:500 .62rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.builder-label{display:block;font-weight:500;font-size:.95rem;color:var(--ink);letter-spacing:-.01em}
 .builder-row{display:flex;gap:.6rem;flex-wrap:wrap}
-.builder-input{flex:1 1 7rem;min-width:0;border:var(--bw) solid var(--ink);border-radius:12px;padding:.6rem .8rem;font:600 1.35rem/1.2 var(--sans);text-transform:uppercase;letter-spacing:.08em;background:var(--cream);color:var(--ink);transition:box-shadow .2s}
-.builder-input:focus{outline:0;box-shadow:0 0 0 3px var(--pink-deep)}
-.glyphs{font:400 clamp(3.6rem,7vw,6rem)/1 var(--display);color:var(--raspberry);display:flex;gap:.02em;margin:.4rem 0 .2rem;min-height:1em;text-shadow:.045em .045em 0 var(--choc);letter-spacing:-.02em;overflow:hidden;padding:0 .08em .08em 0}
-.glyphs span{display:inline-block;animation:pop .6s var(--spring) both;animation-delay:calc(var(--i)*70ms);transform-origin:50% 90%}
-.glyphs span:hover{animation:wiggle .5s var(--out)}
-.builder-note{font:400 .78rem/1.5 var(--mono);color:var(--ink-2)}
-.lede{font-size:1.12rem;max-width:34rem;color:var(--ink-2);margin-bottom:1.6rem}
-.cta-row{display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap}
-.collage{position:relative;aspect-ratio:4/5;max-width:100%}
-.collage .main{position:absolute;inset:4% 10% 0 0;border-radius:30px;overflow:hidden;background:var(--icon) 50% 48%/auto 54% no-repeat,var(--pink-soft);border:var(--bw) solid var(--ink);box-shadow:0 9px 0 var(--ink)}
-.collage .main img{position:relative;width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 1.4s var(--out)}
-.collage .main img::after{content:"";position:absolute;inset:0;background:var(--icon) 50% 48%/auto 54% no-repeat,var(--pink-soft)}
-.collage:hover .main img{transform:scale(1.07)}
-.collage .second{--rot:5deg;position:absolute;right:0;bottom:-4%;width:44%;aspect-ratio:3/4;background:var(--white);padding:8px 8px 10px;border:var(--bw) solid var(--ink);border-radius:10px;box-shadow:0 7px 0 var(--ink);transform:rotate(var(--rot));animation:drop .8s var(--spring) .4s both}
-.collage .second img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:4px;background:var(--icon) center/62% no-repeat,var(--butter-soft)}
-.collage .second img::after{content:"";position:absolute;inset:0;border-radius:4px;background:var(--icon) center/62% no-repeat,var(--butter-soft)}
-.sticker{--rot:-10deg;position:absolute;left:-4%;top:-2%;width:124px;height:124px;border-radius:50%;background:var(--butter);color:var(--ink);display:grid;place-items:center;text-align:center;font:700 .66rem/1.35 var(--mono);text-transform:uppercase;letter-spacing:.12em;border:var(--bw) solid var(--ink);box-shadow:4px 5px 0 var(--ink);transform:rotate(var(--rot));animation:drop .8s var(--spring) .6s both;z-index:2}
-.sticker::after{content:"";position:absolute;inset:7px;border:2.5px dashed var(--ink);border-radius:50%}
-.hero-cake{display:none}
+.builder-input{flex:1 1 7rem;min-width:0;border:1px solid var(--line-2);border-radius:4px;padding:.6rem .9rem;font:500 1.35rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.14em;background:rgba(35,29,30,.9);color:var(--ink);transition:border-color .2s,box-shadow .2s;min-height:48px}
+.builder-input:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.glyphs{font:600 clamp(3.4rem,6vw,5.4rem)/1 var(--sans);letter-spacing:-.05em;color:var(--ink);display:flex;gap:.04em;min-height:1em;overflow:hidden;padding:0 .06em .04em 0;margin-top:.1rem}
+.glyphs span{display:inline-block;animation:pop .6s var(--out) both;animation-delay:calc(var(--i)*70ms)}
+.builder-note{font:400 .74rem/1.65 var(--mono);color:var(--ink-2)}
+#hero-price{color:var(--pink);font-weight:500}
+.candles,.hero-cake,.collage,.sticker{display:none}
 @media (max-width:900px){
-  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
-  .collage{max-width:520px;margin-top:2.5rem}
-  .hero::before{background-size:160px;-webkit-mask-image:radial-gradient(120% 170px at 50% 215px,#000 25%,transparent 80%);mask-image:radial-gradient(120% 170px at 50% 215px,#000 25%,transparent 80%)}
+  .hero-media{bottom:auto;height:var(--heroH)}
+  .hero-media img{object-position:50% 45%}
+  .hero-media::after{background:linear-gradient(to top,rgba(20,16,17,1) 0%,rgba(20,16,17,.95) 20%,rgba(20,16,17,.82) 40%,rgba(20,16,17,.5) 60%,rgba(20,16,17,.15) 80%,rgba(20,16,17,0) 100%)}
+  .hero .wrap{min-height:0;padding-top:calc(var(--heroH) - 250px);padding-bottom:2.5rem}
+  .hero-title{margin-bottom:1.4rem}
+  .hero-grid{grid-template-columns:1fr;gap:2.25rem}
+  .builder{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 @media (max-width:480px){
-  .hero{padding-block:1.75rem 3rem}
-  .hero-title{font-size:clamp(2.6rem,13.5vw,3.4rem)}
-  .sticker{width:98px;height:98px;left:-3%;font-size:.58rem}
-  .candles{right:1rem;top:-26px;gap:8px}
-  .candles i{width:10px;height:28px}
-  .candles i:nth-child(2){height:34px}
-  .candles i:nth-child(3){height:24px}
+  .hero{--heroH:min(74svh,600px)}
+  .hero-title{font-size:clamp(2.7rem,14vw,3.6rem);margin-bottom:1.2rem}
+  .hero .wrap{padding-top:calc(var(--heroH) - 240px)}
+  .lede{font-size:1rem}
+  .builder{padding:1.2rem 1.1rem 1.1rem}
 }
 
-/* ---------- marquee + drips */
-.marquee{background:var(--pink);color:var(--ink);overflow:hidden;padding-block:.9rem;border-top:var(--bw) solid var(--ink);position:relative;z-index:1}
-.marquee-track{display:flex;width:max-content;animation:slide 38s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee span{font:400 clamp(1.5rem,3vw,2.4rem)/1.1 var(--display);padding-inline:1.1rem;white-space:nowrap;display:inline-flex;align-items:center;gap:1.1rem;color:var(--choc);text-shadow:.04em .04em 0 var(--strawberry)}
-.marquee span::after{content:"";width:.5em;height:.5em;border-radius:50%;background:var(--cherry);border:2px solid var(--ink);flex:none;box-shadow:inset -.08em -.08em 0 rgba(0,0,0,.2)}
-.drip{display:block;width:100%;height:48px;position:relative;z-index:2;pointer-events:none}
-.drip-pink{color:var(--pink);margin-bottom:-48px}
-.drip-choc{color:var(--night);margin-bottom:-48px}
-.drip-paper{color:var(--paper)}
+/* ---------- the marquee is gone; the strip of photographs is the moving thing now */
+.marquee,.drip,.marble-edge,.donut-illo{display:none}
 
-/* ---------- sections, colour tiers and piped edges */
-.sec{padding-block:4.5rem;position:relative}
-.sec-mint{background:var(--pistachio-soft)}
-.sec-dots{background:var(--paper)}
-.sec-pink{background:var(--pink-soft)}
-.edge-shell::before{content:"";position:absolute;left:0;right:0;top:-1px;height:24px;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 0,var(--edge) 13.5px,var(--ink) 14px 16.5px,transparent 17px) 0 0/34px 24px repeat-x}
-.edge-paper{--edge:var(--paper)}
-.edge-mint{--edge:var(--pistachio-soft)}
-.edge-pink{--edge:var(--pink-soft)}
-.sec-head{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:2.2rem;flex-wrap:wrap}
-.sec-head h2{font:400 clamp(2.4rem,4.8vw,4rem)/1 var(--display);margin:0;position:relative;padding-bottom:1.1rem;color:var(--choc);text-shadow:.045em .045em 0 var(--strawberry)}
-.sec-head h2::after{content:"";position:absolute;left:0;bottom:0;width:min(100%,13rem);height:12px;background:var(--squiggle) 0 0/20px 12px repeat-x;transform:rotate(-1.5deg);transform-origin:left}
-.sec-note{font:500 .78rem/1.5 var(--mono);color:var(--ink-2);max-width:24rem;background:var(--butter-soft);border:2px solid var(--ink);border-radius:6px;padding:.65rem .85rem;margin:0 4px .4rem 0}
-@media (max-width:680px){.sec{padding-block:3.5rem}.sec-note{max-width:none}}
+/* ---------- sections */
+.sec{padding-block:clamp(4rem,8vw,7rem);position:relative;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:clamp(1.8rem,3vw,2.75rem);flex-wrap:wrap}
+.sec-head h2{font:600 clamp(2.1rem,4.4vw,3.8rem)/1 var(--sans);letter-spacing:-.04em;margin:0;color:var(--ink)}
+.sec-note{font:400 .78rem/1.65 var(--mono);color:var(--ink-2);max-width:26rem;margin:0 0 .4rem}
+.sec-side{display:flex;align-items:end;gap:2rem;flex-wrap:wrap}
+@media (max-width:680px){.sec-note{max-width:none}}
 
-/* ---------- shop grid: cards on pastel plates */
-.filters{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:1.8rem;align-items:center}
-.chip{border:2px solid var(--ink);border-radius:999px;padding:.55rem 1rem;font-size:.88rem;font-weight:600;background:var(--white);transition:transform .18s var(--out),background .2s,color .2s}
-.chip:hover{transform:translateY(-2px) rotate(-1.5deg);background:var(--butter-soft)}
-.chip:active{transform:translateY(1px)}
-.chip[aria-pressed="true"]{background:var(--choc);color:var(--cream)}
-.donut-illo{display:none}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.2rem 1.4rem}
+/* ---------- menu: tall photo tiles with the name and price on a bottom scrim */
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.75rem;align-items:center}
+.chip{border:1px solid var(--line-2);border-radius:999px;padding:.55rem 1rem;font:500 .66rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);min-height:40px;display:inline-flex;align-items:center;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}
 @media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem .8rem}}
-.card{display:flex;flex-direction:column;gap:.8rem;animation:fadeup .55s var(--out) both;min-width:0}
-.card-media{--plate:var(--pink-soft);position:relative;aspect-ratio:4/5;border-radius:26px;overflow:hidden;background:var(--icon) 50% 50%/auto 52% no-repeat,var(--plate);cursor:pointer;border:var(--bw) solid var(--ink);box-shadow:0 6px 0 var(--ink);transition:transform .25s var(--out),box-shadow .25s var(--out)}
-.card:nth-child(3n+2) .card-media{--plate:var(--pistachio-soft)}
-.card:nth-child(3n+3) .card-media{--plate:var(--butter-soft)}
-/* The plate illustration follows the product in the photo's file name, so a heart tart never shows a doughnut. Containers
-   and the images inside them resolve to the same icon: the container paints it while a photo is still loading or lazy,
-   img::after paints it over a broken photo, and a real photo covers both. */
-:where(.collage .main,.collage .second,.card-media,.band-photos figure,.gallery-grid figure,.pdp-main,.pdp-thumbs button,.bag-item,.fly){--icon:var(--icon-cake)}
-.card-media[data-open="number-cake"],[data-icon="number"]{--icon:var(--icon-number)}
-.card-media[data-open="heart-tart"],[data-icon="heart"]{--icon:var(--icon-heart)}
-.card-media[data-open="ring-tart"],[data-icon="ring"]{--icon:var(--icon-ring)}
-.card-media[data-open="bomboloni"],[data-icon="donut"]{--icon:var(--icon-donut)}
-.card-media[data-open="kunafa-cups"],[data-icon="cup"]{--icon:var(--icon-cup)}
-.card-media[data-open="mini-cake"],[data-icon="cupcake"]{--icon:var(--icon-cupcake)}
-[data-icon="letter-m"]{--icon:var(--icon-letter-m)}
-[data-icon="letter-j"]{--icon:var(--icon-letter-j)}
-[data-icon="letter-l"]{--icon:var(--icon-letter-l)}
-img[src*="/number-"],img[src*="/letter-"],img[src*="/bar-mitzvah"]{--icon:var(--icon-number)}
-img[src*="/heart-"],img[src*="/marble-box-detail"]{--icon:var(--icon-heart)}
-img[src*="/letter-m"]{--icon:var(--icon-letter-m)}
-img[src*="/letter-j"]{--icon:var(--icon-letter-j)}
-img[src*="/letter-l"]{--icon:var(--icon-letter-l)}
-img[src*="/ring-"]{--icon:var(--icon-ring)}
-img[src*="/bomboloni"]{--icon:var(--icon-donut)}
-img[src*="/kunafa"]{--icon:var(--icon-cup)}
-img[src*="/mini-"]{--icon:var(--icon-cupcake)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/number-"]),:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/letter-"]),:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/bar-mitzvah"]){--icon:var(--icon-number)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/heart-"]){--icon:var(--icon-heart)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/letter-m"]){--icon:var(--icon-letter-m)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/letter-j"]){--icon:var(--icon-letter-j)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/letter-l"]){--icon:var(--icon-letter-l)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/ring-"]){--icon:var(--icon-ring)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/bomboloni"]){--icon:var(--icon-donut)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/kunafa"]){--icon:var(--icon-cup)}
-:is(.pdp-main,.pdp-thumbs button,.bag-item):has(> img[src*="/mini-"]){--icon:var(--icon-cupcake)}
-/* Only Chromium draws img::after on a broken photo; WebKit and Gecko draw alt text over the plate instead. Hiding the
-   text leaves the container's illustration showing in every engine. */
-.collage .main img,.collage .second img,.card-media img,.band-photos img,.gallery-grid img,.pdp-main img,.pdp-thumbs button img,.bag-item img{color:transparent;font-size:0}
-/* The Name cake is "white florals and gold": a tonal stamp so it no longer duplicates the Vintage card's. */
-.card-media[data-open="name-cake"],.card-media[data-open="name-cake"] img::after{background-blend-mode:luminosity}
-.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--out),opacity .5s var(--out)}
-.card-media img::after{content:"";position:absolute;inset:0;background:var(--icon) 50% 50%/auto 52% no-repeat,var(--plate)}
+@media (max-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}}
+.card{position:relative;animation:fadeup .7s var(--out) both;min-width:0;border-radius:var(--r);overflow:hidden;background:var(--surface);isolation:isolate}
+.card-media{position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer;background:var(--surface-2)}
+.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--out),opacity .7s var(--out)}
 .card-media img.alt{opacity:0}
-.card:hover .card-media{transform:translateY(-4px) rotate(-1deg);box-shadow:0 10px 0 var(--ink)}
 .card:hover .card-media img.main,.card:focus-within .card-media img.main{transform:scale(1.05)}
 .card:hover .card-media img.alt,.card:focus-within .card-media img.alt{opacity:1;transform:scale(1.05)}
-.card-tag{position:absolute;left:.7rem;top:.75rem;font:700 .62rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:.45rem .6rem;border-radius:6px;background:var(--white);color:var(--ink);border:2px solid var(--ink);z-index:3}
-.card-tag.pink,.card-tag.blue,.card-tag.lilac{background:var(--butter)}
-.card-body{position:relative;display:flex;flex-direction:column;gap:.1rem;padding:.2rem .2rem 0}
-.card h3{font:700 1.02rem/1.25 var(--sans);margin:0 0 .2rem}
-.card .meta{font:400 .74rem/1.4 var(--mono);color:var(--ink-2)}
-.price{font:500 .95rem/1.2 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.card .price{position:absolute;right:4px;bottom:calc(100% + 2px);z-index:3;background:var(--butter);border:2px solid var(--ink);border-radius:6px;padding:.35rem .55rem .35rem 1.05rem;font-size:.88rem;max-width:calc(100% - 8px)}
-.card .price::before{content:"";position:absolute;left:.3rem;top:50%;width:8px;height:8px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);transform:translateY(-50%)}
-.card-add{align-self:flex-start;display:inline-flex;align-items:center;gap:.45rem;min-height:44px;font-size:.86rem;font-weight:700;padding:.55rem 1.05rem;margin-left:.2rem;border:2px solid var(--ink);border-radius:999px;background:var(--cream);box-shadow:0 3px 0 var(--ink);transition:transform .18s var(--out),box-shadow .18s var(--out),background .2s}
-.card-add:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--ink);background:var(--pink)}
-.card-add:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-@media (max-width:680px){.card-add{padding:.5rem .9rem;font-size:.82rem}.card .price{font-size:.8rem;padding:.3rem .5rem .3rem .95rem}}
-@media (max-width:360px){.card .price{font-size:.74rem;padding:.28rem .45rem .28rem .9rem;max-width:100%;right:0}}
-@media (max-width:340px){.card-add{padding:.5rem .7rem;font-size:.78rem;gap:.3rem}}
+.card-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,17,.97) 0%,rgba(20,16,17,.82) 28%,rgba(20,16,17,.38) 50%,rgba(20,16,17,0) 70%);pointer-events:none}
+.card-media img,.band-photos img,.strip img,.wall img,.pdp-main img,.pdp-thumbs button img,.bag-item img{color:transparent;font-size:0}
+.card-tag{position:absolute;left:.9rem;top:.9rem;font:500 .58rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;padding:.5rem .65rem;border-radius:2px;background:rgba(20,16,17,.62);color:var(--gold);border:1px solid rgba(212,180,122,.35);z-index:3;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.card-body{position:absolute;left:0;right:0;bottom:0;padding:0 1.1rem calc(1.1rem + 48px);display:flex;flex-direction:column;pointer-events:none;z-index:2}
+.card h3{font:600 1.15rem/1.2 var(--sans);letter-spacing:-.025em;margin:0 0 .3rem;color:var(--ink)}
+.card .meta{font:400 .66rem/1.55 var(--mono);color:rgba(243,235,223,.76);letter-spacing:.02em}
+.price{font:500 .92rem/1.2 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.card .price{margin-top:.4rem;color:var(--ink)}
+.card-add{position:absolute;left:1.1rem;bottom:1.1rem;z-index:3;display:inline-flex;align-items:center;gap:.5rem;min-height:40px;font-size:.78rem;font-weight:600;padding:.5rem 1rem;border:1px solid var(--line-2);border-radius:999px;color:var(--ink);background:rgba(20,16,17,.3);transition:background .25s,color .25s,border-color .25s}
+.card-add:hover,.card-add:focus-visible{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+@media (max-width:680px){
+  .card-body{padding:0 .8rem calc(.8rem + 38px)}
+  .card h3{font-size:.95rem;margin-bottom:.15rem}
+  .card .meta{font-size:.58rem}
+  .card .price{font-size:.8rem;margin-top:.25rem}
+  .card-add{left:.8rem;bottom:.8rem;min-height:34px;font-size:.68rem;padding:.4rem .75rem;gap:.35rem}
+  .card-tag{left:.6rem;top:.6rem;font-size:.5rem;padding:.4rem .5rem}
+}
+@media (max-width:340px){.card-add{padding:.35rem .6rem;font-size:.62rem}}
 
-/* ---------- chocolate band */
-.band{background:var(--night);color:var(--night-fg);position:relative}
-.band-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:3.5rem;align-items:center;padding-block:5.5rem 5rem}
-.band h2{font:400 clamp(2.4rem,5vw,4.4rem)/1 var(--display);color:var(--butter);margin:0 0 1.1rem;text-shadow:.045em .045em 0 var(--pink-deep)}
-.band p{color:var(--night-mute);max-width:32rem;margin-bottom:1.6rem}
-.band-photos{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:start;padding-inline:.5rem}
-.band-photos figure{margin:0;overflow:hidden;border-radius:24px;position:relative;aspect-ratio:3/4;background:var(--night-2);border:var(--bw) solid var(--cream);box-shadow:0 7px 0 var(--pink);transform:rotate(-2deg)}
-.band-photos figure::before{content:"";position:absolute;inset:8px;border:4px dotted var(--gold);border-radius:17px;z-index:2;pointer-events:none}
-.band-photos figure:nth-child(2){margin-top:3.5rem;transform:rotate(2deg)}
-.band-photos img{position:relative;width:100%;height:100%;object-fit:cover}
-.band-photos figure{background:var(--icon) 50% 50%/auto 54% no-repeat,var(--night-2);background-blend-mode:luminosity}
-.band-photos img::after{content:"";position:absolute;inset:0;background:var(--icon) 50% 50%/auto 54% no-repeat,var(--night-2);background-blend-mode:luminosity}
-.band-photos figcaption{position:absolute;left:.7rem;bottom:.7rem;background:var(--butter);color:var(--ink);font:700 .64rem/1.3 var(--mono);padding:.4rem .55rem;border-radius:5px;letter-spacing:.04em;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-2deg);z-index:3}
-@media (max-width:860px){.band-grid{grid-template-columns:1fr;gap:2.5rem;padding-block:4rem 3.5rem}.band-photos figure:nth-child(2){margin-top:2rem}}
-@media (max-width:680px){.band-photos figure,.band-photos img::after{background-size:auto 44%;background-position:50% 36%}}
+/* ---------- feature (the former band): two photographs on the grid, copy beside them */
+.band{position:relative;border-top:1px solid var(--line)}
+.band-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:clamp(4rem,8vw,7rem)}
+.band-copy{display:flex;flex-direction:column;justify-content:center;order:2;min-width:0}
+.band h2{font:600 clamp(2.2rem,4.6vw,4.4rem)/.98 var(--sans);letter-spacing:-.04em;color:var(--ink);margin:0 0 1.2rem;max-width:12ch}
+.band p{color:var(--fg-2);max-width:30rem;margin-bottom:1.9rem;font-size:1.02rem}
+.band-photos{order:1;display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:1rem;align-items:end;min-width:0}
+.band-photos figure{margin:0;overflow:hidden;border-radius:var(--r);position:relative;background:var(--surface-2);min-width:0}
+.band-photos figure:first-child{aspect-ratio:3/4}
+.band-photos figure:nth-child(2){aspect-ratio:4/5}
+.band-photos img{width:100%;height:100%;object-fit:cover;transition:transform 1.3s var(--out)}
+.band-photos figure:hover img{transform:scale(1.04)}
+.band-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1rem .9rem;font:400 .62rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(243,235,223,.88);background:linear-gradient(to top,rgba(20,16,17,.88),rgba(20,16,17,0))}
+@media (max-width:860px){
+  .band-grid{grid-template-columns:1fr;gap:2.5rem;padding-block:4rem 3.5rem}
+  .band-copy{order:1}.band-photos{order:2}
+}
 
-/* ---------- gallery on pistachio */
-.gallery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:180px;grid-auto-flow:dense;gap:1.1rem}
-.gallery-grid figure{--plate:var(--pink-soft);--isize:auto 60%;--ipos:50% 30%;margin:0;position:relative;overflow:hidden;border-radius:20px;background:var(--icon) var(--ipos)/var(--isize) no-repeat,var(--plate);min-width:0;border:var(--bw) solid var(--ink);box-shadow:0 5px 0 var(--ink)}
-.gallery-grid figure:nth-child(4n+2){--plate:var(--butter-soft)}
-.gallery-grid figure:nth-child(4n+3){--plate:var(--lilac-soft)}
-.gallery-grid figure:nth-child(4n+4){--plate:var(--blue-soft)}
-.gallery-grid figure.tall{grid-row:span 2;--isize:auto 48%;--ipos:50% 42%}
-.gallery-grid figure.wide{grid-column:span 2;--isize:auto 64%}
-.gallery-grid img{position:relative;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--out)}
-.gallery-grid img::after{content:"";position:absolute;inset:0;background:var(--icon) var(--ipos)/var(--isize) no-repeat,var(--plate)}
-.gallery-grid figure[data-plate="choc"],.gallery-grid figure[data-plate="choc"] img::after{--plate:var(--night-2);background-blend-mode:luminosity}
-.gallery-grid figure:hover img{transform:scale(1.05)}
-.gallery-grid figcaption{position:absolute;left:.6rem;bottom:.6rem;right:.6rem;width:max-content;max-width:calc(100% - 1.2rem);background:var(--paper);font:700 .64rem/1.35 var(--mono);padding:.4rem .55rem;border-radius:5px;letter-spacing:.03em;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);z-index:2}
-@media (max-width:680px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:160px;gap:.7rem}.gallery-grid figure{--isize:auto 44%;--ipos:50% 14%}.gallery-grid figure.wide{grid-column:span 1;--isize:auto 44%}.gallery-grid figure.tall{--isize:auto 44%;--ipos:50% 34%}}
+/* ---------- recent boxes: an edge-to-edge strip at one height, then a wall of the rest */
+.strip-nav{display:flex;gap:.5rem}
+.strip{display:flex;gap:.75rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gl);padding-inline:var(--gl);padding-bottom:.25rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;cursor:grab}
+.strip::-webkit-scrollbar{display:none}
+.strip figure{margin:0;flex:none;height:clamp(340px,56vh,620px);scroll-snap-align:start;position:relative;border-radius:var(--r);overflow:hidden;background:var(--surface-2)}
+.strip figure button,.wall figure button{display:block;height:100%;width:100%;border-radius:inherit}
+.strip img{height:100%;width:auto;max-width:none;object-fit:cover;transition:transform 1.2s var(--out)}
+.strip figure:hover img,.wall figure:hover img{transform:scale(1.03)}
+.strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.6rem 1rem 1rem;font:400 .64rem/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(243,235,223,.9);background:linear-gradient(to top,rgba(20,16,17,.88),rgba(20,16,17,0));pointer-events:none}
+.strip figure:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+.gallery{padding-bottom:0}
+.wall-sec{padding:.75rem 0 clamp(4rem,8vw,7rem)}
+.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem}
+.wall figure{margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:var(--r);background:var(--surface-2);position:relative;min-width:0}
+.wall img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--out)}
+.wall figure:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:860px){.strip figure{height:clamp(300px,52vh,480px)}}
+@media (max-width:680px){.wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}.strip{gap:.5rem}.strip figure{height:min(62vh,420px)}}
 
-/* ---------- how it works: steps on plates */
-.steps{list-style:none;margin:0;padding:1.4rem 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.4rem 1.8rem}
-.step{position:relative;background:var(--pink-soft);border:var(--bw) solid var(--ink);border-radius:24px;padding:2.1rem 1.5rem 1.7rem;box-shadow:0 7px 0 var(--ink)}
-.step:nth-child(2){background:var(--pistachio-soft)}
-.step:nth-child(3){background:var(--butter-soft)}
-.step .n{position:absolute;left:1rem;top:-1.55rem;font:400 3.4rem/1 var(--display);color:var(--raspberry);text-shadow:.045em .045em 0 var(--choc);transform:rotate(-8deg);transform-origin:50% 100%}
-.step:nth-child(2) .n{transform:rotate(6deg)}
-.step:nth-child(3) .n{transform:rotate(-4deg)}
-.step h3{font:700 1.15rem/1.3 var(--sans);margin:0 0 .5rem;color:var(--choc);position:relative}
-.step p{position:relative}
-.step p{color:var(--ink-2)}
-.offmenu{margin-top:2.75rem;padding:1.4rem 1.6rem;border:var(--bw) solid var(--ink);border-radius:18px;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--butter-soft);box-shadow:0 6px 0 var(--ink);position:relative}
-.offmenu strong{font-weight:700}
-@media (max-width:780px){.steps{grid-template-columns:1fr;gap:2.2rem}}
+/* ---------- lightbox */
+dialog.lightbox{border:0;padding:0;background:transparent;position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;overflow:hidden;color:var(--ink)}
+dialog.lightbox::backdrop{background:rgba(14,11,12,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+dialog.lightbox[open]{animation:fade .3s var(--out)}
+.lb-stage{position:absolute;inset:0;display:grid;place-items:center;padding:clamp(3.75rem,9vh,5.5rem) clamp(1rem,7vw,6rem)}
+.lb-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:4px;animation:fade .4s var(--out)}
+.lb-close{position:absolute;top:calc(1rem + env(safe-area-inset-top,0px));right:1rem;z-index:2;background:rgba(20,16,17,.6)}
+.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);z-index:2;background:rgba(20,16,17,.6)}
+.lb-prev{left:1rem}.lb-next{right:1rem}
+.lb-meta{position:absolute;left:0;right:0;bottom:calc(1.1rem + env(safe-area-inset-bottom,0px));text-align:center;font:400 .66rem/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(243,235,223,.82);padding-inline:4rem;pointer-events:none}
+.lb-meta b{font-weight:500;color:var(--gold);margin-right:1.25rem;font-variant-numeric:tabular-nums}
+@media (max-width:680px){.lb-prev,.lb-next{top:auto;bottom:calc(3rem + env(safe-area-inset-bottom,0px));transform:none}.lb-meta{padding-inline:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px))}.lb-stage{padding:4rem 1rem 7rem}}
 
-/* ---------- details on strawberry */
-.details-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:3.5rem;align-items:start}
-.details-grid .copy p{color:var(--ink-2);margin-bottom:1rem;max-width:30rem}
-.specs{margin:0;display:flex;flex-direction:column;background:var(--white);border:var(--bw) solid var(--ink);border-radius:22px;padding:.4rem 1.4rem;box-shadow:0 7px 0 var(--ink);position:relative}
-.specs::before{content:"Good to know";content:"Good to know" / "";position:absolute;top:-.95em;right:1.2rem;background:var(--pistachio);border:2px solid var(--ink);border-radius:6px;padding:.42rem .6rem;font:700 .62rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink)}
-.specs > div{display:grid;grid-template-columns:9rem 1fr;gap:1rem;padding:1rem 0;border-bottom:2px dotted var(--line)}
-.specs > div:last-child{border-bottom:0}
-.specs dt{font:700 .7rem/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--pink-deep);margin:0}
-.specs dd{margin:0;font-size:.95rem}
-@media (max-width:860px){.details-grid{grid-template-columns:1fr;gap:2.4rem}.specs > div{grid-template-columns:1fr;gap:.25rem}}
+/* ---------- how it works: three numbered columns on hairlines */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
+.step{position:relative;border-top:1px solid var(--line-2);padding:1.5rem 0 0}
+.step .n{font:400 .7rem/1 var(--mono);letter-spacing:.2em;color:var(--gold);margin-bottom:1.75rem}
+.step .n::before{content:"0"}
+.step h3{font:600 1.3rem/1.25 var(--sans);letter-spacing:-.025em;margin:0 0 .6rem;color:var(--ink)}
+.step p{color:var(--fg-2);font-size:.96rem}
+.offmenu{margin-top:3.5rem;padding-top:1.6rem;border-top:1px solid var(--line);display:flex;gap:1.5rem;align-items:center;justify-content:space-between;flex-wrap:wrap;color:var(--fg-2)}
+.offmenu strong{color:var(--ink);font-weight:600}
+@media (max-width:780px){.steps{grid-template-columns:1fr;gap:1.75rem}.step .n{margin-bottom:1rem}}
+
+/* ---------- details: copy and a ruled spec sheet */
+.details-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,5vw,5rem);align-items:start}
+.details-grid .copy p{color:var(--fg-2);margin-bottom:1rem;max-width:30rem;font-size:1.02rem}
+.details-grid .sec-head{margin-bottom:1.6rem}
+.specs{margin:0;display:flex;flex-direction:column;border-top:1px solid var(--line-2)}
+.specs > div{display:grid;grid-template-columns:10rem 1fr;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.specs dt{font:500 .64rem/1.9 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0}
+.specs dd{margin:0;font-size:.98rem;color:var(--ink)}
+@media (max-width:860px){.details-grid{grid-template-columns:1fr;gap:2.4rem}.specs > div{grid-template-columns:1fr;gap:.2rem}}
 
 /* ---------- faq */
-.faq-list{max-width:48rem;display:flex;flex-direction:column;gap:.7rem}
-.faq-list details{border:var(--bw) solid var(--ink);border-radius:16px;background:var(--white);transition:background .2s}
-@media (min-width:900px){.faq-list{max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.4rem;align-items:start}}
-.faq-list details[open]{background:var(--butter-soft)}
-.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.2rem;font-weight:700;font-size:1.02rem;border-radius:14px}
+.faq-list{display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
+@media (min-width:900px){.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:0 4rem;align-items:start}}
+.faq-list details{border-top:1px solid var(--line)}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.15rem 0;font-weight:500;font-size:1.02rem;letter-spacing:-.012em;transition:color .2s}
+.faq-list summary:hover{color:var(--gold)}
 .faq-list summary::-webkit-details-marker{display:none}
-.faq-list summary::after{content:"+";font:500 1.3rem/1 var(--mono);color:var(--ink);width:32px;height:32px;border-radius:50%;background:var(--pink);border:2px solid var(--ink);display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink);transition:transform .3s var(--spring),background .2s;flex:none}
-.faq-list details[open] summary::after{transform:rotate(45deg);background:var(--pistachio)}
-.faq-list .ans{padding:0 1.2rem 1.2rem;color:var(--ink-2);max-width:40rem;animation:fadeup .35s var(--out)}
+.faq-list summary::after{content:"+";font:300 1.5rem/1 var(--mono);color:var(--gold);width:28px;height:28px;display:grid;place-items:center;transition:transform .35s var(--out);flex:none}
+.faq-list details[open] summary::after{transform:rotate(45deg)}
+.faq-list .ans{padding:0 2.5rem 1.4rem 0;color:var(--fg-2);max-width:40rem;animation:fadeup .35s var(--out)}
 
-/* ---------- footer: chocolate tier */
-.foot{background:var(--night);color:var(--night-fg);position:relative}
-.foot .drip{margin-bottom:1.75rem}
-.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.3fr;gap:2.5rem 2rem;padding-top:1.5rem}
-.foot .wordmark{color:var(--butter);font-size:2.6rem;margin-bottom:.9rem;text-shadow:.05em .05em 0 var(--pink-deep)}
-.foot .wordmark small{background:var(--pink)}
-.foot-blurb{color:var(--night-mute);max-width:20rem}
-.foot h4{font:700 .7rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--butter);margin:0 0 1rem}
-.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
-.foot a{color:var(--night-fg);text-decoration:none}
-.foot a:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--pink);text-decoration-thickness:2px}
-.foot .muted{color:var(--night-mute);font-size:.86rem}
-.contact-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.55rem;flex-wrap:wrap}
-.contact-row span{font:400 .9rem/1.4 var(--mono);user-select:all}
-.copy-btn{font:700 .62rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border:2px solid var(--night-mute);border-radius:999px;padding:.38rem .8rem;min-height:40px;color:var(--night-fg);transition:.2s}
-.copy-btn:hover,.copy-btn.done{border-color:var(--butter);background:var(--butter);color:var(--ink)}
-.foot-bottom{border-top:2px dashed var(--night-2);margin-top:3rem;padding-block:1.25rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font:400 .74rem/1.5 var(--mono);color:var(--night-mute)}
-.marble-edge{height:16px;background:var(--checker);border-top:var(--bw) solid var(--ink)}
-.foot-legal{margin-top:2.5rem;font:400 .74rem/1.65 var(--mono);color:var(--night-mute);max-width:64rem}
-.foot-legal strong{color:var(--butter);font-weight:500}
-.foot-legal+.foot-bottom{margin-top:1.25rem}
+/* ---------- footer: quiet */
+.foot{border-top:1px solid var(--line);padding-top:clamp(3rem,6vw,5rem);position:relative}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.3fr;gap:2.5rem 2rem}
+.foot .wordmark{font-size:2rem;margin-bottom:1rem}
+.foot-blurb{color:var(--ink-2);max-width:20rem;font-size:.95rem}
+.foot h4{font:500 .62rem/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 1.1rem}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.55rem}
+.foot a{color:var(--ink);text-decoration:none;font-size:.95rem;transition:color .2s}
+.foot a:hover{color:var(--gold)}
+.foot p{font-size:.95rem}
+.foot .muted{color:var(--ink-2);font-size:.86rem}
+.contact-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;flex-wrap:wrap}
+.contact-row span{font:400 .86rem/1.4 var(--mono);user-select:all}
+.copy-btn{font:500 .58rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:.4rem .8rem;min-height:36px;color:var(--ink);transition:.2s}
+.copy-btn:hover,.copy-btn.done{border-color:var(--gold);color:var(--gold)}
+.foot-legal{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);font:400 .72rem/1.75 var(--mono);color:var(--ink-2);max-width:72rem}
+.foot-legal strong{color:var(--ink);font-weight:500}
+.foot-bottom{border-top:1px solid var(--line);margin-top:1.5rem;padding-block:1.4rem calc(1.4rem + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font:400 .64rem/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 @media (max-width:1100px){.foot-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
-@media (max-width:360px){.foot .wordmark{font-size:2rem}.foot-grid > div{min-width:0}}
+@media (max-width:360px){.foot .wordmark{font-size:1.7rem}.foot-grid > div{min-width:0}}
 
-/* ---------- bag drawer: the order slip */
-.scrim{position:fixed;inset:0;background:rgba(43,21,17,.5);opacity:0;pointer-events:none;transition:opacity .35s;z-index:80}
+/* ---------- bag drawer */
+.scrim{position:fixed;inset:0;background:rgba(14,11,12,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s;z-index:80}
 .scrim.on{opacity:1;pointer-events:auto}
-.bag{position:fixed;top:0;right:0;bottom:0;width:min(450px,100%);background:var(--paper);z-index:90;transform:translateX(104%);visibility:hidden;transition:transform .5s var(--out),visibility 0s .5s;display:flex;flex-direction:column;border-left:var(--bw) solid var(--ink);box-shadow:-24px 0 60px -20px rgba(43,21,17,.4);padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px)}
+.bag{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);color:var(--ink);z-index:90;transform:translateX(100%);visibility:hidden;transition:transform .55s var(--out),visibility 0s .55s;display:flex;flex-direction:column;border-left:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px)}
 .bag.open{transform:none;visibility:visible;transition-delay:0s}
-.bag-head{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.25rem 1.1rem 1.5rem;background:var(--pink);border-bottom:var(--bw) solid var(--ink);position:relative;z-index:1}
-.bag-head::after{content:"";position:absolute;left:0;right:0;top:100%;height:13px;pointer-events:none;background:radial-gradient(circle at 50% 0,var(--pink) 9px,var(--ink) 9.5px 11.5px,transparent 12px) 0 0/26px 13px repeat-x,var(--paper)}
-.bag-head h2{font:400 2rem/1 var(--display);margin:0;color:var(--choc);text-shadow:.04em .04em 0 var(--strawberry)}
-.bag-items{flex:1;overflow:auto;padding:1.8rem 1.5rem 1.1rem;display:flex;flex-direction:column;gap:1.1rem}
-.bag-item{display:grid;grid-template-columns:70px 1fr auto;gap:.9rem;align-items:start;animation:fadeup .4s var(--out) both;min-width:0}
-.bag-item img{position:relative;width:70px;height:88px;object-fit:cover;border-radius:12px;border:2px solid var(--ink);background:var(--icon) center/66% no-repeat,var(--pink-soft);box-shadow:2px 3px 0 var(--ink)}
-.bag-item img::after{content:"";position:absolute;inset:0;border-radius:10px;background:var(--icon) center/66% no-repeat,var(--pink-soft)}
-.bag-item h4{margin:0;font:700 .95rem/1.3 var(--sans)}
-.bag-item .opts{font:400 .72rem/1.45 var(--mono);color:var(--ink-2);margin:.2rem 0 .55rem;overflow-wrap:anywhere}
-.qty-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
-.qty{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;background:var(--white)}
-.qty button{width:40px;height:40px;display:grid;place-items:center;font-weight:700;font-size:1rem;border-radius:50%}
-.qty button:hover{background:var(--butter)}
+.bag-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem 1rem 1.5rem;border-bottom:1px solid var(--line)}
+.bag-head h2{font:600 1.2rem/1 var(--sans);letter-spacing:-.02em;margin:0}
+.bag-items{flex:1;overflow:auto;padding:.4rem 1.5rem 1rem;display:flex;flex-direction:column}
+.bag-item{display:grid;grid-template-columns:72px 1fr auto;gap:1rem;align-items:start;animation:fadeup .4s var(--out) both;min-width:0;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.bag-item img{width:72px;height:90px;object-fit:cover;border-radius:4px;background:var(--surface-2)}
+.bag-item h4{margin:0;font:600 .98rem/1.3 var(--sans);letter-spacing:-.015em}
+.bag-item .opts{font:400 .68rem/1.55 var(--mono);color:var(--ink-2);margin:.25rem 0 .7rem;overflow-wrap:anywhere}
+.qty-row{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px}
+.qty button{width:40px;height:40px;display:grid;place-items:center;font-weight:500;font-size:1rem;border-radius:50%;transition:background .2s,color .2s}
+.qty button:hover{background:var(--ink);color:var(--paper)}
 .qty output{min-width:1.8rem;text-align:center;font:500 .85rem/1 var(--mono)}
-.remove{font:400 .72rem/1 var(--mono);color:var(--ink-2);text-decoration:underline;text-underline-offset:2px;display:inline-flex;align-items:center;min-height:40px;padding-inline:.4rem;margin-inline:-.4rem}
-.remove:hover{color:var(--pink-deep)}
-.bag-foot{padding:1rem 1.5rem calc(1.25rem + env(safe-area-inset-bottom,0px));border-top:var(--bw) dashed var(--ink);display:flex;flex-direction:column;gap:.6rem;background:var(--cream)}
-.bag-sub{display:flex;justify-content:space-between;align-items:baseline;font-weight:700}
-.bag-sub .price{font-size:1.2rem}
-.bag-empty{text-align:center;padding:3rem 1rem;color:var(--ink-2);display:flex;flex-direction:column;gap:1rem;align-items:center}
-.bag-empty .big{font:400 3.4rem/1 var(--display);color:var(--raspberry);text-shadow:.045em .045em 0 var(--choc)}
-@media (max-height:480px){.bag-head{padding-block:.6rem}.bag-head h2{font-size:1.5rem}.bag-foot{padding:.6rem 1.5rem .9rem;gap:.35rem}.bag-items{padding-block:1rem .6rem}}
+.remove{font:400 .62rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:40px;padding-inline:.4rem;margin-inline:-.4rem;transition:color .2s}
+.remove:hover{color:var(--ink)}
+.bag-foot{padding:1.1rem 1.5rem calc(1.25rem + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:flex;flex-direction:column;gap:.7rem;background:var(--surface)}
+.bag-sub{display:flex;justify-content:space-between;align-items:baseline;font-weight:500}
+.bag-sub .price{font-size:1.25rem}
+.bag-empty{text-align:center;padding:3.5rem 1rem;color:var(--ink-2);display:flex;flex-direction:column;gap:1.2rem;align-items:center}
+.bag-empty .big{font:500 3rem/1 var(--mono);color:var(--gold)}
+@media (max-height:480px){.bag-head{padding-block:.6rem}.bag-foot{padding:.6rem 1.5rem .9rem;gap:.35rem}.bag-items{padding-block:.2rem .6rem}}
 
-/* ---------- product dialog: the bakery box */
-dialog.pdp{border:var(--bw) solid var(--ink);padding:0;background:var(--paper);color:var(--ink);width:min(980px,calc(100% - 2rem));max-width:none;height:min(92vh,calc(100% - 2rem));max-height:none;border-radius:26px;overflow:hidden;margin:auto;box-shadow:0 10px 0 var(--ink),0 40px 80px -20px rgba(43,21,17,.5)}
-dialog.pdp::backdrop{background:rgba(43,21,17,.55);animation:fade .3s}
-dialog.pdp[open]{animation:dlg .5s var(--spring)}
+/* ---------- product dialog: the photograph fills the left pane */
+dialog.pdp{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--ink);width:min(1040px,calc(100% - 2rem));max-width:none;height:min(88vh,calc(100% - 2rem));max-height:none;border-radius:8px;overflow:hidden;margin:auto;box-shadow:0 40px 90px -30px rgba(0,0,0,.85)}
+dialog.pdp::backdrop{background:rgba(14,11,12,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:fade .35s}
+dialog.pdp[open]{animation:dlg .5s var(--out)}
 dialog.pdp.closing{animation:dlgout .2s var(--out) forwards}
-.pdp-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);grid-template-rows:minmax(0,1fr);height:100%}
-.pdp-media{background:var(--pink-soft);position:relative;overflow:hidden;min-height:0;border-right:var(--bw) solid var(--ink)}
-.pdp-main{position:absolute;inset:0;background:var(--icon) 50% 46%/auto 40% no-repeat,var(--pink-soft)}
-.pdp-main img{position:relative;width:100%;height:100%;object-fit:cover;animation:fade .4s}
-.pdp-main img::after{content:"";position:absolute;inset:0;background:var(--icon) 50% 46%/auto 40% no-repeat,var(--pink-soft)}
-.pdp-thumbs{display:flex;gap:.45rem;padding:.7rem;overflow-x:auto;position:absolute;bottom:0;left:0;right:0;scrollbar-width:none;z-index:2}
-.pdp-thumbs button{width:50px;height:62px;border-radius:8px;overflow:hidden;border:2px solid var(--ink);background:var(--icon) center/66% no-repeat,var(--butter-soft);flex:none;opacity:.85;transition:.2s}
-.pdp-thumbs button img{position:relative;width:100%;height:100%;object-fit:cover}
-.pdp-thumbs button img::after{content:"";position:absolute;inset:0;background:var(--icon) center/66% no-repeat,var(--butter-soft)}
-.pdp-thumbs button[aria-current="true"] img::after{background-color:var(--pink)}
-.pdp-thumbs button[aria-current="true"]{opacity:1;background:var(--pink);transform:translateY(-2px)}
-.pdp-body{padding:1.9rem 1.75rem 1.25rem;overflow:auto;display:flex;flex-direction:column;gap:1.3rem;min-width:0;min-height:0;height:100%}
-.pdp-close{position:absolute;top:.75rem;right:.75rem;width:42px;height:42px;border-radius:50%;background:var(--butter);border:2px solid var(--ink);display:grid;place-items:center;z-index:3;box-shadow:0 3px 0 var(--ink);font-size:1.5rem;line-height:1;transition:background .2s}
-.pdp-close:hover{background:var(--pink)}
-.pdp h2{font:400 2.3rem/1.05 var(--display);margin:0 0 .6rem;color:var(--choc);text-shadow:.04em .04em 0 var(--strawberry)}
-.pdp-desc{color:var(--ink-2);font-size:.95rem}
-.pdp-opts{display:flex;flex-direction:column;gap:1.2rem}
-.opt{display:flex;flex-direction:column;gap:.5rem}
-.opt-label{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font:700 .88rem/1.2 var(--sans)}
-.opt-label small{font:400 .7rem/1 var(--mono);color:var(--ink-2);text-align:right}
+.pdp-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);height:100%}
+.pdp-media{background:var(--night);position:relative;overflow:hidden;min-height:0;border-right:1px solid var(--line)}
+.pdp-main{position:absolute;inset:0}
+.pdp-main img{width:100%;height:100%;object-fit:cover;animation:fade .45s var(--out)}
+.pdp-thumbs{display:flex;gap:.4rem;padding:1.6rem .75rem .75rem;overflow-x:auto;position:absolute;bottom:0;left:0;right:0;scrollbar-width:none;z-index:2;background:linear-gradient(to top,rgba(14,11,12,.75),rgba(14,11,12,0))}
+.pdp-thumbs::-webkit-scrollbar{display:none}
+.pdp-thumbs button{width:52px;height:64px;border-radius:3px;overflow:hidden;border:1px solid rgba(243,235,223,.28);flex:none;opacity:.72;transition:opacity .2s,border-color .2s,box-shadow .2s;background:var(--surface-2)}
+.pdp-thumbs button img{width:100%;height:100%;object-fit:cover}
+.pdp-thumbs button:hover{opacity:1}
+.pdp-thumbs button[aria-current="true"]{opacity:1;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.pdp-body{padding:2rem 2rem 1.25rem;overflow:auto;display:flex;flex-direction:column;gap:1.4rem;min-width:0;min-height:0;height:100%}
+.pdp-close{position:absolute;top:.85rem;right:.85rem;width:42px;height:42px;border-radius:50%;background:rgba(20,16,17,.6);border:1px solid var(--line-2);display:grid;place-items:center;z-index:3;font-size:1.4rem;line-height:1;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background .2s,color .2s}
+.pdp-close:hover{background:var(--ink);color:var(--paper)}
+.pdp .eyebrow{margin-bottom:.9rem}
+.pdp h2{font:600 clamp(1.7rem,3vw,2.3rem)/1.05 var(--sans);letter-spacing:-.035em;margin:0 0 .7rem}
+.pdp-desc{color:var(--fg-2);font-size:.95rem}
+.pdp-opts{display:flex;flex-direction:column;gap:1.3rem}
+.opt{display:flex;flex-direction:column;gap:.6rem}
+.opt-label{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font:500 .9rem/1.2 var(--sans)}
+.opt-label small{font:400 .64rem/1 var(--mono);letter-spacing:.08em;color:var(--ink-2);text-align:right}
 .choices{display:flex;flex-wrap:wrap;gap:.5rem}
-.choice{border:2px solid var(--ink);border-radius:12px;padding:.55rem .85rem;font-size:.86rem;text-align:left;display:flex;flex-direction:column;gap:.1rem;min-width:0;max-width:100%;background:var(--white);box-shadow:0 3px 0 var(--ink);transition:transform .15s var(--out),box-shadow .15s var(--out),background .2s,color .2s}
-.choice:hover{background:var(--butter-soft);transform:translateY(-1px)}
-.choice[aria-pressed="true"]{background:var(--choc);color:var(--cream);box-shadow:0 1px 0 var(--ink);transform:translateY(2px)}
-.choice .sub{font:400 .68rem/1.35 var(--mono);opacity:.78}
-.choice .delta{font:500 .72rem/1 var(--mono);margin-left:.35rem}
-.text-input{border:var(--bw) solid var(--ink);border-radius:12px;padding:.72rem .9rem;font:600 1.1rem/1.2 var(--sans);background:var(--white);color:var(--ink);width:100%;transition:box-shadow .2s;letter-spacing:.04em}
-.text-input:focus{outline:0;box-shadow:0 0 0 3px var(--pink-deep)}
-.glyph-preview{font:400 5.5rem/1 var(--display);color:var(--raspberry);display:flex;gap:.02em;min-height:1em;text-shadow:.045em .045em 0 var(--choc);padding:.1rem .1em .15rem 0;overflow:hidden;letter-spacing:-.02em}
-.glyph-preview span{display:inline-block;animation:pop .55s var(--spring) both;animation-delay:calc(var(--i)*60ms);transform-origin:50% 90%}
-.allergen{font:400 .72rem/1.5 var(--mono);color:var(--ink-2)}
-.pdp-add{display:flex;gap:.75rem;align-items:center;position:sticky;bottom:-1.25rem;background:var(--paper);padding:.9rem 0 1.25rem;margin-top:auto;border-top:var(--bw) dashed var(--ink)}
-.pdp-add::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:16px;background:linear-gradient(to top,var(--paper),transparent);pointer-events:none}
+.choice{border:1px solid var(--line-2);border-radius:4px;padding:.6rem .9rem;font-size:.86rem;text-align:left;display:flex;flex-direction:column;gap:.15rem;min-width:0;max-width:100%;background:transparent;color:var(--ink);transition:background .2s,color .2s,border-color .2s}
+.choice:hover{border-color:var(--ink)}
+.choice[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.choice .sub{font:400 .64rem/1.45 var(--mono);opacity:.72}
+.choice .delta{font:500 .72rem/1 var(--mono);margin-left:.4rem;opacity:.85}
+.text-input{border:1px solid var(--line-2);border-radius:4px;padding:.8rem 1rem;font:500 1.15rem/1.2 var(--mono);background:var(--surface-2);color:var(--ink);width:100%;transition:border-color .2s,box-shadow .2s;letter-spacing:.12em;min-height:48px}
+.text-input:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.glyph-preview{font:600 clamp(3.4rem,6vw,5rem)/1 var(--sans);letter-spacing:-.05em;color:var(--ink);display:flex;gap:.04em;min-height:1em;padding:.1rem .06em .1rem 0;overflow:hidden}
+.glyph-preview span{display:inline-block;animation:pop .5s var(--out) both;animation-delay:calc(var(--i)*60ms)}
+.allergen{font:400 .68rem/1.65 var(--mono);color:var(--ink-2)}
+.pdp-add{display:flex;gap:.75rem;align-items:center;position:sticky;bottom:-1.25rem;background:var(--surface);padding:1rem 0 1.25rem;margin-top:auto;border-top:1px solid var(--line)}
+.pdp-add::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:20px;background:linear-gradient(to top,var(--surface),transparent);pointer-events:none}
 .pdp-add .btn{flex:1;min-width:0}
-.field-err{font:400 .76rem/1.4 var(--mono);color:var(--pink-deep);min-height:1.1em;margin-top:-1rem}
+#pdp-price{font:500 .95em/1 var(--mono);font-variant-numeric:tabular-nums}
+.field-err{font:400 .74rem/1.4 var(--mono);color:var(--cherry);min-height:1.1em;margin-top:-1rem}
 @media (max-width:760px){
-  dialog.pdp{width:calc(100% - 1rem);height:auto;max-height:calc(100% - 1rem);overflow:auto;border-radius:18px}
+  dialog.pdp{width:calc(100% - 1rem);height:auto;max-height:calc(100% - 1rem);overflow:auto;border-radius:8px}
   .pdp-grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto}
-  .pdp-media{aspect-ratio:auto;height:min(72vw,48vh);height:min(72vw,48dvh);border-right:0;border-bottom:var(--bw) solid var(--ink)}
-  .pdp-main,.pdp-main img::after{background-position:50% 36%}
+  .pdp-media{aspect-ratio:auto;height:min(78vw,50vh);height:min(78vw,50dvh);border-right:0;border-bottom:1px solid var(--line)}
   .pdp-close{position:sticky;top:.6rem;right:auto;margin:.6rem .6rem -42px auto;z-index:4}
-  @media (max-height:480px){.pdp-main,.pdp-main img::after{background-position:50% 14%}}
-  .pdp-body{overflow:visible;height:auto;padding:1.25rem 1.1rem 1rem}
+  .pdp-body{overflow:visible;height:auto;padding:1.4rem 1.1rem 1rem}
   .pdp-add{bottom:-1rem}
 }
 
 /* ---------- checkout */
-.checkout{padding-block:2rem 5rem}
-.co-top{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
-.co-title{font:400 clamp(2.4rem,5vw,3.8rem)/1 var(--display);margin:0;color:var(--raspberry);text-shadow:.045em .045em 0 var(--choc)}
+.checkout{padding-block:2.5rem 6rem}
+.co-top{display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2.5rem}
+.co-title{font:600 clamp(2.2rem,5vw,3.6rem)/1 var(--sans);letter-spacing:-.04em;margin:0}
 .co-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:3rem;align-items:start}
-.co-form{display:flex;flex-direction:column;gap:2.4rem;min-width:0;counter-reset:leg}
-fieldset{border:var(--bw) solid var(--ink);border-radius:22px;padding:1.1rem 1.3rem 1.4rem;margin:0;display:flex;flex-direction:column;gap:.9rem;min-width:0;background:var(--white);box-shadow:0 7px 0 var(--ink)}
-legend{font:400 1.3rem/1 var(--display);color:var(--choc);margin:0 0 .15rem .3rem;padding:.38rem .9rem .3rem .5rem;display:inline-flex;align-items:center;gap:.55rem;max-width:100%;background:var(--butter);border:2px solid var(--ink);border-radius:8px;box-shadow:2px 2px 0 var(--ink);text-shadow:.04em .04em 0 var(--strawberry)}
-legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) / "";display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;flex:none;border-radius:50%;background:var(--pink);border:2px solid var(--ink);font:700 .72rem/1 var(--mono);color:var(--ink)}
-.field{display:flex;flex-direction:column;gap:.35rem;min-width:0}
-.field label{font:700 .84rem/1.2 var(--sans)}
-.field label small{font:400 .7rem/1 var(--mono);color:var(--ink-2);margin-left:.3rem}
-.field input,.field select,.field textarea{border:var(--bw) solid var(--ink);border-radius:12px;padding:.75rem .9rem;font:400 1rem/1.3 var(--sans);background:var(--white);width:100%;min-width:0;color:var(--ink);box-shadow:0 3px 0 var(--line);transition:box-shadow .2s}
+.co-form{display:flex;flex-direction:column;gap:1.25rem;min-width:0;counter-reset:leg}
+fieldset{border:1px solid var(--line);border-radius:var(--r);padding:1.4rem 1.5rem 1.6rem;margin:0;display:flex;flex-direction:column;gap:1rem;min-width:0;background:var(--surface)}
+legend{float:left;width:100%;font:600 1.05rem/1.2 var(--sans);letter-spacing:-.015em;color:var(--ink);margin:0 0 .3rem;padding:0;display:flex;align-items:baseline;gap:.9rem;max-width:100%}
+legend::before{counter-increment:leg;content:"0" counter(leg);content:"0" counter(leg) / "";font:500 .64rem/1 var(--mono);letter-spacing:.2em;color:var(--gold);flex:none}
+.field{display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.field label{font:500 .82rem/1.2 var(--sans);color:rgba(243,235,223,.88)}
+.field label small{font:400 .64rem/1 var(--mono);letter-spacing:.08em;color:var(--ink-2);margin-left:.4rem}
+.field input,.field select,.field textarea{border:1px solid var(--line-2);border-radius:4px;padding:.8rem .95rem;font:400 1rem/1.3 var(--sans);background:var(--surface-2);width:100%;min-width:0;color:var(--ink);min-height:48px;transition:border-color .2s,box-shadow .2s;color-scheme:dark}
 .field textarea{resize:vertical;font-family:var(--sans)}
-.field input:focus,.field select:focus,.field textarea:focus{outline:0;box-shadow:0 0 0 3px var(--pink-deep)}
-.field.bad input,.field.bad select{border-color:var(--cherry);background:var(--pink-soft)}
-.err{font:400 .72rem/1.3 var(--mono);color:var(--pink-deep);min-height:1em}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.field.bad input,.field.bad select{border-color:var(--cherry)}
+.err{font:400 .7rem/1.3 var(--mono);color:var(--cherry);min-height:1em}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.seg{display:grid;grid-template-columns:1fr 1fr;border:var(--bw) solid var(--ink);border-radius:14px;overflow:hidden;position:relative;background:var(--white);box-shadow:0 4px 0 var(--ink)}
-.seg label{padding:.9rem;text-align:center;cursor:pointer;font-weight:700;font-size:.92rem;position:relative;transition:background .2s,color .2s;display:flex;flex-direction:column;gap:.15rem;align-items:center}
-.seg label small{font:400 .68rem/1 var(--mono);opacity:.75;letter-spacing:.04em}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line-2);border-radius:4px;overflow:hidden;position:relative;background:var(--surface-2)}
+.seg label{padding:.9rem;text-align:center;cursor:pointer;font-weight:500;font-size:.92rem;position:relative;transition:background .2s,color .2s;display:flex;flex-direction:column;gap:.2rem;align-items:center}
+.seg label small{font:400 .62rem/1 var(--mono);opacity:.72;letter-spacing:.06em}
 .seg input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
-.seg label:has(input:checked){background:var(--choc);color:var(--cream)}
-.seg label:has(input:focus-visible){outline:3px solid var(--pink);outline-offset:-4px}
-.ticket{position:sticky;top:calc(92px + env(safe-area-inset-top,0px));background:var(--white);border:var(--bw) solid var(--ink);border-radius:22px;overflow:hidden;box-shadow:0 8px 0 var(--ink)}
-.ticket-head{background:var(--checker);padding:1rem 1.1rem;border-bottom:var(--bw) solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.ticket-head h3{font:400 1.4rem/1 var(--display);margin:0;background:var(--cream);color:var(--choc);padding:.4rem .65rem .3rem;border-radius:6px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);text-shadow:.04em .04em 0 var(--strawberry)}
-.ticket-head .no{font:700 .72rem/1 var(--mono);background:var(--butter);padding:.5rem .6rem;border-radius:6px;letter-spacing:.06em;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
-.ticket-lines{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.85rem}
-.tl{display:grid;grid-template-columns:1fr auto;gap:.75rem;font-size:.9rem;align-items:start}
-.tl .sub{font:400 .7rem/1.45 var(--mono);color:var(--ink-2);overflow-wrap:anywhere}
-.ticket-totals{border-top:var(--bw) dashed var(--ink);padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.45rem;font-size:.9rem;background:var(--cream)}
-.tt{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.seg label:has(input:checked){background:var(--ink);color:var(--paper)}
+.seg label:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:-4px}
+.ticket{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.ticket-head{position:relative;padding:1.1rem 1.25rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:1rem;overflow:hidden;isolation:isolate}
+/* the one texture on the site: the real box's marble, inverted into the dark */
+.ticket-head::before{content:"";position:absolute;inset:0;z-index:-1;background:url(images/marble-tile.jpg) 50% 50%/cover;filter:invert(1) brightness(.34) contrast(1.15)}
+.ticket-head h3{font:600 1.05rem/1 var(--sans);letter-spacing:-.015em;margin:0}
+.ticket-head .no{font:500 .66rem/1 var(--mono);letter-spacing:.14em;color:var(--gold)}
+.ticket-lines{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.9rem}
+.tl{display:grid;grid-template-columns:1fr auto;gap:.75rem;font-size:.92rem;align-items:start}
+.tl .sub{font:400 .66rem/1.55 var(--mono);color:var(--ink-2);overflow-wrap:anywhere}
+.ticket-totals{border-top:1px solid var(--line);padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.5rem;font-size:.9rem}
+.tt{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;color:var(--fg-2)}
 .tt .price{font-weight:400}
-.grand{font:500 1.4rem/1 var(--mono);display:flex;justify-content:space-between;padding-top:.7rem;border-top:var(--bw) solid var(--ink);margin-top:.3rem;font-variant-numeric:tabular-nums}
-.ticket-pay{padding:1rem 1.25rem 1.25rem;display:flex;flex-direction:column;gap:.7rem;background:var(--cream)}
+.grand{font:500 1.45rem/1 var(--mono);display:flex;justify-content:space-between;padding-top:.85rem;border-top:1px solid var(--line-2);margin-top:.35rem;font-variant-numeric:tabular-nums}
+.ticket-pay{padding:1rem 1.25rem 1.25rem;display:flex;flex-direction:column;gap:.8rem;border-top:1px solid var(--line)}
 .ticket-pay #co-msg{order:-1}
 #co-msg:empty{display:none}
-.pay-note{font:400 .7rem/1.5 var(--mono);color:var(--ink-2);text-align:center}
-.notice{border:2px dashed var(--ink);border-radius:12px;padding:.9rem 1rem;background:var(--butter-soft);font-size:.86rem;line-height:1.5;animation:fadeup .4s var(--out)}
-.notice.err-box{border-color:var(--cherry);background:var(--pink-soft)}
-.notice a{font-weight:700}
+.pay-note{font:400 .66rem/1.65 var(--mono);color:var(--ink-2);text-align:center}
+.notice{border:1px solid var(--line-2);border-radius:4px;padding:.9rem 1rem;background:var(--surface-2);font-size:.86rem;line-height:1.55;animation:fadeup .4s var(--out);color:var(--ink)}
+.notice.err-box{border-color:var(--cherry)}
+.notice a{font-weight:600;color:var(--gold)}
 @media (max-width:900px){.co-grid{grid-template-columns:1fr;gap:2rem}.ticket{position:static}.row2{grid-template-columns:1fr}}
-@media (max-width:560px){fieldset{padding:1rem 1rem 1.2rem;border-radius:18px;box-shadow:0 5px 0 var(--ink)}legend{font-size:1.08rem;padding:.34rem .75rem .28rem .45rem}}
-@media (max-width:400px){.seg label{padding:.8rem .45rem}.seg label small{font-size:.62rem;white-space:nowrap}}
-@media (max-width:380px){legend{font-size:.98rem}}
-@media (max-width:360px){.ticket-head{padding:.9rem .85rem;gap:.6rem}.ticket-head h3{font-size:1.2rem;white-space:nowrap}.ticket-head .no{white-space:nowrap;font-size:.68rem;padding:.45rem .5rem}}
-@media (max-width:340px){legend{font-size:.9rem;padding:.3rem .6rem .25rem .4rem;gap:.4rem;white-space:nowrap}}
+@media (max-width:560px){fieldset{padding:1.2rem 1rem 1.3rem}}
+@media (max-width:400px){.seg label{padding:.8rem .45rem}.seg label small{font-size:.58rem;white-space:nowrap}}
+@media (max-width:360px){.ticket-head{padding:.9rem .85rem;gap:.6rem}.ticket-head h3{white-space:nowrap}.ticket-head .no{white-space:nowrap;font-size:.62rem}}
 
 /* ---------- success */
-.success{padding-block:4.5rem 3.5rem;position:relative}
-.success::before{content:"";position:absolute;inset:0 0 auto;height:80px;pointer-events:none;background:var(--sprinkles) 0 0/200px;-webkit-mask-image:linear-gradient(#000 50%,transparent);mask-image:linear-gradient(#000 50%,transparent)}
-.success h1{font:400 clamp(2.4rem,6vw,4.6rem)/1 var(--display);margin:0 0 1rem;color:var(--raspberry);text-shadow:.045em .045em 0 var(--choc);position:relative}
-.success-ref{color:var(--ink-2);margin-bottom:2.5rem;font-size:1.05rem;position:relative}
-.success-ref strong{font:500 1em/1 var(--mono);color:var(--ink);background:var(--butter);border:2px solid var(--ink);border-radius:6px;padding:.15rem .45rem;box-shadow:2px 2px 0 var(--ink)}
-.s-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:3rem;align-items:start;position:relative}
-.s-next h3{font:400 1.7rem/1 var(--display);margin:0 0 1rem;color:var(--choc);text-shadow:.04em .04em 0 var(--strawberry)}
-.s-next ol{margin:0 0 2rem;padding-left:1.2rem;display:flex;flex-direction:column;gap:.6rem;color:var(--ink-2)}
-.s-next ol strong{color:var(--ink);font-weight:700}
+.success{padding-block:4.5rem 4rem;position:relative}
+.success h1{font:600 clamp(2.4rem,6vw,4.6rem)/1 var(--sans);letter-spacing:-.045em;margin:0 0 1rem}
+.success-ref{color:var(--fg-2);margin-bottom:2.5rem;font-size:1.05rem}
+.success-ref strong{font:500 1em/1 var(--mono);color:var(--gold)}
+.s-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:3rem;align-items:start}
+.s-next h3{font:600 1.4rem/1.1 var(--sans);letter-spacing:-.025em;margin:0 0 1.2rem}
+.s-next ol{margin:0 0 2rem;padding-left:1.3rem;display:flex;flex-direction:column;gap:.7rem;color:var(--fg-2)}
+.s-next li::marker{font-family:var(--mono);color:var(--gold);font-size:.85em}
+.s-next ol strong{color:var(--ink);font-weight:600}
 @media (max-width:860px){.s-grid{grid-template-columns:1fr}}
 
 /* ---------- toast, fly, reveal */
-.toast{position:fixed;left:var(--gl);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:100;background:var(--choc);color:var(--cream);padding:.7rem .75rem .7rem 1.1rem;border-radius:999px;border:2px solid var(--ink);display:flex;gap:1rem;align-items:center;font-size:.9rem;font-weight:600;transform:translateY(20px);opacity:0;pointer-events:none;transition:.4s var(--spring);box-shadow:0 4px 0 var(--ink);max-width:calc(100vw - var(--gl) - var(--gr))}
+.toast{position:fixed;left:var(--gl);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:100;background:var(--surface-2);color:var(--ink);padding:.65rem .7rem .65rem 1.1rem;border-radius:999px;border:1px solid var(--line-2);display:flex;gap:1rem;align-items:center;font-size:.9rem;font-weight:500;transform:translateY(20px);opacity:0;pointer-events:none;transition:.45s var(--out);box-shadow:0 24px 60px -24px rgba(0,0,0,.8);max-width:calc(100vw - var(--gl) - var(--gr))}
 .toast.on{transform:none;opacity:1;pointer-events:auto}
-.toast button{color:var(--ink);font-weight:700;background:var(--pink);padding:.5rem .8rem;border-radius:999px;border:2px solid var(--ink)}
-.fly{position:fixed;z-index:120;object-fit:cover;border-radius:12px;pointer-events:none;border:2px solid var(--ink);box-shadow:0 10px 24px rgba(0,0,0,.3);background:var(--icon) center/60% no-repeat,var(--pink-soft)}
-.fly::after{content:"";position:absolute;inset:0;border-radius:10px;background:var(--icon) center/60% no-repeat,var(--pink-soft)}
-.rv{transition:transform .75s var(--out)}
-.rv.rv-hidden{opacity:1;transform:translateY(16px)}
+.toast button{color:#141011;font-weight:600;background:var(--gold);padding:.5rem .9rem;border-radius:999px}
+.fly{position:fixed;z-index:120;object-fit:cover;border-radius:6px;pointer-events:none;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.rv{transition:transform .85s var(--out)}
+.rv.rv-hidden{opacity:1;transform:translateY(22px)}
 .rv.rv-in{opacity:1;transform:none}
 
-@keyframes rise{from{transform:translateY(112%) rotate(3deg)}to{transform:none}}
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes drop{from{opacity:0;transform:scale(.6) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(var(--rot,0deg))}}
-@keyframes pop{0%{opacity:0;transform:scale(.3) rotate(-14deg) translateY(.2em)}60%{opacity:1;transform:scale(1.08) rotate(3deg)}100%{opacity:1;transform:none}}
-@keyframes wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-6deg) scale(1.05)}70%{transform:rotate(5deg)}}
-@keyframes dlg{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
-@keyframes dlgout{to{opacity:0;transform:translateY(10px) scale(.98)}}
+@keyframes pop{from{opacity:0;transform:translateY(.25em) scale(.92)}to{opacity:1;transform:none}}
+@keyframes dlg{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes dlgout{to{opacity:0;transform:translateY(8px) scale(.99)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes slide{to{transform:translateX(-50%)}}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08)}}
-@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.45) rotate(-8deg)}100%{transform:scale(1)}}
-@keyframes float{from{transform:rotate(-3deg) translateY(0)}to{transform:rotate(3deg) translateY(-10px)}}
-@keyframes bob{to{translate:0 -8px}}
-@keyframes flicker{from{transform:scale(1) rotate(-4deg)}to{transform:scale(1.12,1.22) rotate(5deg)}}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.13)}}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rv.rv-hidden{opacity:1;transform:none}
-  .hero-cake,.donut-illo,.band-photos img,.marquee-track,.ticker-row,.candles i::before{animation:none!important}
-  .card:hover .card-media,.chip:hover,.btn:hover,.bag-btn:hover,.card-add:hover{transform:none}
+  .hero-media img{animation:none!important;transform:none!important}
+  .ticker-row{animation:none!important;width:auto;justify-content:flex-start;overflow:hidden}
+  .card:hover .card-media img,.strip figure:hover img,.wall figure:hover img,.band-photos figure:hover img,.btn:hover,.btn:active{transform:none}
+  .strip{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -604,65 +517,40 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
 
 <main id="main">
   <section class="hero" id="top">
+    <div class="hero-media" id="hero-media">
+      <picture>
+        <source type="image/webp" srcset="images/number-50-marble-480.webp 480w, images/number-50-marble-960.webp 960w, images/number-50-marble-1600.webp 1600w" sizes="100vw">
+        <img class="on" src="images/number-50-marble-960.jpg" srcset="images/number-50-marble-480.jpg 480w, images/number-50-marble-960.jpg 960w, images/number-50-marble-1600.jpg 1600w" sizes="100vw" alt="A 50 number cake in a marble box with gold almonds, chocolate-dipped strawberries, Ferrero Rocher and a gold crown" width="1280" height="1600" fetchpriority="high" decoding="async">
+      </picture>
+      <img data-slide="letter-m-pastel" alt="" width="1200" height="1600" aria-hidden="true">
+      <img data-slide="ring-shani" alt="" width="1200" height="1600" aria-hidden="true">
+      <img data-slide="name-cake-nissim" alt="" width="1200" height="1600" aria-hidden="true">
+    </div>
     <div class="wrap">
       <p class="eyebrow">Number cakes · Bomboloni · Kunafa cups · Vintage cakes</p>
       <h1 class="hero-title"><span class="w"><span class="word" style="--i:0">Spell</span></span> <span class="w"><span class="word" style="--i:1">it</span></span> <span class="w"><span class="word" style="--i:2">in</span></span> <span class="w"><span class="word" style="--i:3">cream.</span></span></h1>
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="builder">
-            <label class="builder-label" for="hero-chars">Type a number or initials. Up to three characters.</label>
-            <div class="builder-row">
-              <input id="hero-chars" class="builder-input" value="30" maxlength="3" autocomplete="off" spellcheck="false" aria-describedby="hero-note">
-              <button class="btn btn-pink" id="hero-build" type="button">Build this cake</button>
-            </div>
-            <div class="glyphs" id="hero-glyphs" aria-hidden="true"><span style="--i:0">3</span><span style="--i:1">0</span></div>
-            <p class="builder-note" id="hero-note"><span id="hero-price">2 characters · $160 · about 16–20 servings</span> · 48 hours' notice</p>
-            <span class="candles" aria-hidden="true"><i></i><i></i><i></i></span>
-          </div>
           <p class="lede">Number and letter cakes on a buttery cookie base, bomboloni filled the morning you pick up, and Dubai kunafa cups. Made to order in a small kitchen in <span data-brand="cityShort">Houston</span>, and boxed in marble.</p>
           <div class="cta-row">
             <a class="btn btn-ink" href="#shop">See the menu</a>
             <a class="link-arrow" href="#gallery">Recent boxes →</a>
           </div>
         </div>
-        <div class="collage">
-          <div class="main" data-icon="number"><img src="images/number-50-marble.jpg" alt="A 50 number cake in a marble box with gold almonds, chocolate-dipped strawberries, Ferrero Rocher and a gold crown" width="1280" height="1600" fetchpriority="high"></div>
-          <div class="second" data-icon="donut"><img src="images/bomboloni-box.jpg" alt="A box of bomboloni topped with pistachio cream, dulce de leche cream and strawberries" width="1086" height="1448"></div>
-          <div class="sticker"><span>Made<br>to order<br>48 hours</span></div>
-          <svg class="hero-cake" viewBox="0 0 220 240" aria-hidden="true" focusable="false">
-            <g stroke="#2B1511" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-              <ellipse cx="110" cy="226" rx="38" ry="8" fill="#FFF1D6"/>
-              <rect x="101" y="196" width="18" height="30" rx="5" fill="#FFF1D6"/>
-              <ellipse cx="110" cy="190" rx="96" ry="12" fill="#FFF1D6"/>
-              <rect x="30" y="130" width="160" height="58" rx="10" fill="#FF5C9A"/>
-              <rect x="50" y="84" width="120" height="50" rx="8" fill="#BFE6AE"/>
-              <rect x="68" y="44" width="84" height="44" rx="7" fill="#FFF1D6"/>
-              <path d="M38 122H182Q190 122 190 130V136H176V150A7 7 0 0 1 162 150V136H150V162A8 8 0 0 1 134 162V136H120V146A6 6 0 0 1 108 146V136H96V168A8 8 0 0 1 80 168V136H66V154A7 7 0 0 1 52 154V136H30V130Q30 122 38 122Z" fill="#FFF1D6"/>
-              <path d="M56 76H164Q170 76 170 82V88H158V100A6 6 0 0 1 146 100V88H136V112A7 7 0 0 1 122 112V88H112V96A5 5 0 0 1 102 96V88H92V118A7 7 0 0 1 78 118V88H68V104A6 6 0 0 1 56 104V88H50V82Q50 76 56 76Z" fill="#FF5C9A"/>
-              <path d="M72 36H148Q152 36 152 40V46H142V56A5 5 0 0 1 132 56V46H124V66A6 6 0 0 1 112 66V46H104V54A4 4 0 0 1 96 54V46H88V62A5 5 0 0 1 78 62V46H68V40Q68 36 72 36Z" fill="#4A2418"/>
-              <rect x="80" y="12" width="9" height="28" rx="2.5" fill="#FFFDFA"/>
-              <rect x="131" y="12" width="9" height="28" rx="2.5" fill="#FFFDFA"/>
-              <path d="M80 20h9M80 28h9M131 20h9M131 28h9" stroke="#FF5C9A" stroke-width="2.5"/>
-              <path d="M84.5 1c-4 6-4 10 0 10s4-4 0-10z" fill="#FFC63A" stroke-width="2"/>
-              <path d="M135.5 1c-4 6-4 10 0 10s4-4 0-10z" fill="#FFC63A" stroke-width="2"/>
-              <path d="M110 20q2-14 16-18" fill="none"/>
-              <ellipse cx="122" cy="8" rx="7" ry="3.5" transform="rotate(-30 122 8)" fill="#5E9E55"/>
-              <circle cx="110" cy="30" r="10" fill="#E6303F"/>
-            </g>
-            <g stroke-width="3.5" stroke-linecap="round" fill="none">
-              <path stroke="#FFF1D6" d="M44 178l8-4M150 180l8-2M100 182l6-4"/>
-              <path stroke="#FFC63A" d="M62 124l7-3M140 126l6 3"/>
-              <path stroke="#5E9E55" d="M82 60l6 2M128 70l-6 2"/>
-              <path stroke="#FF5C9A" d="M86 72l7-3M138 58l6 3"/>
-            </g>
-          </svg>
+        <div class="builder">
+          <label class="builder-label" for="hero-chars">Type a number or initials. Up to three characters.</label>
+          <div class="builder-row">
+            <input id="hero-chars" class="builder-input" value="30" maxlength="3" autocomplete="off" spellcheck="false" aria-describedby="hero-note">
+            <button class="btn btn-pink" id="hero-build" type="button">Build this cake</button>
+          </div>
+          <div class="glyphs" id="hero-glyphs" aria-hidden="true"><span style="--i:0">3</span><span style="--i:1">0</span></div>
+          <p class="builder-note" id="hero-note"><span id="hero-price">2 characters · $160 · about 16–20 servings</span> · 48 hours' notice</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
-  <svg class="drip drip-pink" aria-hidden="true" focusable="false"><defs><pattern id="drip-pink" width="200" height="48" patternUnits="userSpaceOnUse"><path d="M-5-6H205V12H170V20A10 10 0 0 1 150 20V12H126V33A13 13 0 0 1 100 33V12H76V15A9 9 0 0 1 58 15V12H32V23A11 11 0 0 1 10 23V12H-5Z" fill="currentColor" stroke="#2B1511" stroke-width="2.5" stroke-linejoin="round"/></pattern></defs><rect width="100%" height="100%" fill="url(#drip-pink)"/></svg>
+  <div class="marquee" aria-hidden="true" hidden><div class="marquee-track" id="marquee"></div></div>
 
   <section class="sec" id="shop">
     <div class="wrap">
@@ -676,51 +564,74 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
         <button class="chip" type="button" data-filter="bomboloni" aria-pressed="false">Bomboloni</button>
         <button class="chip" type="button" data-filter="kunafa" aria-pressed="false">Kunafa</button>
         <button class="chip" type="button" data-filter="cakes" aria-pressed="false">Cakes</button>
-        <span class="donut-illo" aria-hidden="true"></span>
       </div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
 
-  <section class="band edge-shell edge-paper" id="dark">
+  <section class="band" id="dark">
     <div class="wrap band-grid">
       <div class="band-copy rv">
         <p class="eyebrow light">For him</p>
         <h2>Black, gold and a little whisky.</h2>
         <p>The Name cake in its darker outfit: black and gold pearls, two mini bottles of his pick on top, and his name in gold on the side. Add a heart tart on the black tray for the table.</p>
-        <button class="btn btn-pink" type="button" data-open="name-cake" data-preset='{"style":"black-gold"}'>Build a Name cake</button>
+        <div><button class="btn btn-pink" type="button" data-open="name-cake" data-preset='{"style":"black-gold"}'>Build a Name cake</button></div>
       </div>
       <div class="band-photos">
-        <figure><img src="images/name-cake-nissim.jpg" alt="A white cake with NISSIM in gold letters, black and gold pearls and two mini whisky bottles on top" loading="lazy"><figcaption>Name cake · black &amp; gold</figcaption></figure>
-        <figure data-icon="heart"><img src="images/heart-strawberries.jpg" alt="A heart-shaped cream tart covered in chopped strawberries on a black marble tray" loading="lazy"><figcaption>Heart tart · strawberries</figcaption></figure>
+        <figure class="rv"><picture><source type="image/webp" srcset="images/name-cake-nissim-480.webp 480w, images/name-cake-nissim-960.webp 960w, images/name-cake-nissim-1600.webp 1600w" sizes="(max-width:860px) 60vw, 45vw"><img src="images/name-cake-nissim-960.jpg" srcset="images/name-cake-nissim-480.jpg 480w, images/name-cake-nissim-960.jpg 960w, images/name-cake-nissim-1600.jpg 1600w" sizes="(max-width:860px) 60vw, 45vw" alt="A white cake with NISSIM in gold letters, black and gold pearls and two mini whisky bottles on top" width="1200" height="1600" loading="lazy" decoding="async"></picture><figcaption>Name cake · black &amp; gold</figcaption></figure>
+        <figure class="rv"><picture><source type="image/webp" srcset="images/heart-strawberries-480.webp 480w, images/heart-strawberries-960.webp 960w, images/heart-strawberries-1600.webp 1600w" sizes="(max-width:860px) 40vw, 30vw"><img src="images/heart-strawberries-960.jpg" srcset="images/heart-strawberries-480.jpg 480w, images/heart-strawberries-960.jpg 960w, images/heart-strawberries-1600.jpg 1600w" sizes="(max-width:860px) 40vw, 30vw" alt="A heart-shaped cream tart covered in chopped strawberries on a black marble tray" width="1200" height="1600" loading="lazy" decoding="async"></picture><figcaption>Heart tart · strawberries</figcaption></figure>
       </div>
     </div>
-    <svg class="drip drip-choc" aria-hidden="true" focusable="false"><defs><pattern id="drip-choc" width="200" height="48" patternUnits="userSpaceOnUse"><path d="M-5-6H205V12H170V20A10 10 0 0 1 150 20V12H126V33A13 13 0 0 1 100 33V12H76V15A9 9 0 0 1 58 15V12H32V23A11 11 0 0 1 10 23V12H-5Z" fill="currentColor" stroke="#2B1511" stroke-width="2.5" stroke-linejoin="round"/></pattern></defs><rect width="100%" height="100%" fill="url(#drip-choc)"/></svg>
   </section>
 
-  <section class="sec sec-mint" id="gallery">
+  <section class="sec gallery" id="gallery">
     <div class="wrap">
       <div class="sec-head">
         <h2>Recent boxes</h2>
-        <p class="sec-note">Real orders, phone photos and all. Tag <span data-brand="instagramAt">@marblebox.bakery</span> when yours arrives.</p>
+        <div class="sec-side">
+          <p class="sec-note">Real orders, phone photos and all. Tag <span data-brand="instagramAt">@marblebox.bakery</span> when yours arrives.</p>
+          <div class="strip-nav"><button class="icon-btn" type="button" data-strip="-1" aria-label="Previous photos">←</button><button class="icon-btn" type="button" data-strip="1" aria-label="Next photos">→</button></div>
+        </div>
       </div>
-      <div class="gallery-grid">
-        <figure class="tall rv" data-icon="letter-m"><img src="images/letter-m-pastel.jpg" alt="Letter M cream tart with pink, blue and lilac piping, Hershey's hearts and Kinder bars" loading="lazy"><figcaption>M · pastel candy, Hershey's hearts</figcaption></figure>
-        <figure class="rv"><img src="images/vintage-30-top.jpg" alt="Top view of a white vintage cake with pink shell piping, pearls and a gold 30, in a clear box with ribbon" loading="lazy"><figcaption>30 · vintage ruffles, baby's breath</figcaption></figure>
-        <figure class="wide rv" data-icon="number"><img src="images/bar-mitzvah-13.jpg" alt="A 13 number cake with blue and white piping and Lindt truffles for a Bar Mitzvah" loading="lazy"><figcaption>13 · Bar Mitzvah, blue &amp; white</figcaption></figure>
-        <figure class="tall rv" data-icon="letter-j"><img src="images/letter-j-rose.jpg" alt="Letter J cream tart with a pink rose, macarons, pretzels and gold chocolate bars" loading="lazy"><figcaption>J · pink rose, macarons, gold bars</figcaption></figure>
-        <figure class="rv"><img src="images/name-cake-chen.jpg" alt="A white cake with CHEN in gold letters, white flowers, baby's breath and gold balls" loading="lazy"><figcaption>Chen · white florals &amp; gold</figcaption></figure>
-        <figure class="rv" data-icon="letter-l"><img src="images/letter-l-crown.jpg" alt="Letter L cream tart with a gold crown, dragon fruit, Ferrero Rocher and a ruby KitKat, with Happy Birthday in gold letters" loading="lazy"><figcaption>L · crown, dragon fruit, KitKat</figcaption></figure>
-        <figure class="tall rv" data-icon="number"><img src="images/number-pastel-hearts.jpg" alt="A pastel number cake with pink Hershey's hearts, Kinder bars, pearls and a gold Happy Birthday topper" loading="lazy"><figcaption>Pastel number · Kinder &amp; pearls</figcaption></figure>
-        <figure class="rv" data-icon="ring"><img src="images/ring-shani.jpg" alt="A ring cream tart with three colors of cream, strawberries, blackberries, macarons and gold hearts" loading="lazy"><figcaption>Ring · three creams, blackberries</figcaption></figure>
-        <figure class="rv" data-icon="heart"><img src="images/marble-box-detail.jpg" alt="The corner of a marble-print box holding a cream tart with macarons and dragon fruit" loading="lazy"><figcaption>Every order leaves in the marble box</figcaption></figure>
-        <figure class="wide rv" data-icon="donut" data-plate="choc"><img src="images/bomboloni-oreo-mm.jpg" alt="Bomboloni with Oreo cream and powdered sugar next to chocolate-glazed doughnuts with M&amp;M's" loading="lazy"><figcaption>Cookies &amp; cream · chocolate &amp; M&amp;M's</figcaption></figure>
-        <figure class="rv" data-icon="number" data-plate="choc"><img src="images/number-chocolate.jpg" alt="A number cake with Ferrero Rocher, Raffaello, strawberries, macarons and a mini Nutella jar" loading="lazy"><figcaption>Chocolate lover's · mini Nutella</figcaption></figure>
+    </div>
+    <div class="strip" id="strip" aria-label="Recent boxes, scroll sideways">
+      <figure class="rv"><button type="button" data-lb="letter-m-pastel" aria-label="Enlarge photo: M · pastel candy, Hershey&#x27;s hearts"><picture><source type="image/webp" srcset="images/letter-m-pastel-480.webp 480w, images/letter-m-pastel-960.webp 960w, images/letter-m-pastel-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/letter-m-pastel-960.jpg" srcset="images/letter-m-pastel-480.jpg 480w, images/letter-m-pastel-960.jpg 960w, images/letter-m-pastel-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="Letter M cream tart with pink, blue and lilac piping, Hershey&#x27;s hearts and Kinder bars" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>M · pastel candy, Hershey&#x27;s hearts</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="vintage-30-top" aria-label="Enlarge photo: 30 · vintage ruffles, baby&#x27;s breath"><picture><source type="image/webp" srcset="images/vintage-30-top-480.webp 480w, images/vintage-30-top-960.webp 960w, images/vintage-30-top-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/vintage-30-top-960.jpg" srcset="images/vintage-30-top-480.jpg 480w, images/vintage-30-top-960.jpg 960w, images/vintage-30-top-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="Top view of a white vintage cake with pink shell piping, pearls and a gold 30, in a clear box with ribbon" width="1086" height="1448" loading="lazy" decoding="async"></picture></button><figcaption>30 · vintage ruffles, baby&#x27;s breath</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="bar-mitzvah-13" aria-label="Enlarge photo: 13 · Bar Mitzvah, blue &amp; white"><picture><source type="image/webp" srcset="images/bar-mitzvah-13-480.webp 480w, images/bar-mitzvah-13-960.webp 960w, images/bar-mitzvah-13-1600.webp 1600w" sizes="(max-width:680px) 630px, (max-width:860px) 720px, 900px"><img src="images/bar-mitzvah-13-960.jpg" srcset="images/bar-mitzvah-13-480.jpg 480w, images/bar-mitzvah-13-960.jpg 960w, images/bar-mitzvah-13-1600.jpg 1600w" sizes="(max-width:680px) 630px, (max-width:860px) 720px, 900px" alt="A 13 number cake with blue and white piping and Lindt truffles for a Bar Mitzvah" width="1536" height="1024" loading="lazy" decoding="async"></picture></button><figcaption>13 · Bar Mitzvah, blue &amp; white</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="letter-j-rose" aria-label="Enlarge photo: J · pink rose, macarons, gold bars"><picture><source type="image/webp" srcset="images/letter-j-rose-480.webp 480w, images/letter-j-rose-960.webp 960w, images/letter-j-rose-1600.webp 1600w" sizes="(max-width:680px) 280px, (max-width:860px) 320px, 400px"><img src="images/letter-j-rose-960.jpg" srcset="images/letter-j-rose-480.jpg 480w, images/letter-j-rose-960.jpg 960w, images/letter-j-rose-1600.jpg 1600w" sizes="(max-width:680px) 280px, (max-width:860px) 320px, 400px" alt="Letter J cream tart with a pink rose, macarons, pretzels and gold chocolate bars" width="1024" height="1536" loading="lazy" decoding="async"></picture></button><figcaption>J · pink rose, macarons, gold bars</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="name-cake-chen" aria-label="Enlarge photo: Chen · white florals &amp; gold"><picture><source type="image/webp" srcset="images/name-cake-chen-480.webp 480w, images/name-cake-chen-960.webp 960w, images/name-cake-chen-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/name-cake-chen-960.jpg" srcset="images/name-cake-chen-480.jpg 480w, images/name-cake-chen-960.jpg 960w, images/name-cake-chen-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="A white cake with CHEN in gold letters, white flowers, baby&#x27;s breath and gold balls" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>Chen · white florals &amp; gold</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="letter-l-crown" aria-label="Enlarge photo: L · crown, dragon fruit, KitKat"><picture><source type="image/webp" srcset="images/letter-l-crown-480.webp 480w, images/letter-l-crown-960.webp 960w, images/letter-l-crown-1600.webp 1600w" sizes="(max-width:680px) 236px, (max-width:860px) 270px, 338px"><img src="images/letter-l-crown-960.jpg" srcset="images/letter-l-crown-480.jpg 480w, images/letter-l-crown-960.jpg 960w, images/letter-l-crown-1600.jpg 1600w" sizes="(max-width:680px) 236px, (max-width:860px) 270px, 338px" alt="Letter L cream tart with a gold crown, dragon fruit, Ferrero Rocher and a ruby KitKat, with Happy Birthday in gold letters" width="900" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>L · crown, dragon fruit, KitKat</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="number-pastel-hearts" aria-label="Enlarge photo: Pastel number · Kinder &amp; pearls"><picture><source type="image/webp" srcset="images/number-pastel-hearts-480.webp 480w, images/number-pastel-hearts-960.webp 960w, images/number-pastel-hearts-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/number-pastel-hearts-960.jpg" srcset="images/number-pastel-hearts-480.jpg 480w, images/number-pastel-hearts-960.jpg 960w, images/number-pastel-hearts-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="A pastel number cake with pink Hershey&#x27;s hearts, Kinder bars, pearls and a gold Happy Birthday topper" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>Pastel number · Kinder &amp; pearls</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="ring-shani" aria-label="Enlarge photo: Ring · three creams, blackberries"><picture><source type="image/webp" srcset="images/ring-shani-480.webp 480w, images/ring-shani-960.webp 960w, images/ring-shani-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/ring-shani-960.jpg" srcset="images/ring-shani-480.jpg 480w, images/ring-shani-960.jpg 960w, images/ring-shani-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="A ring cream tart with three colors of cream, strawberries, blackberries, macarons and gold hearts" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>Ring · three creams, blackberries</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="marble-box-detail" aria-label="Enlarge photo: Every order leaves in the marble box"><picture><source type="image/webp" srcset="images/marble-box-detail-480.webp 480w, images/marble-box-detail-960.webp 960w, images/marble-box-detail-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/marble-box-detail-960.jpg" srcset="images/marble-box-detail-480.jpg 480w, images/marble-box-detail-960.jpg 960w, images/marble-box-detail-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="The corner of a marble-print box holding a cream tart with macarons and dragon fruit" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>Every order leaves in the marble box</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="bomboloni-oreo-mm" aria-label="Enlarge photo: Cookies &amp; cream · chocolate &amp; M&amp;M&#x27;s"><picture><source type="image/webp" srcset="images/bomboloni-oreo-mm-480.webp 480w, images/bomboloni-oreo-mm-960.webp 960w, images/bomboloni-oreo-mm-1600.webp 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px"><img src="images/bomboloni-oreo-mm-960.jpg" srcset="images/bomboloni-oreo-mm-480.jpg 480w, images/bomboloni-oreo-mm-960.jpg 960w, images/bomboloni-oreo-mm-1600.jpg 1600w" sizes="(max-width:680px) 315px, (max-width:860px) 360px, 450px" alt="Bomboloni with Oreo cream and powdered sugar next to chocolate-glazed doughnuts with M&amp;M&#x27;s" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><figcaption>Cookies &amp; cream · chocolate &amp; M&amp;M&#x27;s</figcaption></figure>
+      <figure class="rv"><button type="button" data-lb="number-chocolate" aria-label="Enlarge photo: Chocolate lover&#x27;s · mini Nutella"><picture><source type="image/webp" srcset="images/number-chocolate-480.webp 480w, images/number-chocolate-960.webp 960w, images/number-chocolate-1600.webp 1600w" sizes="(max-width:680px) 336px, (max-width:860px) 384px, 480px"><img src="images/number-chocolate-960.jpg" srcset="images/number-chocolate-480.jpg 480w, images/number-chocolate-960.jpg 960w, images/number-chocolate-1600.jpg 1600w" sizes="(max-width:680px) 336px, (max-width:860px) 384px, 480px" alt="A number cake with Ferrero Rocher, Raffaello, strawberries, macarons and a mini Nutella jar" width="1170" height="1462" loading="lazy" decoding="async"></picture></button><figcaption>Chocolate lover&#x27;s · mini Nutella</figcaption></figure>
+    </div>
+  </section>
+  <section class="wall-sec" aria-label="More recent boxes">
+    <div class="wrap">
+      <div class="wall" id="wall">
+        <figure class="rv"><button type="button" data-lb="number-fruit" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/number-fruit-480.webp 480w, images/number-fruit-960.webp 960w, images/number-fruit-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/number-fruit-960.jpg" srcset="images/number-fruit-480.jpg 480w, images/number-fruit-960.jpg 960w, images/number-fruit-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A number cake topped with strawberries, mango, kiwi, dragon fruit and blackberries" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="number-60-lilac" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/number-60-lilac-480.webp 480w, images/number-60-lilac-960.webp 960w, images/number-60-lilac-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/number-60-lilac-960.jpg" srcset="images/number-60-lilac-480.jpg 480w, images/number-60-lilac-960.jpg 960w, images/number-60-lilac-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A 60 number cake in lilac, white and blush piping with a gold Happy Birthday banner" width="1600" height="1200" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="number-12-boho" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/number-12-boho-480.webp 480w, images/number-12-boho-960.webp 960w, images/number-12-boho-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/number-12-boho-960.jpg" srcset="images/number-12-boho-480.jpg 480w, images/number-12-boho-960.jpg 960w, images/number-12-boho-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A 12 number cake in cream and blush piping with dried flowers" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="number-15-pink" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/number-15-pink-480.webp 480w, images/number-15-pink-960.webp 960w, images/number-15-pink-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/number-15-pink-960.jpg" srcset="images/number-15-pink-480.jpg 480w, images/number-15-pink-960.jpg 960w, images/number-15-pink-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A 15 number cake in pink" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-gold-pampas" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-gold-pampas-480.webp 480w, images/cake-gold-pampas-960.webp 960w, images/cake-gold-pampas-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-gold-pampas-960.jpg" srcset="images/cake-gold-pampas-480.jpg 480w, images/cake-gold-pampas-960.jpg 960w, images/cake-gold-pampas-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A white cake with gold pampas grass, gold pearls and a gold Happy Birthday topper" width="1280" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-50-ferrero" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-50-ferrero-480.webp 480w, images/cake-50-ferrero-960.webp 960w, images/cake-50-ferrero-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-50-ferrero-960.jpg" srcset="images/cake-50-ferrero-480.jpg 480w, images/cake-50-ferrero-960.jpg 960w, images/cake-50-ferrero-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A 50 cake with chocolate piping, Ferrero Rocher and a gold 50 topper" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-rainbow-babys-breath" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-rainbow-babys-breath-480.webp 480w, images/cake-rainbow-babys-breath-960.webp 960w, images/cake-rainbow-babys-breath-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-rainbow-babys-breath-960.jpg" srcset="images/cake-rainbow-babys-breath-480.jpg 480w, images/cake-rainbow-babys-breath-960.jpg 960w, images/cake-rainbow-babys-breath-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A white cake covered in rainbow baby&#x27;s breath with a white carnation" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-blue-white-lemons" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-blue-white-lemons-480.webp 480w, images/cake-blue-white-lemons-960.webp 960w, images/cake-blue-white-lemons-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-blue-white-lemons-960.jpg" srcset="images/cake-blue-white-lemons-480.jpg 480w, images/cake-blue-white-lemons-960.jpg 960w, images/cake-blue-white-lemons-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A blue and white cake with daisies and lemons between blue-and-white candles" width="1086" height="1448" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-vogue-12" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-vogue-12-480.webp 480w, images/cake-vogue-12-960.webp 960w, images/cake-vogue-12-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-vogue-12-960.jpg" srcset="images/cake-vogue-12-480.jpg 480w, images/cake-vogue-12-960.jpg 960w, images/cake-vogue-12-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A cream vintage cake with a Vogue plaque, black and gold pearls and three candles" width="1024" height="1536" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-red-roses" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-red-roses-480.webp 480w, images/cake-red-roses-960.webp 960w, images/cake-red-roses-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-red-roses-960.jpg" srcset="images/cake-red-roses-480.jpg 480w, images/cake-red-roses-960.jpg 960w, images/cake-red-roses-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A white cake with a cascade of red roses and baby&#x27;s breath" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="name-cake-chava" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/name-cake-chava-480.webp 480w, images/name-cake-chava-960.webp 960w, images/name-cake-chava-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/name-cake-chava-960.jpg" srcset="images/name-cake-chava-480.jpg 480w, images/name-cake-chava-960.jpg 960w, images/name-cake-chava-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A white cake with CHAVA in silver letters and a cascade of pink and purple roses" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="name-cake-chen-peach" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/name-cake-chen-peach-480.webp 480w, images/name-cake-chen-peach-960.webp 960w, images/name-cake-chen-peach-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/name-cake-chen-peach-960.jpg" srcset="images/name-cake-chen-peach-480.jpg 480w, images/name-cake-chen-peach-960.jpg 960w, images/name-cake-chen-peach-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A peach name cake for Chen" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-gold-candles" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-gold-candles-480.webp 480w, images/cake-gold-candles-960.webp 960w, images/cake-gold-candles-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-gold-candles-960.jpg" srcset="images/cake-gold-candles-480.jpg 480w, images/cake-gold-candles-960.jpg 960w, images/cake-gold-candles-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A cake with gold candles" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="vintage-30-boxed" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/vintage-30-boxed-480.webp 480w, images/vintage-30-boxed-960.webp 960w, images/vintage-30-boxed-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/vintage-30-boxed-960.jpg" srcset="images/vintage-30-boxed-480.jpg 480w, images/vintage-30-boxed-960.jpg 960w, images/vintage-30-boxed-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="The vintage 30 cake in its clear box with ribbon" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="ring-berries" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/ring-berries-480.webp 480w, images/ring-berries-960.webp 960w, images/ring-berries-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/ring-berries-960.jpg" srcset="images/ring-berries-480.jpg 480w, images/ring-berries-960.jpg 960w, images/ring-berries-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="A ring cream tart with strawberries, blueberries, raspberries and silver chocolate bars, in a clear box" width="1024" height="1536" loading="lazy" decoding="async"></picture></button></figure>
+        <figure class="rv"><button type="button" data-lb="cake-vogue-12-party" aria-label="Enlarge photo"><picture><source type="image/webp" srcset="images/cake-vogue-12-party-480.webp 480w, images/cake-vogue-12-party-960.webp 960w, images/cake-vogue-12-party-1600.webp 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px"><img src="images/cake-vogue-12-party-960.jpg" srcset="images/cake-vogue-12-party-480.jpg 480w, images/cake-vogue-12-party-960.jpg 960w, images/cake-vogue-12-party-1600.jpg 1600w" sizes="(max-width:680px) 50vw, (max-width:1360px) 25vw, 320px" alt="The Vogue 12 cake at the party" width="1200" height="1600" loading="lazy" decoding="async"></picture></button></figure>
       </div>
     </div>
   </section>
 
-  <section class="sec sec-dots edge-shell edge-mint" id="how">
+  <section class="sec" id="how">
     <div class="wrap">
       <div class="sec-head">
         <h2>How ordering works</h2>
@@ -738,7 +649,7 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
     </div>
   </section>
 
-  <section class="sec sec-pink edge-shell edge-paper" id="details">
+  <section class="sec" id="details">
     <div class="wrap">
       <div class="details-grid">
         <div class="copy rv">
@@ -758,7 +669,7 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
     </div>
   </section>
 
-  <section class="sec edge-shell edge-pink" id="faq">
+  <section class="sec" id="faq">
     <div class="wrap">
       <div class="sec-head">
         <h2>Questions</h2>
@@ -850,7 +761,6 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
 </section>
 
 <footer class="foot">
-  <svg class="drip drip-paper" aria-hidden="true" focusable="false"><defs><pattern id="drip-paper" width="200" height="48" patternUnits="userSpaceOnUse"><path d="M-5-6H205V12H170V20A10 10 0 0 1 150 20V12H126V33A13 13 0 0 1 100 33V12H76V15A9 9 0 0 1 58 15V12H32V23A11 11 0 0 1 10 23V12H-5Z" fill="currentColor" stroke="#2B1511" stroke-width="2.5" stroke-linejoin="round"/></pattern></defs><rect width="100%" height="100%" fill="url(#drip-paper)"/></svg>
   <div class="wrap foot-grid">
     <div>
       <a class="wordmark" href="#top" data-home><span data-brand="name">Marble Box</span><small data-brand="descriptor">Bakery</small></a>
@@ -883,7 +793,6 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
     <span>© <span id="year">2026</span> <span data-brand="name">Marble Box</span> <span data-brand="descriptor">Bakery</span></span>
     <span>Cream tarts, boxed in marble.</span>
   </div>
-  <div class="marble-edge"></div>
 </footer>
 
 <div class="scrim" id="scrim"></div>
@@ -898,6 +807,13 @@ legend::before{counter-increment:leg;content:counter(leg);content:counter(leg) /
   </div>
 </aside>
 <dialog class="pdp" id="pdp" aria-label="Product"></dialog>
+<dialog class="lightbox" id="lightbox" aria-label="Photo">
+  <div class="lb-stage" id="lb-stage"></div>
+  <button class="icon-btn lb-prev" type="button" data-lb-step="-1" aria-label="Previous photo">←</button>
+  <button class="icon-btn lb-next" type="button" data-lb-step="1" aria-label="Next photo">→</button>
+  <button class="icon-btn lb-close" type="button" data-lb-close aria-label="Close">×</button>
+  <p class="lb-meta" id="lb-meta" aria-live="polite"></p>
+</dialog>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="lib/pricing.js"></script>
@@ -932,6 +848,16 @@ let CAT = null;                                   // filled from catalog.json at
 document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('is-missing'); }, true);
 const product = id => (CAT ? Pricing.findProduct(CAT, id) : null);
 const imgPath = name => `images/${name}.jpg`;
+
+/* ---- PRESENTATION HELPERS (no commerce logic): responsive <picture> markup built from the images/ variants.
+   WebP first with a JPEG fallback, 480/960/1600 srcset, real width/height so nothing shifts, lazy unless told otherwise. ---- */
+const DIMS = { 'bar-mitzvah-13': [1536, 1024], 'bomboloni-box-2': [1200, 1600], 'bomboloni-box': [1086, 1448], 'bomboloni-oreo-mm': [1200, 1600], 'cake-50-ferrero': [1200, 1600], 'cake-blue-white-lemons': [1086, 1448], 'cake-gold-candles': [1200, 1600], 'cake-gold-pampas': [1280, 1600], 'cake-rainbow-babys-breath': [1200, 1600], 'cake-red-roses': [1200, 1600], 'cake-vogue-12-party': [1200, 1600], 'cake-vogue-12': [1024, 1536], 'heart-strawberries': [1200, 1600], 'kunafa-cups': [1086, 1448], 'letter-j-rose': [1024, 1536], 'letter-l-crown': [900, 1600], 'letter-m-pastel': [1200, 1600], 'marble-box-detail': [1200, 1600], 'mini-ruffle-cakes': [1122, 1402], 'name-cake-chava': [1200, 1600], 'name-cake-chen-peach': [1200, 1600], 'name-cake-chen': [1200, 1600], 'name-cake-nissim': [1200, 1600], 'number-12-boho': [1200, 1600], 'number-15-pink': [1200, 1600], 'number-50-marble': [1280, 1600], 'number-60-lilac': [1600, 1200], 'number-chocolate': [1170, 1462], 'number-fruit': [1200, 1600], 'number-pastel-hearts': [1200, 1600], 'ring-berries': [1024, 1536], 'ring-shani': [1200, 1600], 'vintage-30-boxed': [1200, 1600], 'vintage-30-side': [1200, 1600], 'vintage-30-top': [1086, 1448] };
+const CARD_SIZES = '(max-width:680px) 50vw, (max-width:1000px) 33vw, 320px';
+const srcsetOf = (name, ext) => [480, 960, 1600].map(s => `images/${name}-${s}.${ext} ${s}w`).join(', ');
+function pic(name, { alt = '', sizes = '100vw', cls = '', id = '', lazy = true, attrs = '' } = {}) {
+  const [w, h] = DIMS[name] || [1200, 1600];
+  return `<picture><source type="image/webp" srcset="${srcsetOf(name, 'webp')}" sizes="${sizes}"><img${id ? ` id="${id}"` : ''}${cls ? ` class="${cls}"` : ''} src="images/${name}-960.jpg" srcset="${srcsetOf(name, 'jpg')}" sizes="${sizes}" alt="${esc(alt)}" width="${w}" height="${h}"${lazy ? ' loading="lazy"' : ''} decoding="async"${attrs ? ' ' + attrs : ''}></picture>`;
+}
 const catLabel = id => (CAT.categories.find(c => c.id === id) || {}).label || '';
 
 /* ---- cart state ---- */
@@ -1014,8 +940,8 @@ function renderGrid() {
     const alt = p.images[1];
     grid.append(el(`<article class="card" style="animation-delay:${i * 60}ms">
       <div class="card-media" data-open="${p.id}" role="button" tabindex="0" aria-label="View ${esc(p.name)}">
-        <img class="main" src="${imgPath(p.images[0])}" alt="${esc(p.alt || p.name)}" loading="lazy" width="800" height="1000">
-        ${alt ? `<img class="alt" src="${imgPath(alt)}" alt="" loading="lazy" aria-hidden="true">` : ''}
+        ${pic(p.images[0], { cls: 'main', alt: p.alt || p.name, sizes: CARD_SIZES })}
+        ${alt ? pic(alt, { cls: 'alt', sizes: CARD_SIZES, attrs: 'aria-hidden="true"' }) : ''}
         ${p.tag ? `<span class="card-tag ${esc(p.tagColor || '')}">${esc(p.tag)}</span>` : ''}
       </div>
       <div class="card-body">
@@ -1071,8 +997,8 @@ function renderPdp() {
     <button class="pdp-close" type="button" data-close aria-label="Close">×</button>
     <div class="pdp-grid">
       <div class="pdp-media">
-        <div class="pdp-main"><img id="pdp-img" src="${imgPath(p.images[0])}" alt="${esc(p.alt || p.name)}"></div>
-        ${p.images.length > 1 ? `<div class="pdp-thumbs">${p.images.map((im, i) => `<button type="button" data-img="${i}" aria-current="${i === 0}" aria-label="Photo ${i + 1} of ${p.images.length}"><img src="${imgPath(im)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+        <div class="pdp-main">${pic(p.images[0], { id: 'pdp-img', alt: p.alt || p.name, lazy: false, sizes: '(max-width:760px) 100vw, 520px' })}</div>
+        ${p.images.length > 1 ? `<div class="pdp-thumbs">${p.images.map((im, i) => `<button type="button" data-img="${i}" data-name="${esc(im)}" aria-current="${i === 0}" aria-label="Photo ${i + 1} of ${p.images.length}">${pic(im, { sizes: '52px' })}</button>`).join('')}</div>` : ''}
       </div>
       <div class="pdp-body">
         <div>
@@ -1172,7 +1098,7 @@ function renderBag() {
     list.innerHTML = `<div class="bag-empty"><div class="big">0</div><p>Your box is empty.</p><button class="btn btn-line" type="button" data-close-bag data-goto="#shop">Start with a number</button></div>`;
   } else {
     list.innerHTML = t.lines.map(l => `<div class="bag-item" data-key="${esc(l.item.key)}">
-      <img src="${imgPath(l.product.images[0])}" alt="">
+      ${pic(l.product.images[0], { sizes: '72px' })}
       <div><h4>${esc(l.product.name)}</h4><div class="opts">${esc(l.summary)}</div>
         <div class="qty-row"><div class="qty" aria-label="Quantity"><button type="button" data-bag-qty="-1" aria-label="One fewer">−</button><output>${l.qty}</output><button type="button" data-bag-qty="1" aria-label="One more">+</button></div><button class="remove" type="button" data-remove>Remove</button></div>
       </div>
@@ -1514,6 +1440,120 @@ async function boot() {
   else if (qs.get('order') === 'cancelled') { history.replaceState(null, '', location.pathname); toast('Payment cancelled. Your box is saved.', 'Open', openBag); }
 }
 boot();
+})();
+</script>
+<script>
+/* ---- PRESENTATION ONLY: hero crossfade, gallery strip, lightbox, product-photo srcset sync. No commerce logic lives here. ---- */
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const srcsetOf = (name, ext) => [480, 960, 1600].map(s => `images/${name}-${s}.${ext} ${s}w`).join(', ');
+
+/* Hero: the first photograph is in the HTML (LCP). The other three load only after the page has settled, then the
+   stack crossfades every 6.5 s while the visible one zooms slowly. Reduced motion keeps the first photo still. */
+(function hero() {
+  const wrap = $('#hero-media'); if (!wrap || reduceMotion) return;
+  const slides = $$('img', wrap); if (slides.length < 2) return;
+  let i = 0;
+  const load = img => new Promise(done => {
+    if (img.getAttribute('src')) return done();
+    img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true });
+    img.srcset = srcsetOf(img.dataset.slide, 'webp'); img.sizes = '100vw'; img.src = `images/${img.dataset.slide}-960.jpg`;
+  });
+  const show = async n => {
+    const next = slides[n % slides.length];
+    await load(next);
+    if (next.decode) { try { await next.decode(); } catch (e) {} }
+    if (!next.complete || !next.naturalWidth) return;      // a photo that failed stays out of the rotation
+    slides.forEach(s => s.classList.toggle('on', s === next));
+    i = n % slides.length;
+  };
+  const begin = () => setTimeout(() => { load(slides[1]); setInterval(() => { if (!document.hidden) show(i + 1); }, 6500); }, 2500);
+  if (document.readyState === 'complete') begin(); else addEventListener('load', begin, { once: true });
+})();
+
+/* Below-the-fold photographs are lazy in the markup so they never compete with the hero. Once the page has loaded and
+   the browser is idle, on a connection that is not metered or slow, they are warmed in document order so scrolling
+   never meets an empty tile. */
+(function warmGallery() {
+  const c = navigator.connection || {};
+  if (c.saveData || /(^|\b)(slow-)?2g\b|3g/.test(c.effectiveType || '')) return;
+  const go = () => $$('#dark img[loading="lazy"], #gallery img[loading="lazy"], .wall-sec img[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 1500 }) : setTimeout(go, 400));
+  if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
+})();
+
+/* Recent boxes: arrow buttons page the strip; a mouse can also drag it. Touch scrolls natively. */
+(function strip() {
+  const strip = $('#strip'); if (!strip) return;
+  $$('[data-strip]').forEach(b => b.addEventListener('click', () => {
+    const fig = strip.querySelector('figure'); const step = (fig ? fig.getBoundingClientRect().width : 320) + 12;
+    strip.scrollBy({ left: +b.dataset.strip * step * (innerWidth > 900 ? 2 : 1), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }));
+  let drag = null;
+  strip.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button !== 0) return; drag = { x: e.clientX, left: strip.scrollLeft, moved: false }; });
+  strip.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) < 5) return;
+    drag.moved = true; strip.classList.add('dragging'); strip.scrollLeft = drag.left - dx;
+  });
+  const release = () => {
+    if (!drag) return;
+    const moved = drag.moved; drag = null; strip.classList.remove('dragging');
+    if (moved) { const swallow = ev => { ev.stopPropagation(); ev.preventDefault(); }; strip.addEventListener('click', swallow, true); setTimeout(() => strip.removeEventListener('click', swallow, true), 0); }
+  };
+  addEventListener('pointerup', release); addEventListener('pointercancel', release);
+})();
+
+/* Lightbox: tap a gallery photo to see it large. Escape, the × or a tap on the photo closes; arrows and swipes move. */
+(function lightbox() {
+  const dlg = $('#lightbox'); if (!dlg || !dlg.showModal) return;
+  const items = $$('#gallery figure button[data-lb], .wall-sec figure button[data-lb]'); if (!items.length) return;
+  const stage = $('#lb-stage'), meta = $('#lb-meta');
+  let cur = 0;
+  const render = n => {
+    cur = (n + items.length) % items.length;
+    const b = items[cur], name = b.dataset.lb, thumb = b.querySelector('img'), cap = b.closest('figure').querySelector('figcaption');
+    const img = document.createElement('img');
+    img.src = `images/${name}-960.jpg`; img.srcset = srcsetOf(name, 'webp'); img.sizes = '100vw';
+    img.alt = thumb ? thumb.alt : ''; img.width = thumb ? +thumb.getAttribute('width') : 1200; img.height = thumb ? +thumb.getAttribute('height') : 1600;
+    img.decoding = 'async';
+    stage.replaceChildren(img);
+    const count = document.createElement('b'); count.textContent = `${String(cur + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+    meta.replaceChildren(count, document.createTextNode(cap ? cap.textContent : ''));
+    [1, -1].forEach(d => { const nb = items[(cur + d + items.length) % items.length]; const pre = new Image(); pre.srcset = srcsetOf(nb.dataset.lb, 'webp'); pre.sizes = '100vw'; pre.src = `images/${nb.dataset.lb}-960.jpg`; });
+  };
+  const open = n => { render(n); if (!dlg.open) dlg.showModal(); document.body.classList.add('locked'); };
+  const close = () => { if (dlg.open) dlg.close(); };
+  items.forEach((b, n) => b.addEventListener('click', () => open(n)));
+  dlg.addEventListener('click', e => {
+    const t = e.target.closest('button');
+    if (t && t.dataset.lbStep) return render(cur + +t.dataset.lbStep);
+    if (t && t.hasAttribute('data-lb-close')) return close();
+    if (!t) close();
+  });
+  dlg.addEventListener('close', () => { document.body.classList.remove('locked'); stage.replaceChildren(); const b = items[cur]; if (b) b.focus({ preventScroll: true }); });
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); render(cur + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); render(cur - 1); } });
+  let sx = null;
+  dlg.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  dlg.addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 40) render(cur + (dx < 0 ? 1 : -1)); });
+})();
+
+/* Product dialog: the storefront script swaps #pdp-img's src on a thumbnail tap; this keeps the <picture> sources in step
+   so the browser shows the tapped photo in the right size and format. */
+(function pdpPictures() {
+  const d = $('#pdp'); if (!d) return;
+  d.addEventListener('click', e => {
+    const t = e.target.closest('button[data-img][data-name]'); if (!t) return;
+    const main = $('#pdp-img'); if (!main) return;
+    const name = t.dataset.name, source = main.parentElement && main.parentElement.querySelector('source');
+    if (source) source.srcset = srcsetOf(name, 'webp');
+    main.srcset = srcsetOf(name, 'jpg'); main.src = `images/${name}-960.jpg`;
+  });
+})();
 })();
 </script>
 </body>
