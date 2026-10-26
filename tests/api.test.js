@@ -111,7 +111,7 @@ function closedDate() {
 }
 const WINDOW = catalog.brand.pickupWindows[0];
 const good = over => ({
-  items: [{ productId: 'number-cake', options: { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }, qty: 1 }, { productId: 'bomboloni', options: { size: 'six', mix: 'assorted' }, qty: 1 }],
+  items: [{ productId: 'number-cake', options: { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }, qty: 1 }, { productId: 'bomboloni', options: { size: 'dozen', mix: 'assorted' }, qty: 1 }],
   customer: { name: 'Dana Levi', email: 'dana@example.com', phone: '713 555 0199' },
   fulfillment: { method: 'pickup', date: nextOpenDate(4), window: WINDOW, address: '', notes: 'candles' },
   ref: 'MS-1234', ...over
@@ -127,7 +127,7 @@ const paidEvent = (sessionId, orderId) => JSON.stringify({ id: 'evt_1', type: 'c
 /* ---------- pricing (shared module) ---------- */
 test('pricing: number cake prices by character count plus deltas', () => {
   const p = Pricing.findProduct(catalog, 'number-cake');
-  assert.equal(Pricing.unitPrice(p, { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }), 160 + 12 + 8);
+  assert.equal(Pricing.unitPrice(p, { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }), 350 + 12 + 8);
   assert.equal(Pricing.describe(p, { chars: '50', topping: 'gold', cream: 'pistachio', topper: 'gold' }), '50 · Gold & crown · Pistachio · gold topper');
   assert.match(Pricing.validate(p, { chars: '', topping: 'gold', cream: 'vanilla', topper: 'none' }), /required/);
 });
@@ -142,14 +142,14 @@ test('checkout: pickup order → pending row + Stripe session with server prices
   assert.equal(fake.rows.length, 1);
   const row = fake.rows[0];
   assert.equal(row.status, 'pending');
-  assert.equal(row.subtotal_cents, (180 + 36) * 100);
+  assert.equal(row.subtotal_cents, (370 + 55) * 100);
   assert.equal(row.delivery_fee_cents, 0);
-  assert.equal(row.total_cents, 21600);
+  assert.equal(row.total_cents, 42500);
   assert.equal(row.items[0].summary, '18 · Gold & crown · Pistachio · gold topper');
   assert.equal(row.stripe_session_id, res.body.id, 'session id attached to the row');
   const form = fake.stripeCalls[0];
-  assert.equal(form.get('line_items[0][price_data][unit_amount]'), '18000');
-  assert.equal(form.get('line_items[1][price_data][unit_amount]'), '3600');
+  assert.equal(form.get('line_items[0][price_data][unit_amount]'), '37000');
+  assert.equal(form.get('line_items[1][price_data][unit_amount]'), '5500');
   assert.equal(form.get('metadata[order_id]'), row.id);
   assert.equal(form.get('payment_intent_data[metadata][order_id]'), row.id);
   assert.equal(form.get('allow_promotion_codes'), 'true');
@@ -162,12 +162,12 @@ test('checkout: ignores any prices sent by the browser', async () => {
   reset();
   const res = await post(good({ items: [{ productId: 'number-cake', options: { chars: '18', topping: 'gold', cream: 'pistachio', topper: 'gold' }, qty: 1, price: 1, amount: 1 }], total: 1 }));
   assert.equal(res.statusCode, 200);
-  assert.equal(fake.stripeCalls[0].get('line_items[0][price_data][unit_amount]'), '18000');
+  assert.equal(fake.stripeCalls[0].get('line_items[0][price_data][unit_amount]'), '37000');
 });
 
 test('checkout: delivery under the free threshold adds the fee, over it does not', async () => {
   reset();
-  let res = await post(good({ items: [{ productId: 'bomboloni', options: { size: 'six', mix: 'assorted' }, qty: 1 }], fulfillment: { method: 'delivery', date: nextOpenDate(3), window: WINDOW, address: '12 Main St, Houston TX 77002' } }));
+  let res = await post(good({ items: [{ productId: 'bomboloni', options: { size: 'dozen', mix: 'assorted' }, qty: 1 }], fulfillment: { method: 'delivery', date: nextOpenDate(3), window: WINDOW, address: '12 Main St, Houston TX 77002' } }));
   assert.equal(res.statusCode, 200, JSON.stringify(res.body));
   assert.equal(fake.stripeCalls[0].get('line_items[1][price_data][product_data][name]'), 'Delivery');
   assert.equal(fake.stripeCalls[0].get('line_items[1][price_data][unit_amount]'), String(catalog.fulfillment.delivery.fee * 100));
@@ -285,7 +285,7 @@ test('order api: pending until paid; settles from Stripe when the webhook is lat
   assert.equal(res.body.customer_email, undefined);
   assert.equal(res.body.address, undefined);
   assert.equal(res.body.has_address, true);
-  assert.equal(res.body.total_cents, 21600);
+  assert.equal(res.body.total_cents, 42500);
   assert.equal(fake.resend.length, 2, 'emails went out from the success-page path');
   res = await call(orderApi, { url: '/api/order?session_id=cs_test_unknown' });
   assert.equal(res.statusCode, 404);
@@ -340,7 +340,7 @@ test('emails: templates render the sample order with totals and the change polic
   const o = emails.sampleOrder();
   const b = emails.bakerEmail(o, { paymentUrl: 'https://dashboard.stripe.com/test/payments/pi_sample' });
   assert.equal(b.subject, 'New order MS-1234 · Sat Oct 24 · 10:00 – 12:00 · pickup');
-  assert.match(b.html, /\$252/); assert.match(b.text, /Paid \$252/);
+  assert.match(b.html, /\$460/); assert.match(b.text, /Paid \$460/);
   assert.match(b.html, /Candles please/);
   const c = emails.customerEmail(o);
   assert.match(c.html, /Thank you, Dana\./); assert.match(c.html, /48 hours/); assert.match(c.html, /tree nuts/);

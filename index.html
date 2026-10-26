@@ -542,7 +542,7 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
     <nav class="nav" id="nav" aria-label="Site">
       <a href="#shop" data-filter="all">Menu</a>
       <a href="#shop" data-filter="tarts">Number cakes</a>
-      <a href="#shop" data-filter="bomboloni">Bomboloni</a>
+      <a href="#shop" data-filter="bomboloni">Sofganiot</a>
       <a href="#gallery">Recent boxes</a>
       <a href="#details">Details</a>
       <a href="#faq">FAQ</a>
@@ -627,7 +627,7 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
       <div class="filters" role="group" aria-label="Filter the menu">
         <button class="chip" type="button" data-filter="all" aria-pressed="true">Everything</button>
         <button class="chip" type="button" data-filter="tarts" aria-pressed="false">Number &amp; letter cakes</button>
-        <button class="chip" type="button" data-filter="bomboloni" aria-pressed="false">Bomboloni</button>
+        <button class="chip" type="button" data-filter="bomboloni" aria-pressed="false">Sofganiot</button>
         <button class="chip" type="button" data-filter="kunafa" aria-pressed="false">Kunafa</button>
         <button class="chip" type="button" data-filter="cakes" aria-pressed="false">Cakes</button>
         <span class="donut-illo" aria-hidden="true"></span>
@@ -831,7 +831,7 @@ dialog.lb::backdrop{background:rgba(8,8,8,.94)}
       <h4>Order</h4>
       <ul>
         <li><a href="#shop" data-filter="tarts">Number &amp; letter cakes</a></li>
-        <li><a href="#shop" data-filter="bomboloni">Bomboloni</a></li>
+        <li><a href="#shop" data-filter="bomboloni">Sofganiot</a></li>
         <li><a href="#shop" data-filter="kunafa">Kunafa cups</a></li>
         <li><a href="#shop" data-filter="cakes">Vintage &amp; name cakes</a></li>
       </ul>
@@ -981,7 +981,7 @@ function updateHero() {
   const n = Math.max(v.length, 1);
   const price = opt.charPrices[String(n)];
   const serv = `about ${n * 8}–${n * 10} servings`;
-  $('#hero-price').textContent = v ? `${n} character${n > 1 ? 's' : ''} · ${money(price)} · ${serv}` : 'From $85 per character · 8–10 servings each';
+  $('#hero-price').textContent = v ? `${n} character${n > 1 ? 's' : ''} · ${money(price)} · ${serv}` : 'From $200 · 8–10 servings per character';
 }
 $('#hero-chars').addEventListener('input', e => { const v = heroChars(); if (e.target.value !== v) e.target.value = v; updateHero(); });
 $('#hero-build').addEventListener('click', () => openProduct('number-cake', { chars: heroChars() || '30' }));
